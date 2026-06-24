@@ -465,13 +465,19 @@
   white-space: nowrap;
   transform: translateX(-50%) rotate(-4deg); /* tilts up toward the right */
   transform-origin: center;
+  animation: hud-in 0.6s 0.25s ease both; /* fade in gently after the box slides */
+}
+@keyframes hud-in {
+  from {
+    opacity: 0;
+  }
 }
 /* when stacked: normal gap (box height only) until the game is revealed, then
    grow to the full play height so the box slides down to reveal the hidden zone */
 @media (max-width: 860px) {
   .about__stickers-col {
     height: var(--box-h, 400px);
-    transition: height 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: height 0.9s cubic-bezier(0.45, 0, 0.2, 1);
   }
   .about__stickers-col--playing {
     height: var(--play-h, 620px);
@@ -962,6 +968,11 @@
 /* lamp toggle: black shadow (not bright amber) in cave mode */
 :root.cave-active .nav__lamp {
   box-shadow: 2px 2px 0 #14100a;
+}
+/* cave mode: scrolled header is black with amber text, matching the top */
+:root.cave-active .nav--scrolled {
+  background: var(--paper); /* near-black in cave mode */
+  backdrop-filter: none;
 }
 .cavemode {
   position: fixed;
