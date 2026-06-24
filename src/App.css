@@ -453,7 +453,7 @@
   position: absolute;
   left: 0;
   /* centered on the box's left border, just above the top border with margin */
-  bottom: calc(var(--box-h, 540px) + 0.7rem);
+  bottom: calc(var(--box-h, 540px) + 0.7rem + 30px);
   z-index: 6;
   padding: 0.42rem 0.8rem;
   background: var(--ink);
@@ -472,11 +472,11 @@
   }
 }
 @media (max-width: 720px) {
-  /* shrink the pill and place it below the blurb, right side above the note */
+  /* shrink the pill; right side sits slightly above the ring */
   .game-hud {
     left: auto;
-    right: 0.75rem;
-    bottom: calc(var(--box-h, 400px) + 2rem);
+    right: 0.4rem;
+    bottom: calc(var(--box-h, 400px) + 190px);
     padding: 0.32rem 0.62rem;
     font-size: 0.56rem;
     transform: rotate(-4deg);
