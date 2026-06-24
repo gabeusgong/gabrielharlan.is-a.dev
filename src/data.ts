@@ -55,6 +55,8 @@ export const hobbies: Sticker[] = [
   { emoji: '🪴', label: 'plants', tone: 'cobalt', rotate: -6 },
   { emoji: '📚', label: 'reading', tone: 'coral', rotate: 7 },
   { emoji: '🏊', label: 'swimming', tone: 'lime', rotate: -5 },
+  { emoji: '🎮', label: 'gaming', tone: 'pink', rotate: 8 },
+  { emoji: '🏋️', label: 'gym', tone: 'cobalt', rotate: -7 },
 ]
 
 export type Project = {
