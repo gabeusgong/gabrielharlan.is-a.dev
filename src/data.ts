@@ -5,9 +5,8 @@
 
 export const profile = {
   name: 'Gabriel Harlan',
-  // hero one-liner — bridges the two worlds: digital design + real caves
-  tagline:
-    'I make human-centered things for the surface — and help map the caves beneath it.',
+  // hero one-liner
+  tagline: 'I turn messy problems into clean, human-centered interfaces.',
   // rotating words in the hero ("I'm ___.")
   iAm: ['a web designer', 'a UX nerd', 'a caver', 'a keyboard builder', 'an informatics major'],
   about:
