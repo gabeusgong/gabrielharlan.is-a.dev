@@ -79,26 +79,20 @@
   backface-visibility: hidden;
 }
 .nav--scrolled {
-  background: var(--ink);
+  background: rgba(244, 236, 216, 0.82);
+  backdrop-filter: blur(10px);
   padding: 0.7rem 2rem;
-  box-shadow: 0 2px 0 #000;
-  border-bottom: 2.5px solid #000;
+  box-shadow: 0 2px 0 var(--ink);
+  border-bottom: 2.5px solid var(--ink);
 }
-/* light text on the black scrolled bar */
-.nav--scrolled .nav__brand,
-.nav--scrolled .nav__links a {
-  color: var(--paper);
-}
-/* on mobile, keep the scrolled header identical to the top (no black bar) */
+/* on mobile, keep the scrolled header identical to the top */
 @media (max-width: 720px) {
   .nav--scrolled {
     background: transparent;
+    backdrop-filter: none;
     padding: 1.1rem 2rem;
     box-shadow: none;
     border-bottom: none;
-  }
-  .nav--scrolled .nav__brand {
-    color: var(--ink);
   }
 }
 .nav__brand {
