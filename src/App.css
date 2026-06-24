@@ -785,6 +785,10 @@
   border-color: #14100a;
   box-shadow: 3px 3px 0 #14100a;
 }
+/* lamp toggle: black shadow (not bright amber) in cave mode */
+:root.cave-active .nav__lamp {
+  box-shadow: 2px 2px 0 #14100a;
+}
 .cavemode {
   position: fixed;
   inset: 0;
