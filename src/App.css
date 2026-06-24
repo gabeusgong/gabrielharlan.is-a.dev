@@ -191,6 +191,13 @@
   padding: 6rem 1.5rem 4rem;
   overflow: hidden;
 }
+/* desktop: extra bottom padding lifts the content, giving more room between
+   the CTA buttons and the scroll cue */
+@media (min-width: 721px) {
+  .hero {
+    padding-bottom: 11rem;
+  }
+}
 .hero__inner {
   position: relative;
   z-index: 2;
