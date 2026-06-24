@@ -21,8 +21,8 @@ const shots = [
     cap: 'Cave detail — access notes, seasonal closures, and saved-cave hearts.',
   },
   {
-    src: `${base}karst/cave-show.png`,
-    cap: 'Show-cave listing — the public, beginner-friendly entry point.',
+    src: `${base}karst/bc-record.png`,
+    cap: 'Dead reckoning in action — recording a breadcrumb trail (crumbs, distance, GPS accuracy) so you can retrace your steps back out.',
   },
 ]
 
