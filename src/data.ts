@@ -1,21 +1,19 @@
 /* ============================================================
-   YOUR CONTENT LIVES HERE 👋
-   Everything below is a PLACEHOLDER seeded with the little I know.
-   Swap in your real details and the whole site updates.
-   (Search for "TODO" to find the spots most in need of your input.)
+   GABRIEL HARLAN — site content
+   Edit anything here and the whole site updates.
    ============================================================ */
 
 export const profile = {
   name: 'Gabriel Harlan',
-  // TODO: your hero one-liner — keep it punchy and a little weird
-  tagline: 'Software engineer who builds weird, useful things.',
-  // shown as rotating words in the hero
-  iAm: ['an engineer', 'a tinkerer', 'a problem-solver', 'a builder'],
-  // TODO: 2–3 sentences in your real voice
+  // hero one-liner — bridges the two worlds: digital design + real caves
+  tagline:
+    'I make human-centered things for the surface — and help map the caves beneath it.',
+  // rotating words in the hero ("I'm ___.")
+  iAm: ['a web designer', 'a UX nerd', 'a caver', 'a keyboard builder', 'an informatics major'],
   about:
-    "I'm a software engineer who likes the messy middle — the place where a half-formed idea turns into something people actually use. I care about craft, fast feedback loops, and shipping things that feel good to touch. When I'm not at a keyboard you'll probably find me chasing one of the obsessions below.",
-  location: 'Somewhere with good coffee', // TODO
-  status: 'open to interesting things', // little status pill in the nav
+    "I'm a senior Informatics student at Indiana University, minoring in Human-Centered Computing and Web Design. I like turning messy problems into clean, human-centered interfaces — and I sweat the details whether that's a Figma file, a Firestore rule, or the keymap on a board I soldered myself. By day I lead a campus IT support team; on weekends I'm underground with the Bloomington Indiana Grotto, which is exactly how the cave field-guide app below got started.",
+  location: 'Bloomington, Indiana',
+  status: 'open to new roles',
 }
 
 export type Skill = { name: string; tone: keyof typeof tones }
@@ -27,22 +25,22 @@ export const tones = {
   sun: 'var(--sun)',
 } as const
 
-// TODO: replace with your real toolkit. tone just sets the color.
 export const skills: Skill[] = [
-  { name: 'TypeScript', tone: 'cobalt' },
-  { name: 'React', tone: 'coral' },
-  { name: 'Node.js', tone: 'lime' },
-  { name: 'Firebase / Firestore', tone: 'sun' },
-  { name: 'Java', tone: 'pink' },
-  { name: 'Python', tone: 'cobalt' },
-  { name: 'PostgreSQL', tone: 'coral' },
-  { name: 'CSS / Motion', tone: 'lime' },
-  { name: 'System Design', tone: 'sun' },
-  { name: 'Testing', tone: 'pink' },
+  { name: 'JavaScript', tone: 'cobalt' },
+  { name: 'React / Next.js', tone: 'coral' },
+  { name: 'PHP', tone: 'lime' },
+  { name: 'MySQL', tone: 'sun' },
+  { name: 'Python', tone: 'pink' },
+  { name: 'HTML / CSS', tone: 'cobalt' },
+  { name: 'Figma', tone: 'coral' },
+  { name: 'Firebase / Firestore', tone: 'lime' },
+  { name: 'UX & HCI Design', tone: 'sun' },
+  { name: 'Git', tone: 'pink' },
+  { name: 'Tableau', tone: 'cobalt' },
+  { name: 'Web Design', tone: 'coral' },
 ]
 
-// Draggable sticker badges — your hobbies / interests.
-// TODO: make these actually about you. emoji + label.
+// Draggable sticker badges — pulled from your real clubs & hobbies.
 export type Sticker = {
   emoji: string
   label: string
@@ -50,14 +48,15 @@ export type Sticker = {
   rotate: number
 }
 export const hobbies: Sticker[] = [
-  { emoji: '🧗', label: 'spelunking', tone: 'sun', rotate: -8 },
-  { emoji: '🎧', label: 'making playlists', tone: 'cobalt', rotate: 6 },
-  { emoji: '📷', label: 'film photography', tone: 'coral', rotate: -4 },
-  { emoji: '☕', label: 'over-engineered coffee', tone: 'pink', rotate: 9 },
-  { emoji: '🌱', label: 'growing things', tone: 'lime', rotate: -10 },
-  { emoji: '🎲', label: 'board games', tone: 'sun', rotate: 5 },
-  { emoji: '🚲', label: 'long bike rides', tone: 'cobalt', rotate: -6 },
-  { emoji: '📚', label: 'sci-fi paperbacks', tone: 'coral', rotate: 7 },
+  { emoji: '🧗', label: 'caving', tone: 'sun', rotate: -8 },
+  { emoji: '⌨️', label: 'custom keyboards', tone: 'cobalt', rotate: 6 },
+  { emoji: '☕', label: 'coffee', tone: 'coral', rotate: -4 },
+  { emoji: '🎸', label: 'guitar', tone: 'pink', rotate: 9 },
+  { emoji: '🥾', label: 'hiking', tone: 'lime', rotate: -10 },
+  { emoji: '🖥️', label: 'PC building', tone: 'sun', rotate: 5 },
+  { emoji: '🪴', label: 'plants', tone: 'cobalt', rotate: -6 },
+  { emoji: '📚', label: 'reading', tone: 'coral', rotate: 7 },
+  { emoji: '🏊', label: 'swimming', tone: 'lime', rotate: -5 },
 ]
 
 export type Project = {
@@ -70,51 +69,41 @@ export type Project = {
   emoji: string
 }
 
-// TODO: your real projects. The first one is seeded from what I know.
 export const projects: Project[] = [
   {
-    title: 'Spelunk-a-Dunk',
+    title: 'Karst',
     blurb:
-      'A location-aware app for cave explorers — with a geoprivacy layer that obfuscates sensitive coordinates instead of exposing them. Firestore rules, admin tooling, the works.',
-    tags: ['React', 'Firestore', 'Geoprivacy', 'Java'],
+      "A caver's field guide to the wild and show caves of southern Indiana's karst country. A Next.js + Firestore app with a privacy-first map that fuzzes sensitive cave locations, gamified AR “breadcrumb” trails, grotto groups, a community field guide, and a bat / White-Nose Syndrome conservation guide. Ships as a web app and an Android build.",
+    tags: ['Next.js', 'Firestore', 'Leaflet', 'Privacy-first'],
     tone: 'sun',
     year: '2025',
-    emoji: '🗺️',
-    // href: 'https://...',
+    emoji: '🦇',
+    href: 'https://spelunk-a-dunk.web.app',
   },
   {
-    title: 'Project Two',
+    title: 'ITIT — IT Inventory Tracker',
     blurb:
-      'TODO — a one-line description of what it does and why it was fun or hard to build. Lead with the interesting part.',
-    tags: ['TypeScript', 'Node'],
+      'Senior capstone with a four-person Scrum team: inventory tracking for small businesses that’s less error-prone than spreadsheets and far cheaper than enterprise systems. Pairs a physical IoT tracker with a web app for deployments, locations, and items — plus CSV export and Google login.',
+    tags: ['JavaScript', 'PHP', 'MySQL', 'IoT'],
+    tone: 'cobalt',
+    year: '2025',
+    emoji: '📦',
+    href: 'https://cgi.luddy.indiana.edu/~team43/login.php',
+  },
+  {
+    title: 'Split Wireless Keyboard',
+    blurb:
+      'A hand-built split, wireless, ortholinear mechanical keyboard running custom ZMK firmware — bespoke keymaps, rotary encoders, the works. Because the best tools are the ones you tune yourself.',
+    tags: ['ZMK', 'Firmware', 'Hardware'],
     tone: 'coral',
     year: '2024',
-    emoji: '🛠️',
-  },
-  {
-    title: 'Project Three',
-    blurb:
-      'TODO — another thing you made. Side project, work project, weekend hack — whatever you’re proud of.',
-    tags: ['Python', 'Data'],
-    tone: 'cobalt',
-    year: '2023',
-    emoji: '⚙️',
-  },
-  {
-    title: 'Project Four',
-    blurb:
-      'TODO — optional. Delete this card if you only want three, or add more by editing data.ts.',
-    tags: ['Design', 'CSS'],
-    tone: 'pink',
-    year: '2023',
-    emoji: '✨',
+    emoji: '⌨️',
   },
 ]
 
-// TODO: your real links. Leave href empty to hide a row.
 export const links = {
-  email: 'gharlan@tirerack.com',
-  github: '', // 'https://github.com/yourname'
-  linkedin: '', // 'https://linkedin.com/in/yourname'
-  twitter: '', // 'https://x.com/yourname'
+  email: 'gbharlan@iu.edu',
+  github: 'https://github.com/gabeusgong',
+  linkedin: 'https://linkedin.com/in/gbharlan',
+  twitter: '',
 }
