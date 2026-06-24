@@ -451,16 +451,37 @@
 /* score HUD */
 .game-hud {
   position: absolute;
-  left: 0.9rem;
-  bottom: calc(var(--box-h, 540px) - 2.9rem); /* top-left, just inside the box */
+  left: 0;
+  /* centered on the box's left border, just above the top border with margin */
+  bottom: calc(var(--box-h, 540px) + 0.7rem);
   z-index: 6;
-  padding: 0.4rem 0.75rem;
+  padding: 0.42rem 0.8rem;
   background: var(--ink);
   color: var(--paper);
   border-radius: 100px;
   font-size: 0.66rem;
-  transform: rotate(-4deg); /* tilts up toward the right for a playful look */
-  transform-origin: left center;
+  white-space: nowrap;
+  transform: translateX(-50%) rotate(-4deg); /* tilts up toward the right */
+  transform-origin: center;
+}
+/* when stacked, reserve the full play height so the box sits below the blurb
+   with the hidden zone (and pill) in between — no overlap with the text */
+@media (max-width: 860px) {
+  .about__stickers-col {
+    height: var(--play-h, 620px);
+  }
+}
+@media (max-width: 720px) {
+  /* shrink the pill and place it below the blurb, right side above the note */
+  .game-hud {
+    left: auto;
+    right: 0.75rem;
+    bottom: calc(var(--box-h, 400px) + 2rem);
+    padding: 0.32rem 0.62rem;
+    font-size: 0.56rem;
+    transform: rotate(-4deg);
+    transform-origin: right center;
+  }
 }
 
 /* a scored sticker fades away */
