@@ -74,7 +74,7 @@ export const projects: Project[] = [
       "A caver's field guide to the wild and show caves of southern Indiana's karst country. A Next.js + Firebase app with a privacy-first map that fuzzes sensitive cave locations, gamified AR “breadcrumb” trails, grotto groups, a community field guide, and a bat / White-Nose Syndrome conservation guide. Ships as a web app and an Android build.",
     tags: ['Next.js', 'Firebase', 'Leaflet', 'Privacy-first'],
     tone: 'sun',
-    year: '2025',
+    year: '2026',
     emoji: '🦇',
     href: 'https://spelunk-a-dunk.web.app',
   },
