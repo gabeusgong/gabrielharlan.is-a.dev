@@ -210,6 +210,9 @@
 .hero__name .hero__letter-wrap:nth-child(7) .hero__letter {
   color: var(--cobalt);
 }
+.hero__name .hero__letter-wrap:nth-last-child(1) .hero__letter {
+  color: var(--lime);
+}
 
 .hero__sub {
   margin: 1.8rem auto 0;
