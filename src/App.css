@@ -375,7 +375,7 @@
 }
 .stickerboard {
   position: relative;
-  height: 400px;
+  height: 540px;
   padding: 0;
   border: 2.5px dashed var(--ink);
   border-radius: var(--r);
@@ -386,6 +386,130 @@
 }
 .stickerboard:active {
   cursor: grabbing;
+}
+
+/* hidden ring target — revealed once a sticker is flung */
+.hoopring {
+  position: absolute;
+  width: 132px;
+  height: 132px;
+  transform: translate(-50%, -50%) scale(0.4);
+  border-radius: 50%;
+  border: 7px solid var(--cobalt);
+  box-shadow:
+    0 0 0 3px var(--ink),
+    0 0 22px 4px rgba(45, 77, 245, 0.55),
+    inset 0 0 18px rgba(45, 77, 245, 0.4);
+  display: grid;
+  place-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 3;
+}
+.hoopring--on {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+  animation: hoop-pulse 1.8s ease-in-out infinite;
+}
+.hoopring__label {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink);
+  opacity: 0.65;
+}
+@keyframes hoop-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 3px var(--ink),
+      0 0 22px 4px rgba(45, 77, 245, 0.5),
+      inset 0 0 18px rgba(45, 77, 245, 0.4);
+  }
+  50% {
+    box-shadow:
+      0 0 0 3px var(--ink),
+      0 0 34px 9px rgba(45, 77, 245, 0.8),
+      inset 0 0 24px rgba(45, 77, 245, 0.55);
+  }
+}
+
+/* score HUD */
+.game-hud {
+  position: absolute;
+  top: 0.7rem;
+  left: 0.7rem;
+  z-index: 6;
+  padding: 0.4rem 0.7rem;
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: 100px;
+  font-size: 0.66rem;
+}
+
+/* a scored sticker fades away */
+.sticker--scored {
+  opacity: 0 !important;
+  pointer-events: none;
+  transition: opacity 0.45s ease;
+}
+
+/* confetti particles */
+.confetti {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  margin: -5px 0 0 -5px;
+  border: 1.5px solid var(--ink);
+  border-radius: 2px;
+  pointer-events: none;
+  z-index: 7;
+  animation: confetti-fly 1s ease-out forwards;
+}
+@keyframes confetti-fly {
+  to {
+    transform: translate(var(--dx), var(--dy)) rotate(var(--rot));
+    opacity: 0;
+  }
+}
+
+/* win overlay */
+.game-win {
+  position: absolute;
+  inset: 0;
+  z-index: 8;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  text-align: center;
+  background: rgba(244, 236, 216, 0.82);
+  backdrop-filter: blur(3px);
+  border-radius: var(--r);
+  animation: win-in 0.4s ease both;
+}
+@keyframes win-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}
+.game-win__big {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(2.4rem, 9vw, 4rem);
+  line-height: 0.9;
+  margin: 0;
+  color: var(--coral);
+}
+.game-win__sub {
+  font-family: var(--body);
+  font-weight: 600;
+  margin: 0 0 0.8rem;
+  color: var(--ink);
 }
 .sticker {
   position: absolute;
