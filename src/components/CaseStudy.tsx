@@ -135,6 +135,20 @@ export default function CaseStudy({
             </section>
 
             <section className="cs__block">
+              <div className="cs__spotlight">
+                <span className="cs__spotlight-tag label">★ Signature feature</span>
+                <h3 className="cs__spotlight-h">Dead reckoning, where GPS can&apos;t reach</h3>
+                <p>
+                  Caves swallow GPS, so Karst leans on <strong>dead reckoning</strong> —
+                  estimating your position from the phone&apos;s motion sensors and your
+                  last known fix instead of satellites. Drop a marker at the entrance and
+                  it keeps tracking your path underground, so the breadcrumb trail can
+                  always lead you back out.
+                </p>
+              </div>
+            </section>
+
+            <section className="cs__block">
               <h3 className="cs__h3">Key decisions</h3>
               <div className="cs__decisions">
                 {decisions.map((d) => (

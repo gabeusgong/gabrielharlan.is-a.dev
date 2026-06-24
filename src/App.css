@@ -66,7 +66,7 @@
   top: 0;
   left: 0;
   right: 0;
-  z-index: 100;
+  z-index: 8600; /* stays above cave-mode darkness so the lamp toggle is reachable */
   display: flex;
   align-items: center;
   gap: 1.5rem;
@@ -832,6 +832,32 @@
 .cs__block {
   margin-top: 2.7rem;
 }
+.cs__spotlight {
+  background: var(--sun);
+  border: var(--border-ink);
+  border-radius: 18px;
+  box-shadow: var(--shadow-hard);
+  padding: 1.6rem 1.8rem;
+}
+.cs__spotlight-tag {
+  color: var(--ink);
+}
+.cs__spotlight-h {
+  font-size: clamp(1.5rem, 4vw, 2.2rem);
+  margin: 0.5rem 0 0.7rem;
+}
+.cs__spotlight p {
+  color: var(--ink);
+  line-height: 1.6;
+  max-width: 62ch;
+  margin: 0;
+}
+.cs__spotlight strong {
+  background: var(--ink);
+  color: var(--sun);
+  padding: 0 0.28em;
+  border-radius: 4px;
+}
 .cs__h3 {
   font-size: 1.7rem;
   margin-bottom: 0.9rem;
@@ -865,6 +891,7 @@
 }
 .cs__gallery {
   display: flex;
+  align-items: flex-start;
   gap: 1.4rem;
   overflow-x: auto;
   padding-bottom: 1rem;
@@ -882,12 +909,10 @@
   overflow: hidden;
   box-shadow: 5px 5px 0 var(--ink);
   background: #000;
-  aspect-ratio: 824 / 1830;
 }
 .cs__phone img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
   display: block;
 }
 .cs__shot figcaption {
