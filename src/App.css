@@ -89,6 +89,18 @@
 .nav--scrolled .nav__links a {
   color: var(--paper);
 }
+/* on mobile, keep the scrolled header identical to the top (no black bar) */
+@media (max-width: 720px) {
+  .nav--scrolled {
+    background: transparent;
+    padding: 1.1rem 2rem;
+    box-shadow: none;
+    border-bottom: none;
+  }
+  .nav--scrolled .nav__brand {
+    color: var(--ink);
+  }
+}
 .nav__brand {
   display: inline-flex;
   align-items: center;
