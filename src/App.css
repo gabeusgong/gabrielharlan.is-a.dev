@@ -365,33 +365,39 @@
 }
 .about__stickers-col {
   position: relative;
+  height: var(--box-h, 540px); /* matches the box so it aligns beside the text */
 }
 .about__sticker-note {
   position: absolute;
-  top: -1.6rem;
-  right: 1rem;
+  bottom: calc(var(--box-h, 540px) + 6px); /* right above the box's top border */
+  right: 0.75rem;
+  z-index: 4;
   color: var(--ink-soft);
   transform: rotate(4deg);
+  pointer-events: none;
 }
-/* tall play area spanning the column; nothing clips at the top */
-/* tall play area; the box sits at the bottom and the space above it (the
-   Easter-egg zone) is open. Nothing clips at the top. */
+/* the bordered box sits at the bottom and aligns beside the text; the play
+   area extends ABOVE it (anchored to the column bottom, overflowing upward —
+   the Easter-egg zone). Height is set inline by JS (box + extension). */
 .playground {
-  position: relative;
-  height: clamp(780px, 92vh, 880px);
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: visible;
   cursor: grab;
-  touch-action: none;
+  touch-action: pan-y; /* allow page scroll over the area; drag is handled in JS */
 }
 .playground:active {
   cursor: grabbing;
 }
-/* the bordered box — all four borders, same as before, lower 540px */
+/* the bordered box — all four borders, height matches --box-h */
 .playbox {
   position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
-  height: 540px;
+  height: var(--box-h, 540px);
   border: 2.5px dashed var(--ink);
   border-radius: var(--r);
   background: rgba(255, 255, 255, 0.25);
@@ -784,7 +790,7 @@
   list-style: none;
   margin: 0 auto;
   padding: 0;
-  max-width: 620px;
+  max-width: 820px;
   border-top: var(--border-ink);
 }
 .contact__row {

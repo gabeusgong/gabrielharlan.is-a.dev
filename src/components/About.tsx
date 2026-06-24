@@ -4,14 +4,16 @@ import { profile, hobbies, tones } from '../data'
 import Reveal from './Reveal'
 
 const CONFETTI = ['#f4502a', '#2d4df5', '#c8f02c', '#ff9ece', '#ffc23d']
-const BOX_H = 540 // bordered box (same size as before)
-const GAP_H = 86 // ring opening height
+const GAP_H = 104 // ring opening height
+// bordered box height — smaller on mobile; the hidden zone is kept above it
+const boxHeight = () => (window.innerWidth <= 720 ? 400 : 540)
+const extHeight = () => (window.innerWidth <= 720 ? 220 : 320)
 
-/* Gravity sandbox + hidden game. Stickers pile in the bordered box. You can
-   only grab/fling them inside the box — the play area secretly extends above
-   the top border (the Easter egg). Fling a sticker above the border and a ring
-   appears on the right wall, drawn edge-on as a line with real collision posts;
-   thread every sticker through the slot to win. */
+/* Gravity sandbox + hidden game. Stickers pile in the bordered box (which is
+   aligned beside the text). The play area secretly extends above the top
+   border. You can only grab/fling stickers inside the box — once one crosses
+   the border you lose control of it, and a ring appears on the right wall.
+   Thread every sticker fully through the ring's slot (real collision) to win. */
 function StickerPlayground() {
   const sceneRef = useRef<HTMLDivElement>(null)
   const itemRefs = useRef<Array<HTMLDivElement | null>>([])
@@ -31,6 +33,11 @@ function StickerPlayground() {
     const { Engine, Runner, Bodies, Body, Composite, Mouse, MouseConstraint, Events } =
       Matter
 
+    const setSizes = () => {
+      scene.style.height = `${boxHeight() + extHeight()}px`
+      scene.parentElement?.style.setProperty('--box-h', `${boxHeight()}px`)
+    }
+    setSizes()
     let width = scene.clientWidth
     let height = scene.clientHeight
 
@@ -41,24 +48,18 @@ function StickerPlayground() {
     const T = 600
     const BIG = 1400
 
-    const boxTopY = () => height - BOX_H // y of the visible top border
-    const gapY = () => boxTopY() - 64 // ring center, just above the border
+    const boxTopY = () => height - boxHeight() // y of the visible top border
+    const gapY = () => boxTopY() - 70 // ring center, just above the border
     const gapTop = () => gapY() - GAP_H / 2
     const gapBot = () => gapY() + GAP_H / 2
 
     const floor = Bodies.rectangle(width / 2, height + T / 2, width * 4, T, opts)
     const ceil = Bodies.rectangle(width / 2, -T / 2, width * 4, T, opts)
     const leftW = Bodies.rectangle(-T / 2, height / 2, T, height * 4, opts)
-    // right wall is split into two posts, leaving the ring gap between them
+    // right wall split into two posts, leaving the ring gap between them
     const rightUp = Bodies.rectangle(width + T / 2, gapTop() - BIG / 2, T, BIG, opts)
     const rightLo = Bodies.rectangle(width + T / 2, gapBot() + BIG / 2, T, BIG, opts)
-    // score sensor just outside the gap
-    const goal = Bodies.rectangle(width + 16, gapY(), 34, GAP_H, {
-      isStatic: true,
-      isSensor: true,
-      label: 'goal',
-    })
-    Composite.add(engine.world, [floor, ceil, leftW, rightUp, rightLo, goal])
+    Composite.add(engine.world, [floor, ceil, leftW, rightUp, rightLo])
 
     const layout = () => {
       Body.setPosition(floor, { x: width / 2, y: height + T / 2 })
@@ -66,7 +67,6 @@ function StickerPlayground() {
       Body.setPosition(leftW, { x: -T / 2, y: height / 2 })
       Body.setPosition(rightUp, { x: width + T / 2, y: gapTop() - BIG / 2 })
       Body.setPosition(rightLo, { x: width + T / 2, y: gapBot() + BIG / 2 })
-      Body.setPosition(goal, { x: width + 16, y: gapY() })
       if (ringRef.current) {
         ringRef.current.style.top = `${gapY()}px`
         ringRef.current.style.height = `${GAP_H}px`
@@ -75,8 +75,7 @@ function StickerPlayground() {
     layout()
 
     const startX = () => 50 + Math.random() * Math.max(40, width - 100)
-    // spawn low in the box so settling stays calm and nothing pops above the border
-    const startY = (i: number) => height - 240 + (i % 5) * 30
+    const startY = (i: number) => height - 230 + (i % 5) * 30
 
     const pairs = itemRefs.current
       .map((el, i) => {
@@ -93,8 +92,6 @@ function StickerPlayground() {
       .filter((p): p is { el: HTMLDivElement; body: Matter.Body; i: number } => p !== null)
 
     Composite.add(engine.world, pairs.map((p) => p.body))
-    const indexByBody = new Map<number, number>()
-    pairs.forEach((p) => indexByBody.set(p.body.id, p.i))
 
     const burst = (x: number, y: number, n = 24) => {
       for (let k = 0; k < n; k++) {
@@ -139,38 +136,31 @@ function StickerPlayground() {
       if (e?.body && e.body.position.y < boxTopY()) release()
     })
 
-    Events.on(engine, 'collisionStart', (evt: Matter.IEventCollision<Matter.Engine>) => {
-      if (!isActive) return
-      for (const pair of evt.pairs) {
-        const other =
-          pair.bodyA.label === 'goal'
-            ? pair.bodyB
-            : pair.bodyB.label === 'goal'
-              ? pair.bodyA
-              : null
-        if (!other) continue
-        const idx = indexByBody.get(other.id)
-        if (idx === undefined || scored.has(idx)) continue
-        scored.add(idx)
-        burst(width - 10, gapY())
-        Composite.remove(engine.world, other)
-        itemRefs.current[idx]?.classList.add('sticker--scored')
-        setScore(scored.size)
-        if (scored.size === total) {
-          burst(width / 2, height * 0.4, 60)
-          setWon(true)
-        }
-      }
-    })
-
     type Handler = (e: Event) => void
-    const m = mouse as unknown as { mousedown: Handler; mousemove: Handler; mouseup: Handler }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const mm = mouse as any
+    const m = mm as { mousedown: Handler; mousemove: Handler; mouseup: Handler }
+    // drop matter's default touch + wheel listeners; we manage touch so the page
+    // can still scroll over the play area and the wheel isn't captured
     scene.removeEventListener('touchstart', m.mousedown)
     scene.removeEventListener('touchmove', m.mousemove)
     scene.removeEventListener('touchend', m.mouseup)
-    scene.addEventListener('touchstart', m.mousedown, { passive: false })
-    scene.addEventListener('touchmove', m.mousemove, { passive: false })
-    scene.addEventListener('touchend', m.mouseup, { passive: false })
+    scene.removeEventListener('wheel', mm.mousewheel)
+    scene.removeEventListener('mousewheel', mm.mousewheel)
+    scene.removeEventListener('DOMMouseScroll', mm.mousewheel)
+
+    const onTouchStart = (e: TouchEvent) => m.mousedown(e as unknown as Event)
+    const onTouchMove = (e: TouchEvent) => {
+      // only hijack the gesture (block scroll) while actually dragging a sticker
+      if (mm.body) {
+        m.mousemove(e as unknown as Event)
+        e.preventDefault()
+      }
+    }
+    const onTouchEnd = (e: TouchEvent) => m.mouseup(e as unknown as Event)
+    scene.addEventListener('touchstart', onTouchStart, { passive: true })
+    scene.addEventListener('touchmove', onTouchMove, { passive: false })
+    scene.addEventListener('touchend', onTouchEnd, { passive: true })
 
     const runner = Runner.create()
     Runner.run(runner, engine)
@@ -179,15 +169,32 @@ function StickerPlayground() {
     const sync = () => {
       ticks++
       const top = boxTopY()
-      // if the dragged sticker rises above the border, you lose control of it
+      // dragged sticker rising above the border → lose control of it
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const held = (mc as any).body as Matter.Body | null
       if (held && held.position.y < top) release()
+
       let flungAbove = false
-      for (const { el, body } of pairs) {
-        // a *moving* sticker above the border (a real fling, not settling) reveals the ring.
-        // grace period lets the initial drop settle first.
+      for (const { el, body, i } of pairs) {
+        // reveal the ring when a *moving* sticker clears the border (after a grace
+        // period so the initial settle doesn't trigger it)
         if (ticks > 150 && body.position.y < top && body.speed > 1.6) flungAbove = true
+
+        // score only when a sticker FULLY passes through the ring (its whole body
+        // clears the right edge), not on a mere touch
+        if (isActive && !scored.has(i) && body.position.x - el.offsetWidth / 2 > width) {
+          scored.add(i)
+          burst(width - 8, gapY())
+          Composite.remove(engine.world, body)
+          el.classList.add('sticker--scored')
+          setScore(scored.size)
+          if (scored.size === total) {
+            burst(width / 2, height * 0.5, 60)
+            setWon(true)
+          }
+          continue
+        }
+
         el.style.transform =
           `translate(${body.position.x - el.offsetWidth / 2}px, ` +
           `${body.position.y - el.offsetHeight / 2}px) rotate(${body.angle}rad)`
@@ -211,6 +218,7 @@ function StickerPlayground() {
 
     const ro = new ResizeObserver(() => {
       if (!sceneRef.current) return
+      setSizes()
       width = sceneRef.current.clientWidth
       height = sceneRef.current.clientHeight
       layout()
@@ -219,9 +227,9 @@ function StickerPlayground() {
 
     return () => {
       ro.disconnect()
-      scene.removeEventListener('touchstart', m.mousedown)
-      scene.removeEventListener('touchmove', m.mousemove)
-      scene.removeEventListener('touchend', m.mouseup)
+      scene.removeEventListener('touchstart', onTouchStart)
+      scene.removeEventListener('touchmove', onTouchMove)
+      scene.removeEventListener('touchend', onTouchEnd)
       Events.off(engine, 'afterUpdate', sync)
       Runner.stop(runner)
       Composite.clear(engine.world, false)
@@ -231,10 +239,9 @@ function StickerPlayground() {
 
   return (
     <div className="playground" ref={sceneRef}>
-      {/* the bordered box (all four borders), lower portion */}
       <div className="playbox" aria-hidden />
+      <div className="about__sticker-note label">grab &amp; fling →</div>
 
-      {/* ring on the right wall — edge-on, reads as a vertical line with rim posts */}
       <div ref={ringRef} className={`ring ${active ? 'ring--on' : ''}`} aria-hidden>
         <span className="ring__cap" />
         <span className="ring__slot" />
@@ -266,7 +273,12 @@ function StickerPlayground() {
       ))}
 
       {won && (
-        <div className="game-win">
+        <div
+          className="game-win"
+          onPointerDown={(e) => e.stopPropagation()}
+          onTouchStart={(e) => e.stopPropagation()}
+          onMouseDown={(e) => e.stopPropagation()}
+        >
           <p className="game-win__big">YOU WON</p>
           <p className="game-win__sub">all {total} hobbies sunk 🎉</p>
           <button
@@ -274,6 +286,10 @@ function StickerPlayground() {
             className="btn btn--solid"
             data-cursor
             onClick={() => resetRef.current()}
+            onTouchEnd={(e) => {
+              e.preventDefault()
+              resetRef.current()
+            }}
           >
             Play again ↺
           </button>
@@ -305,7 +321,6 @@ export default function About() {
         </div>
 
         <Reveal delay={0.15} className="about__stickers-col">
-          <div className="about__sticker-note label">grab &amp; fling →</div>
           <StickerPlayground />
         </Reveal>
       </div>
