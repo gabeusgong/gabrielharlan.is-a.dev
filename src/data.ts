@@ -10,7 +10,7 @@ export const profile = {
   // rotating words in the hero ("I'm ___.")
   iAm: ['a web designer', 'a UX nerd', 'a caver', 'a keyboard builder', 'an informatics major'],
   about:
-    "I'm a senior Informatics student at Indiana University, minoring in Human-Centered Computing and Web Design. I like turning big ideas into clean, human-centered interfaces — and I sweat the details whether that's a Figma file, a line of CSS, or the keymap on a board I soldered myself. I spent the last couple years leading a campus IT support team at IU; on weekends I'm underground with the Bloomington Indiana Grotto, which is exactly how the cave field-guide app below got started.",
+    "I'm a senior Informatics student at Indiana University, minoring in Human-Centered Computing and Web Design. I like turning big ideas into clean, human-centered interfaces, and I care about building things that feel good to use, not just things that look good. I spent the last couple years leading a campus IT support team at IU; on weekends I'm underground with the Bloomington Indiana Grotto, which is exactly how the cave field-guide app below got started.",
   location: 'Bloomington, Indiana',
   status: 'open to new roles',
 }
