@@ -26,6 +26,13 @@ function StickerPlayground() {
 
   const total = hobbies.length
 
+  // once the game is revealed, mark the column so (on mobile) it expands to
+  // reserve the hidden zone and pushes the box down
+  useEffect(() => {
+    const col = sceneRef.current?.parentElement
+    col?.classList.toggle('about__stickers-col--playing', active)
+  }, [active])
+
   useEffect(() => {
     const scene = sceneRef.current
     if (!scene) return

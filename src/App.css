@@ -460,10 +460,14 @@
   transform: translateX(-50%) rotate(-4deg); /* tilts up toward the right */
   transform-origin: center;
 }
-/* when stacked, reserve the full play height so the box sits below the blurb
-   with the hidden zone (and pill) in between — no overlap with the text */
+/* when stacked: normal gap (box height only) until the game is revealed, then
+   grow to the full play height so the box slides down to reveal the hidden zone */
 @media (max-width: 860px) {
   .about__stickers-col {
+    height: var(--box-h, 400px);
+    transition: height 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .about__stickers-col--playing {
     height: var(--play-h, 620px);
   }
 }
