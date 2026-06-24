@@ -87,10 +87,10 @@ export const projects: Project[] = [
     tone: 'cobalt',
     year: '2025',
     emoji: '📦',
-    href: 'https://cgi.luddy.indiana.edu/~team43/login.php',
+    href: 'https://zion.luddy.indiana.edu/info-capstone-2026/itit',
   },
   {
-    title: 'Split Wireless Keyboard',
+    title: 'Corne 42 LP Wireless Split Keyboard',
     blurb:
       'A hand-built split, wireless, ortholinear mechanical keyboard running custom ZMK firmware — bespoke keymaps, rotary encoders, the works. Because the best tools are the ones you tune yourself.',
     tags: ['ZMK', 'Firmware', 'Hardware'],
