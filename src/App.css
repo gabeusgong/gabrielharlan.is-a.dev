@@ -374,90 +374,71 @@
   transform: rotate(4deg);
 }
 /* tall play area spanning the column; nothing clips at the top */
+/* tall play area; the box sits at the bottom and the space above it (the
+   Easter-egg zone) is open. Nothing clips at the top. */
 .playground {
   position: relative;
-  height: clamp(560px, 82vh, 780px);
+  height: clamp(780px, 92vh, 880px);
   cursor: grab;
   touch-action: none;
 }
 .playground:active {
   cursor: grabbing;
 }
-/* the bordered "box" the stickers pile into — side + bottom borders only */
+/* the bordered box — all four borders, same as before, lower 540px */
 .playbox {
   position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
-  height: 340px;
+  height: 540px;
   border: 2.5px dashed var(--ink);
-  border-top: none;
-  border-radius: 0 0 var(--r) var(--r);
+  border-radius: var(--r);
   background: rgba(255, 255, 255, 0.25);
   pointer-events: none;
 }
 
-/* basketball hoop mounted on the right wall (revealed once you fling) */
-.hoop {
-  position: absolute;
-  right: -2px;
-  width: 96px;
-  height: 66px;
-  transform: translateY(-50%) scale(0.5);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  z-index: 3;
-}
-.hoop--on {
-  opacity: 1;
-  transform: translateY(-50%) scale(1);
-}
-/* backboard flush against the wall */
-.hoop__board {
+/* ring on the right wall: edge-on, so it reads as a vertical line with rim
+   posts (caps) and a glowing slot you must thread a sticker through */
+.ring {
   position: absolute;
   right: 0;
-  top: 50%;
+  width: 18px;
   transform: translateY(-50%);
-  width: 11px;
-  height: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+  z-index: 3;
+}
+.ring--on {
+  opacity: 1;
+}
+.ring__cap {
+  width: 18px;
+  height: 7px;
+  flex: none;
   background: var(--ink);
   border-radius: 4px;
 }
-/* rim: a foreshortened ellipse sticking out from the wall (reads as 3D) */
-.hoop__rim {
-  position: absolute;
-  right: 9px;
-  top: 50%;
-  width: 78px;
-  height: 26px;
-  transform: translateY(-50%);
-  border: 5px solid var(--coral);
-  border-radius: 50%;
-  background: rgba(244, 80, 42, 0.1);
-  box-shadow: 0 0 16px rgba(244, 80, 42, 0.5);
-  animation: hoop-pulse 1.8s ease-in-out infinite;
+.ring__slot {
+  width: 5px;
+  flex: 1;
+  margin: 2px 0;
+  border-radius: 3px;
+  background: var(--cobalt);
+  box-shadow: 0 0 16px 2px var(--cobalt);
+  animation: ring-pulse 1.6s ease-in-out infinite;
 }
-/* net hanging below the rim */
-.hoop__net {
-  position: absolute;
-  right: 18px;
-  top: calc(50% - 2px);
-  width: 58px;
-  height: 30px;
-  background-image:
-    repeating-linear-gradient(72deg, transparent 0 5px, rgba(33, 27, 20, 0.45) 5px 6px),
-    repeating-linear-gradient(-72deg, transparent 0 5px, rgba(33, 27, 20, 0.45) 5px 6px);
-  clip-path: polygon(0 0, 100% 0, 80% 100%, 20% 100%);
-  opacity: 0.65;
-}
-@keyframes hoop-pulse {
+@keyframes ring-pulse {
   0%,
   100% {
-    box-shadow: 0 0 14px rgba(244, 80, 42, 0.45);
+    box-shadow: 0 0 12px 1px var(--cobalt);
   }
   50% {
-    box-shadow: 0 0 26px 6px rgba(244, 80, 42, 0.8);
+    box-shadow: 0 0 24px 5px var(--cobalt);
   }
 }
 
