@@ -220,18 +220,23 @@
 }
 .hero__rotator {
   display: inline-flex;
+  align-items: center;
+  justify-content: center;
   position: relative;
   font-family: var(--display);
   font-weight: 600;
   font-style: italic;
   color: var(--ink);
   background: var(--sun);
-  padding: 0 0.32em;
+  padding: 0.04em 0.34em 0.1em;
   border-radius: 6px;
-  overflow: hidden;
-  height: 1.2em;
-  align-items: center;
+  line-height: 1;
+  vertical-align: baseline;
   transform: rotate(-1.5deg);
+  white-space: nowrap;
+}
+.hero__rotator > span {
+  display: inline-block;
 }
 .hero__cta {
   display: flex;
