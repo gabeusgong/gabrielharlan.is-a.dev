@@ -451,14 +451,16 @@
 /* score HUD */
 .game-hud {
   position: absolute;
-  top: 0.7rem;
-  left: 0.7rem;
+  left: 0.9rem;
+  bottom: calc(var(--box-h, 540px) - 2.9rem); /* top-left, just inside the box */
   z-index: 6;
-  padding: 0.4rem 0.7rem;
+  padding: 0.4rem 0.75rem;
   background: var(--ink);
   color: var(--paper);
   border-radius: 100px;
   font-size: 0.66rem;
+  transform: rotate(-4deg); /* tilts up toward the right for a playful look */
+  transform-origin: left center;
 }
 
 /* a scored sticker fades away */
