@@ -151,8 +151,10 @@ function StickerPlayground() {
 
     const onTouchStart = (e: TouchEvent) => m.mousedown(e as unknown as Event)
     const onTouchMove = (e: TouchEvent) => {
-      // only hijack the gesture (block scroll) while actually dragging a sticker
-      if (mm.body) {
+      // only hijack the gesture (block scroll) while actually dragging a sticker.
+      // the grabbed body lives on the MouseConstraint, not the mouse.
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      if ((mc as any).body) {
         m.mousemove(e as unknown as Event)
         e.preventDefault()
       }
