@@ -41,6 +41,14 @@ Ideas for the next round of work on gabrielharlan.is-a.dev. ⭐ = highest impact
 ## Practical
 - [ ] **Privacy-friendly analytics** (e.g. Plausible) to see traffic when sharing for jobs.
 - [ ] **Real light/dark toggle** beyond cave mode.
+- [ ] **Installable PWA** — manifest + service worker ("add to home screen"). Deferred.
+- [ ] **Contact form** (e.g. Formspree) so people can message without an email client. Deferred.
+
+## Shipped 2026-06-30
+Custom 404 page · JSON-LD/SEO meta · "view source" footer · WebP case-study images
+(1 MB→~100 KB) · copy-to-clipboard email + toast · inactive-tab title egg · sticker-game
+best time (localStorage) · scroll-velocity marquee · depth gauge · idle bat · throwable cards.
+Plus coworker fixes: cursor hides on exit + no blend flicker; modal scroll containment + de-jank.
 
 ---
 
