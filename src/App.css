@@ -1227,3 +1227,32 @@
     display: none;
   }
 }
+
+/* ---------- idle surprise: a bat flutters across ---------- */
+.idlebat {
+  position: fixed;
+  top: 28vh;
+  left: -64px;
+  font-size: 2rem;
+  z-index: 70;
+  pointer-events: none;
+  will-change: transform;
+  animation: bat-fly 6s linear forwards;
+}
+@keyframes bat-fly {
+  0% {
+    transform: translate(0, 0) rotate(-8deg);
+  }
+  25% {
+    transform: translate(28vw, -9vh) rotate(8deg);
+  }
+  50% {
+    transform: translate(55vw, 5vh) rotate(-8deg);
+  }
+  75% {
+    transform: translate(82vw, -7vh) rotate(8deg);
+  }
+  100% {
+    transform: translate(114vw, 3vh) rotate(-8deg);
+  }
+}

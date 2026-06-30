@@ -9,6 +9,7 @@ import Projects from './components/Projects'
 import Contact from './components/Contact'
 import CaveMode from './components/CaveMode'
 import DepthGauge from './components/DepthGauge'
+import IdleSurprise from './components/IdleSurprise'
 
 function App() {
   const [cave, setCave] = useState(false)
@@ -34,6 +35,7 @@ function App() {
         <Contact />
       </main>
       <CaveMode active={cave} />
+      <IdleSurprise />
     </>
   )
 }
