@@ -4,9 +4,10 @@ import { projects, tones, type Project } from '../data'
 import Reveal from './Reveal'
 import CaseStudy from './CaseStudy'
 
-// throwable cards only on desktop (a fine pointer) — avoids hijacking mobile scroll
+// throwable cards on non-touch devices — disable only when the primary pointer
+// is coarse (touch), so it never hijacks mobile scrolling
 const canDrag =
-  typeof window !== 'undefined' && window.matchMedia?.('(pointer: fine)').matches === true
+  typeof window === 'undefined' || !window.matchMedia?.('(pointer: coarse)').matches
 
 function TiltCard({
   p,
