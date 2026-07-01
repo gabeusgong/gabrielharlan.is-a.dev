@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { profile } from '../data'
 import Settings from './Settings'
 
@@ -18,17 +18,68 @@ type Props = {
 
 export default function Nav({ cave, onToggleCave }: Props) {
   const [scrolled, setScrolled] = useState(false)
+  const [active, setActive] = useState('about')
+  const markRef = useRef<HTMLSpanElement>(null)
+  const clicks = useRef(0)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40)
+    onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
+  // scrollspy: highlight the section currently in view
+  useEffect(() => {
+    const ids = ['about', 'skills', 'process', 'work', 'wall', 'contact']
+    const els = ids.map((id) => document.getElementById(id)).filter(Boolean) as HTMLElement[]
+    if (!els.length) return
+    const io = new IntersectionObserver(
+      (entries) => {
+        const vis = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]
+        if (vis) {
+          // map 'process' onto the Work tab (no nav link of its own)
+          const id = vis.target.id === 'process' ? 'work' : vis.target.id
+          setActive(id)
+        }
+      },
+      { rootMargin: '-45% 0px -45% 0px' },
+    )
+    els.forEach((el) => io.observe(el))
+    return () => io.disconnect()
+  }, [])
+
+  // click the ✸ to sprinkle sparkles
+  const sparkle = (e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    clicks.current++
+    const r = markRef.current?.getBoundingClientRect()
+    const cx = r ? r.left + r.width / 2 : 40
+    const cy = r ? r.top + r.height / 2 : 40
+    const glyphs = clicks.current >= 5 ? ['🦇', '✸', '✦'] : ['✦', '✸']
+    for (let i = 0; i < (clicks.current >= 5 ? 14 : 7); i++) {
+      const s = document.createElement('span')
+      s.className = 'sparkle'
+      s.textContent = glyphs[i % glyphs.length]
+      s.style.left = `${cx}px`
+      s.style.top = `${cy}px`
+      const ang = Math.random() * Math.PI * 2
+      const dist = 30 + Math.random() * 70
+      s.style.setProperty('--dx', `${Math.cos(ang) * dist}px`)
+      s.style.setProperty('--dy', `${Math.sin(ang) * dist - 20}px`)
+      s.style.setProperty('--rot', `${Math.random() * 360 - 180}deg`)
+      document.body.appendChild(s)
+      window.setTimeout(() => s.remove(), 1000)
+    }
+  }
+
   return (
     <nav className={`nav ${scrolled ? 'nav--scrolled' : ''}`}>
       <a href="#top" className="nav__brand">
-        <span className="nav__mark" aria-hidden>
+        <span className="nav__mark" ref={markRef} onClick={sparkle} data-cursor>
           <span className="nav__mark-star">✸</span>
           <span className="nav__mark-bat">🦇</span>
         </span>
@@ -43,7 +94,9 @@ export default function Nav({ cave, onToggleCave }: Props) {
       <ul className="nav__links">
         {sections.map((s) => (
           <li key={s.id}>
-            <a href={s.href ?? `#${s.id}`}>{s.label}</a>
+            <a href={s.href ?? `#${s.id}`} className={active === s.id ? 'is-active' : ''}>
+              {s.label}
+            </a>
           </li>
         ))}
       </ul>

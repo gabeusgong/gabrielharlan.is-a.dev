@@ -43,6 +43,12 @@ export default function Contact() {
         </h2>
       </Reveal>
 
+      <Reveal delay={0.08}>
+        <p className="contact__avail">
+          <span className="contact__avail-dot" /> {profile.availability}
+        </p>
+      </Reveal>
+
       <ContactForm />
 
       <Reveal delay={0.12}>

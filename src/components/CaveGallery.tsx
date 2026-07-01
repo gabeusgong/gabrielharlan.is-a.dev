@@ -100,7 +100,13 @@ export default function CaveGallery() {
 
         <Reveal delay={0.14}>
           <figure className="caves__feature">
-            <img src={FEATURED.src} alt={FEATURED.alt} loading="lazy" />
+            <img
+              src={FEATURED.src}
+              srcSet={`${FEATURED.src.replace('.webp', '-sm.webp')} 640w, ${FEATURED.src} 1280w`}
+              sizes="(max-width: 680px) 92vw, 620px"
+              alt={FEATURED.alt}
+              loading="lazy"
+            />
             <figcaption>{FEATURED.alt}.</figcaption>
           </figure>
         </Reveal>
@@ -115,7 +121,13 @@ export default function CaveGallery() {
               onClick={() => setIdx(i)}
               aria-label={`Open photo: ${p.alt}`}
             >
-              <img src={p.src} alt={p.alt} loading="lazy" />
+              <img
+                src={p.src}
+                srcSet={`${p.src.replace('.webp', '-sm.webp')} 640w, ${p.src} 1280w`}
+                sizes="(max-width: 640px) 45vw, 240px"
+                alt={p.alt}
+                loading="lazy"
+              />
             </button>
           ))}
         </div>

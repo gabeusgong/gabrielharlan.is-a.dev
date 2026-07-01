@@ -14,6 +14,7 @@ import {
 import { db } from '../lib/firebase'
 import { tones } from '../data'
 import Reveal from './Reveal'
+import { isClean, mask } from '../lib/profanity'
 
 const COLORS = ['coral', 'cobalt', 'lime', 'pink', 'sun'] as const
 type ColorKey = (typeof COLORS)[number]
@@ -33,6 +34,7 @@ export default function Wall() {
   const [text, setText] = useState('')
   const [num, setNum] = useState<number | null>(null)
   const [busy, setBusy] = useState(false)
+  const [blocked, setBlocked] = useState(false)
   const nextColor = useRef(0)
 
   // live wall
@@ -47,7 +49,8 @@ export default function Wall() {
             const color = (COLORS as readonly string[]).includes(data.color)
               ? (data.color as ColorKey)
               : 'sun'
-            return { id: d.id, text: String(data.text ?? ''), color }
+            // mask anything unsavory that slipped in, so it never shows to visitors
+            return { id: d.id, text: mask(String(data.text ?? '')), color }
           }),
         )
       },
@@ -84,6 +87,11 @@ export default function Wall() {
     e.preventDefault()
     const t = text.trim().slice(0, MAX)
     if (!t || busy) return
+    if (!isClean(t)) {
+      setBlocked(true)
+      window.setTimeout(() => setBlocked(false), 3000)
+      return
+    }
     setBusy(true)
     const color = COLORS[nextColor.current++ % COLORS.length]
     try {
@@ -134,6 +142,7 @@ export default function Wall() {
             stick it →
           </button>
         </form>
+        {blocked && <p className="wall__blocked label">let&apos;s keep it friendly ✌️</p>}
       </Reveal>
 
       <div className="wall__board">
