@@ -104,12 +104,10 @@ export default function Contact() {
       </Reveal>
 
       <footer className="footer">
-        <span className="label">
-          © {profile.name} · built with care, thanks for scrolling ·{' '}
-          <a href={REPO} target="_blank" rel="noreferrer" className="footer__src" data-cursor>
-            view source
-          </a>
-        </span>
+        <span className="label">© {profile.name} · built with care, thanks for scrolling</span>
+        <a href={REPO} target="_blank" rel="noreferrer" className="footer__src label" data-cursor>
+          view source ↗
+        </a>
       </footer>
 
       <AnimatePresence>
