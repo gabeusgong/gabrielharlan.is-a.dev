@@ -7,7 +7,7 @@ Ideas for the next round of work on gabrielharlan.is-a.dev. ⭐ = highest impact
       keyboard** (interactive Base/Lower/Raise keymap diagram built from the real `goozmk-config1`
       ZMK config; links the public repo) both have full case-study modals. CaseStudy.tsx is now
       data-driven (karst / itit / corne). All three projects now tell a full story.
-- [ ] **Process / "how I work" beat** — a couple of wireframe→final shots or a short
+- [x] **Process / "how I work" beat** — a couple of wireframe→final shots or a short
       blurb on the design loop. Show the UX thinking, not just the result.
 - [ ] **A testimonial** — one short quote from a professor, teammate, or the IT-team lead.
 

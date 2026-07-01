@@ -28,7 +28,7 @@ export default function Contact() {
     <section className="section contact" id="contact">
       <Reveal>
         <p className="label">
-          <span className="tick">05</span> / let&apos;s talk
+          <span className="tick">06</span> / let&apos;s talk
         </p>
       </Reveal>
 

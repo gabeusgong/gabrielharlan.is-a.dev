@@ -2450,3 +2450,73 @@
   transform: translate(-1px, -1px);
   background: var(--lime);
 }
+
+/* ---------- how I work (process) ---------- */
+.process__heading {
+  font-size: clamp(2.2rem, 6vw, 4.2rem);
+  margin-top: 0.6rem;
+}
+.process__word {
+  font-style: italic;
+  color: var(--coral);
+}
+.process__intro {
+  margin-top: 0.9rem;
+  max-width: 58ch;
+  color: var(--ink-soft);
+  font-size: 1.02rem;
+}
+.process__steps {
+  margin-top: 2.2rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.2rem;
+}
+@media (max-width: 900px) {
+  .process__steps {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 560px) {
+  .process__steps {
+    grid-template-columns: 1fr;
+  }
+}
+.process__step {
+  position: relative;
+  padding: 1.5rem 1.3rem 1.6rem;
+  background: var(--paper);
+  border: var(--border-ink);
+  border-radius: 16px;
+  box-shadow: var(--shadow-hard);
+}
+.process__no {
+  color: var(--ink-soft);
+}
+.process__emoji {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.7rem;
+  height: 2.7rem;
+  font-size: 1.4rem;
+  margin: 0.7rem 0 0.4rem;
+  border: 2px solid var(--ink);
+  border-radius: 12px;
+  box-shadow: 2px 2px 0 var(--ink);
+}
+.process__step-title {
+  font-family: var(--display);
+  font-size: 1.35rem;
+  margin: 0.3rem 0 0.5rem;
+}
+.process__step-text {
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+  line-height: 1.55;
+  margin: 0;
+}
+.process__loop {
+  margin-top: 1.6rem;
+  color: var(--ink-soft);
+}

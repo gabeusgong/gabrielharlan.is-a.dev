@@ -111,7 +111,7 @@ export default function Projects() {
       <div className="work__head">
         <Reveal>
           <p className="label">
-            <span className="tick">03</span> / selected work
+            <span className="tick">04</span> / selected work
           </p>
         </Reveal>
         <Reveal delay={0.05}>
