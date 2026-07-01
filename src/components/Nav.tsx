@@ -6,9 +6,9 @@ const sections = [
   { id: 'about', label: 'About' },
   { id: 'skills', label: 'Skills' },
   { id: 'work', label: 'Work' },
-  { id: 'caves', label: 'Caves', href: '#/caves' },
   { id: 'wall', label: 'Wall' },
   { id: 'contact', label: 'Say hi' },
+  { id: 'caves', label: 'Caves', href: '#/caves' },
 ]
 
 type Props = {

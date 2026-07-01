@@ -34,36 +34,41 @@ export default function Achievements() {
     }
     window.addEventListener('keydown', onKey)
 
-    // mobile Konami: swipe ↑↑↓↓←→←→ (taps/small moves are ignored, so stray
-    // touches never break the sequence)
+    // mobile Konami: swipe ↑↑↓↓←→←→. Direction is committed on touchmove (once
+    // per gesture) because a scrolling swipe fires touchcancel, not touchend —
+    // touchmove still fires on a passive listener even while the page scrolls.
     const SWIPES = ['up', 'up', 'down', 'down', 'left', 'right', 'left', 'right']
     let tSeq: string[] = []
     let sx = 0
     let sy = 0
+    let recorded = false
     const onTS = (e: TouchEvent) => {
       const t = e.changedTouches[0]
       sx = t.clientX
       sy = t.clientY
+      recorded = false
     }
-    const onTE = (e: TouchEvent) => {
+    const onTM = (e: TouchEvent) => {
+      if (recorded) return
       const t = e.changedTouches[0]
       const dx = t.clientX - sx
       const dy = t.clientY - sy
       const adx = Math.abs(dx)
       const ady = Math.abs(dy)
-      if (adx < 28 && ady < 28) return // ignore taps — only swipes count
+      if (adx < 30 && ady < 30) return // wait for a clear swipe
+      recorded = true
       const tok = ady > adx ? (dy < 0 ? 'up' : 'down') : dx < 0 ? 'left' : 'right'
       tSeq = [...tSeq, tok].slice(-SWIPES.length)
       if (SWIPES.every((k, i) => k === tSeq[i])) unlock('konami')
     }
     window.addEventListener('touchstart', onTS, { passive: true })
-    window.addEventListener('touchend', onTE, { passive: true })
+    window.addEventListener('touchmove', onTM, { passive: true })
 
     return () => {
       window.removeEventListener('secret-unlocked', onUnlock)
       window.removeEventListener('keydown', onKey)
       window.removeEventListener('touchstart', onTS)
-      window.removeEventListener('touchend', onTE)
+      window.removeEventListener('touchmove', onTM)
     }
   }, [])
 
