@@ -34,41 +34,46 @@ export default function Achievements() {
     }
     window.addEventListener('keydown', onKey)
 
-    // mobile Konami: swipe ↑↑↓↓←→←→. Direction is committed on touchmove (once
-    // per gesture) because a scrolling swipe fires touchcancel, not touchend —
-    // touchmove still fires on a passive listener even while the page scrolls.
+    // mobile Konami: swipe ↑↑↓↓←→←→. Committed once per gesture on whichever of
+    // touchmove / touchend / touchcancel first shows a clear displacement — a
+    // scrolling swipe may end in any of those, so we listen for all three.
     const SWIPES = ['up', 'up', 'down', 'down', 'left', 'right', 'left', 'right']
     let tSeq: string[] = []
     let sx = 0
     let sy = 0
     let recorded = false
+    const record = (dx: number, dy: number) => {
+      if (recorded) return
+      const adx = Math.abs(dx)
+      const ady = Math.abs(dy)
+      if (adx < 24 && ady < 24) return // not a swipe yet
+      recorded = true
+      const tok = ady > adx ? (dy < 0 ? 'up' : 'down') : dx < 0 ? 'left' : 'right'
+      tSeq = [...tSeq, tok].slice(-SWIPES.length)
+      if (SWIPES.every((k, i) => k === tSeq[i])) unlock('konami')
+    }
     const onTS = (e: TouchEvent) => {
       const t = e.changedTouches[0]
       sx = t.clientX
       sy = t.clientY
       recorded = false
     }
-    const onTM = (e: TouchEvent) => {
-      if (recorded) return
+    const onMove = (e: TouchEvent) => {
       const t = e.changedTouches[0]
-      const dx = t.clientX - sx
-      const dy = t.clientY - sy
-      const adx = Math.abs(dx)
-      const ady = Math.abs(dy)
-      if (adx < 30 && ady < 30) return // wait for a clear swipe
-      recorded = true
-      const tok = ady > adx ? (dy < 0 ? 'up' : 'down') : dx < 0 ? 'left' : 'right'
-      tSeq = [...tSeq, tok].slice(-SWIPES.length)
-      if (SWIPES.every((k, i) => k === tSeq[i])) unlock('konami')
+      record(t.clientX - sx, t.clientY - sy)
     }
     window.addEventListener('touchstart', onTS, { passive: true })
-    window.addEventListener('touchmove', onTM, { passive: true })
+    window.addEventListener('touchmove', onMove, { passive: true })
+    window.addEventListener('touchend', onMove, { passive: true })
+    window.addEventListener('touchcancel', onMove, { passive: true })
 
     return () => {
       window.removeEventListener('secret-unlocked', onUnlock)
       window.removeEventListener('keydown', onKey)
       window.removeEventListener('touchstart', onTS)
-      window.removeEventListener('touchmove', onTM)
+      window.removeEventListener('touchmove', onMove)
+      window.removeEventListener('touchend', onMove)
+      window.removeEventListener('touchcancel', onMove)
     }
   }, [])
 
