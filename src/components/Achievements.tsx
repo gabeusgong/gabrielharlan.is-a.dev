@@ -107,7 +107,7 @@ export default function Achievements() {
           className="achv__toggle"
           data-cursor
           onClick={() => setOpen((o) => !o)}
-          aria-label={`Secrets found: ${count} of ${total}`}
+          aria-label={`${count}/${total} secrets found`}
         >
           🗝 {count}/{total}
         </button>

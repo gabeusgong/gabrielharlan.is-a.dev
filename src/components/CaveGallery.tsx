@@ -73,13 +73,6 @@ export default function CaveGallery() {
 
   return (
     <div className="cavespage" id="caves">
-      <header className="cavespage__bar">
-        <a href="#top" className="cavespage__back" data-cursor>
-          ← Gabriel Harlan
-        </a>
-        <span className="label cavespage__tag">photo log</span>
-      </header>
-
       <div className="cavespage__inner section">
         <Reveal>
           <p className="label">
@@ -105,6 +98,8 @@ export default function CaveGallery() {
               srcSet={`${FEATURED.src.replace('.webp', '-sm.webp')} 640w, ${FEATURED.src} 1280w`}
               sizes="(max-width: 680px) 92vw, 620px"
               alt={FEATURED.alt}
+              width={1400}
+              height={1867}
               loading="lazy"
             />
             <figcaption>{FEATURED.alt}.</figcaption>

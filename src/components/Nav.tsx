@@ -15,9 +15,10 @@ const sections = [
 type Props = {
   cave: boolean
   onToggleCave: () => void
+  route?: string
 }
 
-export default function Nav({ cave, onToggleCave }: Props) {
+export default function Nav({ cave, onToggleCave, route }: Props) {
   const [scrolled, setScrolled] = useState(false)
   const [active, setActive] = useState('about')
   const markRef = useRef<HTMLSpanElement>(null)
@@ -110,13 +111,16 @@ export default function Nav({ cave, onToggleCave }: Props) {
       </span>
 
       <ul className="nav__links">
-        {sections.map((s) => (
-          <li key={s.id}>
-            <a href={s.href ?? `#${s.id}`} className={active === s.id ? 'is-active' : ''}>
-              {s.label}
-            </a>
-          </li>
-        ))}
+        {sections.map((s) => {
+          const activeId = route === 'caves' ? 'caves' : active
+          return (
+            <li key={s.id}>
+              <a href={s.href ?? `#${s.id}`} className={activeId === s.id ? 'is-active' : ''}>
+                {s.label}
+              </a>
+            </li>
+          )
+        })}
       </ul>
 
       <div className="nav__controls">

@@ -50,7 +50,13 @@ export default function About() {
           </Reveal>
           <Reveal delay={0.1}>
             <figure className="about__portrait">
-              <img src={`${base}portrait.webp`} alt="Gabriel Harlan" loading="lazy" />
+              <img
+                src={`${base}portrait.webp`}
+                alt="Gabriel Harlan"
+                width={900}
+                height={1200}
+                loading="lazy"
+              />
               <figcaption>the culprit, off the clock</figcaption>
             </figure>
           </Reveal>

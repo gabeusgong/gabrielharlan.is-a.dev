@@ -102,16 +102,7 @@ function App() {
     }
   }, [])
 
-  if (route === 'caves') {
-    return (
-      <MotionConfig reducedMotion="never">
-        <Cursor />
-        <Suspense fallback={null}>
-          <CaveGallery />
-        </Suspense>
-      </MotionConfig>
-    )
-  }
+  const onCaves = route === 'caves'
 
   return (
     <MotionConfig reducedMotion="never">
@@ -120,19 +111,25 @@ function App() {
       </a>
       <Cursor />
       <DepthGauge />
-      <Nav cave={cave} onToggleCave={toggleCave} />
-      <main id="main" tabIndex={-1}>
-        <Hero />
-        <About />
-        <Skills />
-        <Process />
-        <Projects />
+      <Nav cave={cave} onToggleCave={toggleCave} route={route} />
+      {onCaves ? (
         <Suspense fallback={null}>
-          <Wall />
+          <CaveGallery />
         </Suspense>
-        <Testimonials />
-        <Contact />
-      </main>
+      ) : (
+        <main id="main" tabIndex={-1}>
+          <Hero />
+          <About />
+          <Skills />
+          <Process />
+          <Projects />
+          <Suspense fallback={null}>
+            <Wall />
+          </Suspense>
+          <Testimonials />
+          <Contact />
+        </main>
+      )}
       <CaveMode active={cave} />
       <IdleSurprise />
       <Achievements />
