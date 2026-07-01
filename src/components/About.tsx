@@ -2,6 +2,8 @@ import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import { profile, hobbies } from '../data'
 import Reveal from './Reveal'
 
+const base = import.meta.env.BASE_URL
+
 // matter-js is heavy — load the physics playground (and the engine) in its own
 // chunk, only once the About section scrolls near. The column has a fixed CSS
 // height, so mounting later causes no layout shift.
@@ -45,6 +47,12 @@ export default function About() {
               Hi — I&apos;m Gabe.
               <span className="about__wink"> Nice to meet you.</span>
             </h2>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <figure className="about__portrait">
+              <img src={`${base}portrait.webp`} alt="Gabriel Harlan" loading="lazy" />
+              <figcaption>the culprit, off the clock</figcaption>
+            </figure>
           </Reveal>
           <Reveal delay={0.12}>
             <p className="about__body">{profile.about}</p>

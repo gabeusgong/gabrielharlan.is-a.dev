@@ -11,6 +11,8 @@ import Contact from './components/Contact'
 
 // lazy so Firebase ships in its own chunk, not the initial bundle
 const Wall = lazy(() => import('./components/Wall'))
+// lazy so the cave photos load only when the gallery is reached
+const CaveGallery = lazy(() => import('./components/CaveGallery'))
 import CaveMode from './components/CaveMode'
 import DepthGauge from './components/DepthGauge'
 import IdleSurprise from './components/IdleSurprise'
@@ -60,6 +62,9 @@ function App() {
         <About />
         <Skills />
         <Projects />
+        <Suspense fallback={null}>
+          <CaveGallery />
+        </Suspense>
         <Suspense fallback={null}>
           <Wall />
         </Suspense>

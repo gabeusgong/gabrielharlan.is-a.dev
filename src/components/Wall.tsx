@@ -100,7 +100,7 @@ export default function Wall() {
     <section className="section wall" id="wall">
       <Reveal>
         <p className="label">
-          <span className="tick">04</span> / the wall
+          <span className="tick">05</span> / the wall
         </p>
       </Reveal>
       <Reveal delay={0.05}>

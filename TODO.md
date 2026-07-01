@@ -58,7 +58,9 @@ Ideas for the next round of work on gabrielharlan.is-a.dev. ⭐ = highest impact
 - [~] **Deepen cave mode** — ✅ faint synthesized water-drip ambience (Web Audio, echo via feedback
       delay) while underground. (The headlamp-trailing bat was removed.) Still open: a mute toggle;
       depth-gauge recolor in-theme.
-- [ ] **Real cave photos** — a small atmospheric gallery from the Bloomington Indiana Grotto. (skipped for now)
+- [x] **Real cave photos** — ✅ "Underground" gallery section: featured hero shot + 23-photo masonry
+      grid with a keyboard-navigable lightbox (`CaveGallery.tsx`, lazy-loaded; `public/caves/*.webp`).
+      Plus a portrait polaroid in the About intro (`public/portrait.webp`).
 - [ ] **`/` command palette / fake terminal** — jump to sections or run `whoami` / `ls projects`.
 - [ ] **Now-playing chip** — Last.fm / Spotify "currently listening" for a living, personal touch.
 - [ ] **Blob parallax / gyro tilt** — hero blobs drift with the mouse (desktop) or phone tilt (gyro).
