@@ -319,7 +319,7 @@ const STUDIES: Record<string, Study> = {
       { label: 'Runs', value: 'ZMK · nice!nano v2 · BLE' },
     ],
     live: {
-      href: 'https://github.com/gabeusgong/goozmk-config1',
+      href: 'https://github.com/gabeusgong/zmk-config',
       label: 'See the ZMK config →',
     },
     problem: (
