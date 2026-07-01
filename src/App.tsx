@@ -20,38 +20,25 @@ import Achievements from './components/Achievements'
 import Terminal from './components/Terminal'
 import NowPlaying from './components/NowPlaying'
 import { unlock } from './lib/achievements'
-import { apply as applyPrefs, getMotion } from './lib/prefs'
+import { apply as applyPrefs } from './lib/prefs'
 
 const getRoute = () =>
   typeof window !== 'undefined' && window.location.hash === '#/caves' ? 'caves' : 'home'
 
-const motionMode = (): 'always' | 'never' | 'user' => {
-  const m = getMotion()
-  return m === 'reduced' ? 'always' : m === 'full' ? 'never' : 'user'
-}
-
 function App() {
   const [cave, setCave] = useState(false)
   const [route, setRoute] = useState(getRoute)
-  const [reducedMotion, setReducedMotion] = useState(motionMode)
 
-  // keep theme/motion attributes + MotionConfig in sync with prefs and the OS
+  // keep the theme attribute in sync with the pref and the OS
   useEffect(() => {
     applyPrefs()
-    const onPref = () => setReducedMotion(motionMode())
+    const onPref = () => applyPrefs()
     window.addEventListener('pref-change', onPref)
     const dark = window.matchMedia('(prefers-color-scheme: dark)')
-    const red = window.matchMedia('(prefers-reduced-motion: reduce)')
-    const onOS = () => {
-      applyPrefs()
-      setReducedMotion(motionMode())
-    }
-    dark.addEventListener?.('change', onOS)
-    red.addEventListener?.('change', onOS)
+    dark.addEventListener?.('change', applyPrefs)
     return () => {
       window.removeEventListener('pref-change', onPref)
-      dark.removeEventListener?.('change', onOS)
-      red.removeEventListener?.('change', onOS)
+      dark.removeEventListener?.('change', applyPrefs)
     }
   }, [])
 
@@ -109,7 +96,7 @@ function App() {
 
   if (route === 'caves') {
     return (
-      <MotionConfig reducedMotion={reducedMotion}>
+      <MotionConfig reducedMotion="never">
         <Cursor />
         <Suspense fallback={null}>
           <CaveGallery />
@@ -119,7 +106,7 @@ function App() {
   }
 
   return (
-    <MotionConfig reducedMotion={reducedMotion}>
+    <MotionConfig reducedMotion="never">
       <a href="#main" className="skip-link">
         Skip to content
       </a>

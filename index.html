@@ -5,19 +5,13 @@
     <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- apply theme/motion before paint to avoid a flash -->
+    <!-- apply theme before paint to avoid a flash -->
     <script>
       (function () {
         try {
-          var d = document.documentElement,
-            t = localStorage.getItem('gh-theme'),
-            m = localStorage.getItem('gh-motion')
-          d.dataset.theme =
+          var t = localStorage.getItem('gh-theme')
+          document.documentElement.dataset.theme =
             (t ? t === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light'
-          d.dataset.motion =
-            (m ? m === 'reduced' : matchMedia('(prefers-reduced-motion: reduce)').matches)
-              ? 'reduced'
-              : 'full'
         } catch (e) {}
       })()
     </script>

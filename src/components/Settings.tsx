@@ -1,12 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import {
-  resolvedDark,
-  setTheme,
-  resolvedReduced,
-  setMotion,
-  isMuted,
-  setMuted,
-} from '../lib/prefs'
+import { resolvedDark, setTheme, isMuted, setMuted } from '../lib/prefs'
 
 /* Small preferences popover in the nav: light/dark theme, motion, and sound.
    Each control flips to an explicit value (default follows the OS until touched). */
@@ -34,7 +27,6 @@ export default function Settings() {
   }, [])
 
   const dark = resolvedDark()
-  const reduced = resolvedReduced()
   const muted = isMuted()
 
   return (
@@ -61,17 +53,6 @@ export default function Settings() {
             <span className="settings__ico">{dark ? '🌙' : '☀️'}</span>
             Theme
             <span className="settings__val">{dark ? 'Dark' : 'Light'}</span>
-          </button>
-          <button
-            className="settings__row"
-            role="menuitemcheckbox"
-            aria-checked={!reduced}
-            onClick={() => setMotion(reduced ? 'full' : 'reduced')}
-            data-cursor
-          >
-            <span className="settings__ico">{reduced ? '⏸️' : '🌀'}</span>
-            Motion
-            <span className="settings__val">{reduced ? 'Reduced' : 'Full'}</span>
           </button>
           <button
             className="settings__row"

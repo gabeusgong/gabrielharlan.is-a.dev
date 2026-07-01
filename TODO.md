@@ -15,7 +15,7 @@ Ideas for the next round of work on gabrielharlan.is-a.dev. ⭐ = highest impact
 - [x] ⭐ **Accessibility pass**
   - [x] Visible `:focus-visible` focus ring site-wide (amber in cave mode)
   - [x] Skip-to-content link; `<main>` landmark
-  - [x] `prefers-reduced-motion` + in-site Motion toggle (Settings) + static marquee
+  - [—] Reduced-motion mode removed per request (caused a flicker in the sticker game); animations always play now
   - [x] Allow pinch-zoom (removed `user-scalable=no` / `maximum-scale`)
   - [x] Screen-reader hobbies list; polite live region for unlock toasts
   - [x] Keyboard-operable sticker game — stickers focusable; arrow keys / space fling them
@@ -67,7 +67,7 @@ Ideas for the next round of work on gabrielharlan.is-a.dev. ⭐ = highest impact
 - [x] **Blob parallax / gyro tilt** — hero blobs drift with the mouse (desktop) or phone tilt (gyro).
 - [x] **Time-aware greeting** — hero eyebrow greets by the visitor's local hour; "welcome back"
       for returning visitors (localStorage).
-- [x] **Chaos / motion dial** — let visitors turn the animation intensity up or down (fun + a11y).
+- [—] **Chaos / motion dial** — removed along with reduced-motion mode (per request).
 - [ ] **Animated nav mark** — the ✸ flaps into a bat on hover.
 - [x] **Visitor count** — "you're explorer #N" (shipped with the Firebase wall).
 - [ ] **First-visit intro** — a brief headlamp-on "descent" before the hero (optional; mind load friction).

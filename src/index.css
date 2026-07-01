@@ -177,25 +177,6 @@ main:focus {
   }
 }
 
-/* reduce motion */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.001ms !important;
-    transition-duration: 0.001ms !important;
-    scroll-behavior: auto !important;
-  }
-}
-/* manual "reduced motion" preference (Settings) mirrors the media query */
-:root[data-motion='reduced'] *,
-:root[data-motion='reduced'] *::before,
-:root[data-motion='reduced'] *::after {
-  animation-duration: 0.001ms !important;
-  transition-duration: 0.001ms !important;
-  scroll-behavior: auto !important;
-}
-
 /* ---- dark theme (Settings toggle / OS preference) ---- */
 :root[data-theme='dark'] {
   --paper: #1a150e; /* warm near-black */

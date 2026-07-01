@@ -1,7 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'motion/react'
 import { profile } from '../data'
-import { resolvedReduced } from '../lib/prefs'
 
 const container = {
   hidden: {},
@@ -128,7 +127,6 @@ export default function Hero() {
   const limeY = useTransform(sy, [-1, 1], [18, -18])
 
   useEffect(() => {
-    if (resolvedReduced()) return
     if (window.matchMedia?.('(pointer: coarse)').matches) {
       const onTilt = (e: DeviceOrientationEvent) => {
         if (e.gamma == null || e.beta == null) return

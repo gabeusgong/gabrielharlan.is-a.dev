@@ -16,8 +16,12 @@
   z-index: 9999;
 }
 @media (pointer: fine) {
-  * {
-    cursor: none;
+  /* custom cursor everywhere — !important beats per-element cursor:pointer so the
+     native arrow never shows on top of the blob (settings, lamp, minimize, etc.) */
+  *,
+  *::before,
+  *::after {
+    cursor: none !important;
   }
 }
 
@@ -167,6 +171,22 @@
 }
 .nav__links a:hover::after {
   transform: scaleX(1);
+}
+/* between mobile and full desktop: absolute-centering would overlap the status
+   pill, so put the tabs back in flow, right-aligned against the controls */
+@media (min-width: 721px) and (max-width: 1200px) {
+  .nav__links {
+    position: static;
+    transform: none;
+    left: auto;
+    margin-left: auto;
+  }
+}
+/* when it gets tight, drop the status pill so the tabs still fit without clipping */
+@media (min-width: 721px) and (max-width: 940px) {
+  .nav__status {
+    display: none;
+  }
 }
 @media (max-width: 720px) {
   .nav__status,
@@ -458,7 +478,7 @@
   position: absolute;
   left: 0;
   /* centered on the box's left border, just above the top border with margin */
-  bottom: calc(var(--box-h, 540px) + 0.7rem + 30px);
+  bottom: calc(var(--box-h, 540px) + 0.7rem + 60px);
   z-index: 6;
   padding: 0.42rem 0.8rem;
   background: var(--ink);
@@ -484,6 +504,14 @@
   }
   .about__stickers-col--playing {
     height: var(--play-h, 620px);
+  }
+}
+/* single-column desktop (721–860px): the box's left border is near the screen
+   edge, so drop the translateX(-50%) that would push the pill half off-screen */
+@media (min-width: 721px) and (max-width: 860px) {
+  .game-hud {
+    transform: rotate(-4deg);
+    transform-origin: left center;
   }
 }
 @media (max-width: 720px) {

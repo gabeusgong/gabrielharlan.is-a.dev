@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
-import { setTheme, setMotion, setMuted, resolvedDark } from '../lib/prefs'
+import { setTheme, setMuted, resolvedDark } from '../lib/prefs'
 import { unlock } from '../lib/achievements'
 
 type Line = { kind: 'in' | 'out'; text: string }
@@ -25,7 +25,6 @@ const HELP = [
   '  open <section>    jump to a section (about, work, wall, contact…)',
   '  caves             open the cave photo gallery',
   '  theme <dark|light>   switch theme',
-  '  motion <on|off>   animation on/off',
   '  mute / unmute     toggle sound',
   '  cave              toggle cave mode',
   '  resume            open my résumé',
@@ -126,15 +125,6 @@ export default function Terminal({ onToggleCave }: { onToggleCave: () => void })
         } else {
           setTheme(resolvedDark() ? 'light' : 'dark')
           print([`theme → ${resolvedDark() ? 'light' : 'dark'}`])
-        }
-        break
-      case 'motion':
-        if (arg === 'off' || arg === 'reduced') {
-          setMotion('reduced')
-          print(['motion → reduced'])
-        } else {
-          setMotion('full')
-          print(['motion → full'])
         }
         break
       case 'mute':
