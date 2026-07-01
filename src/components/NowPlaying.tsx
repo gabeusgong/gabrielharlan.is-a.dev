@@ -12,9 +12,11 @@ export default function NowPlaying() {
   const [track, setTrack] = useState<Track | null>(null)
   const [min, setMin] = useState(() => {
     try {
-      return localStorage.getItem(MIN_KEY) === '1'
+      // start minimized unless the visitor has chosen otherwise
+      const v = localStorage.getItem(MIN_KEY)
+      return v === null ? true : v === '1'
     } catch {
-      return false
+      return true
     }
   })
 
