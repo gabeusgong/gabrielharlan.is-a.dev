@@ -126,3 +126,8 @@ export const links = {
   linkedin: 'https://linkedin.com/in/gbharlan',
   twitter: '',
 }
+
+// Add quotes here (with the person's permission) and the "Kind words" section
+// appears automatically. Leave empty to hide it.
+export type Testimonial = { quote: string; name: string; role: string }
+export const testimonials: Testimonial[] = []

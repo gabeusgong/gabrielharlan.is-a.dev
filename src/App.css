@@ -2520,3 +2520,60 @@
   margin-top: 1.6rem;
   color: var(--ink-soft);
 }
+
+/* ---------- testimonials ("kind words") ---------- */
+.kudos__heading {
+  font-size: clamp(2.2rem, 6vw, 4.2rem);
+  margin-top: 0.6rem;
+}
+.kudos__word {
+  font-style: italic;
+  color: var(--cobalt);
+}
+.kudos__grid {
+  margin-top: 2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.4rem;
+}
+.kudos__card {
+  position: relative;
+  padding: 1.8rem 1.6rem 1.5rem;
+  background: var(--paper);
+  border: var(--border-ink);
+  border-radius: 16px;
+  box-shadow: var(--shadow-hard);
+}
+.kudos__card::before {
+  content: '\201C';
+  position: absolute;
+  top: -0.35em;
+  left: 0.5rem;
+  font-family: var(--display);
+  font-size: 4rem;
+  line-height: 1;
+  color: var(--sun);
+}
+.kudos__quote {
+  position: relative;
+  font-family: var(--display);
+  font-size: 1.15rem;
+  line-height: 1.5;
+  color: var(--ink);
+  margin: 0 0 1.1rem;
+}
+.kudos__by {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  font-size: 0.85rem;
+}
+.kudos__by strong {
+  color: var(--ink);
+}
+.kudos__by span {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+}

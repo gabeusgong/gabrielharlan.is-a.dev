@@ -9,6 +9,7 @@ import Skills from './components/Skills'
 import Process from './components/Process'
 import Projects from './components/Projects'
 import Contact from './components/Contact'
+import Testimonials from './components/Testimonials'
 
 // lazy so Firebase ships in its own chunk, not the initial bundle
 const Wall = lazy(() => import('./components/Wall'))
@@ -123,6 +124,7 @@ function App() {
         <Suspense fallback={null}>
           <Wall />
         </Suspense>
+        <Testimonials />
         <Contact />
       </main>
       <CaveMode active={cave} />
