@@ -137,4 +137,10 @@ export const testimonials: Testimonial[] = [
     name: 'Wesley Clifford',
     role: 'IT Coordinator · IU Support Center (SCIPS)',
   },
+  {
+    quote:
+      'Gabe is doing fantastic in class. He is perpetually ahead of the rest of the class — I have had to find him extra projects to work on… He is truly a self-starter and a very driven person that all the other students look to for advice and help.',
+    name: 'Anthony Lincoln',
+    role: 'Computer Information Systems Instructor · ACATEC',
+  },
 ]
