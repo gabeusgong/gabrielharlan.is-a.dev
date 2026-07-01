@@ -1825,6 +1825,7 @@
 }
 .about__portrait img {
   width: 100%;
+  height: auto;
   display: block;
 }
 .about__portrait figcaption {
@@ -1871,6 +1872,7 @@
 }
 .caves__feature img {
   width: 100%;
+  height: auto;
   display: block;
 }
 .caves__feature figcaption {
