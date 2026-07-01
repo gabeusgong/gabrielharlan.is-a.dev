@@ -96,7 +96,7 @@ export default function Contact() {
 
       <footer className="footer">
         <span className="label">
-          © {profile.name} · built by hand, thanks for scrolling ·{' '}
+          © {profile.name} · built with care, thanks for scrolling ·{' '}
           <a href={REPO} target="_blank" rel="noreferrer" className="footer__src" data-cursor>
             view source
           </a>
