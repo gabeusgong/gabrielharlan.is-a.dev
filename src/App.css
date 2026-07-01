@@ -2533,9 +2533,15 @@
 .kudos__grid {
   margin-top: 2rem;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 460px));
-  justify-content: start;
+  /* equal columns that fill the container and grow/shrink with the screen */
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 1.4rem;
+}
+/* stack on mobile */
+@media (max-width: 720px) {
+  .kudos__grid {
+    grid-template-columns: 1fr;
+  }
 }
 .kudos__card {
   position: relative;
