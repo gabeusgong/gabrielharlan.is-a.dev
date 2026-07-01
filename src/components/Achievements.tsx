@@ -34,9 +34,37 @@ export default function Achievements() {
     }
     window.addEventListener('keydown', onKey)
 
+    // mobile Konami: swipe ↑↑↓↓←→←→ then two taps
+    const TOUCH_SEQ = ['up', 'up', 'down', 'down', 'left', 'right', 'left', 'right', 'tap', 'tap']
+    let tSeq: string[] = []
+    let sx = 0
+    let sy = 0
+    const onTS = (e: TouchEvent) => {
+      const t = e.changedTouches[0]
+      sx = t.clientX
+      sy = t.clientY
+    }
+    const onTE = (e: TouchEvent) => {
+      const t = e.changedTouches[0]
+      const dx = t.clientX - sx
+      const dy = t.clientY - sy
+      const adx = Math.abs(dx)
+      const ady = Math.abs(dy)
+      let tok: string
+      if (adx < 24 && ady < 24) tok = 'tap'
+      else if (ady > adx) tok = dy < 0 ? 'up' : 'down'
+      else tok = dx < 0 ? 'left' : 'right'
+      tSeq = [...tSeq, tok].slice(-TOUCH_SEQ.length)
+      if (TOUCH_SEQ.every((k, i) => k === tSeq[i])) unlock('konami')
+    }
+    window.addEventListener('touchstart', onTS, { passive: true })
+    window.addEventListener('touchend', onTE, { passive: true })
+
     return () => {
       window.removeEventListener('secret-unlocked', onUnlock)
       window.removeEventListener('keydown', onKey)
+      window.removeEventListener('touchstart', onTS)
+      window.removeEventListener('touchend', onTE)
     }
   }, [])
 

@@ -111,7 +111,8 @@
   font-size: 0.7rem;
   letter-spacing: 0.08em;
   text-transform: lowercase;
-  color: var(--ink-soft);
+  /* fixed dark text — the pill is always lime, so keep it legible in dark mode */
+  color: #26201a;
   padding: 0.3rem 0.7rem;
   border: 2px solid var(--ink);
   border-radius: 100px;
@@ -140,7 +141,11 @@
   display: flex;
   gap: 1.4rem;
   list-style: none;
-  margin: 0 0 0 auto;
+  /* truly centered in the bar regardless of the side clusters' widths */
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
   padding: 0;
   font-weight: 600;
 }
@@ -2202,4 +2207,194 @@
   50% {
     height: 14px;
   }
+}
+
+/* ---------- now-playing card (Last.fm), floating + minimizable ---------- */
+.np-card {
+  position: fixed;
+  left: 1rem;
+  bottom: 1rem;
+  z-index: 60;
+  display: flex;
+  align-items: stretch;
+  gap: 0.7rem;
+  width: min(300px, 78vw);
+  padding: 0.55rem;
+  background: var(--paper);
+  border: var(--border-ink);
+  border-radius: 14px;
+  box-shadow: var(--shadow-hard);
+}
+.np-card__cover {
+  position: relative;
+  flex: none;
+  width: 58px;
+  height: 58px;
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--paper-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.np-card__cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.np-card__note {
+  font-size: 1.4rem;
+  color: var(--ink-soft);
+}
+.np-card__eq {
+  position: absolute;
+  left: 4px;
+  bottom: 4px;
+  display: none;
+  align-items: flex-end;
+  gap: 2px;
+  height: 12px;
+  padding: 1px 2px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 3px;
+}
+.np-card--live .np-card__eq {
+  display: inline-flex;
+}
+.np-card__eq i {
+  display: block;
+  width: 3px;
+  height: 4px;
+  background: var(--lime);
+  animation: eq 0.9s ease-in-out infinite;
+}
+.np-card__eq i:nth-child(2) {
+  animation-delay: 0.15s;
+}
+.np-card__eq i:nth-child(3) {
+  animation-delay: 0.3s;
+}
+@keyframes eq {
+  0%, 100% {
+    height: 3px;
+  }
+  50% {
+    height: 11px;
+  }
+}
+.np-card__info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+  padding-right: 1rem;
+}
+.np-card__label {
+  color: var(--ink-soft);
+  font-size: 0.6rem;
+}
+.np-card__track {
+  font-family: var(--body);
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.np-card__artist {
+  font-family: var(--body);
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.np-card__min {
+  position: absolute;
+  top: 3px;
+  right: 5px;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  line-height: 1;
+  color: var(--ink-soft);
+  background: transparent;
+  border: 0;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.np-card__min:hover {
+  background: var(--paper-2);
+  color: var(--ink);
+}
+.np-fab {
+  position: fixed;
+  left: 1rem;
+  bottom: 1rem;
+  z-index: 60;
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  overflow: hidden;
+  border: var(--border-ink);
+  border-radius: 50%;
+  background: var(--paper);
+  box-shadow: var(--shadow-hard);
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+.np-fab:hover {
+  transform: translate(-1px, -1px);
+}
+.np-fab img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.np-fab__note {
+  font-size: 1.3rem;
+  color: var(--ink);
+}
+.np-fab__pulse {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--lime);
+  border: 1.5px solid var(--ink);
+}
+@media (max-width: 720px) {
+  .np-card {
+    width: min(240px, 66vw);
+  }
+}
+
+/* ---------- dark mode: force dark text on bright accent backgrounds ---------- */
+:root[data-theme='dark'] .btn--ghost:hover,
+:root[data-theme='dark'] .btn--resume:hover,
+:root[data-theme='dark'] .cs__close:hover,
+:root[data-theme='dark'] .contact__copy:hover,
+:root[data-theme='dark'] .achv__toggle:hover,
+:root[data-theme='dark'] .hero__rotator,
+:root[data-theme='dark'] .cs__sync-node--hw,
+:root[data-theme='dark'] .kb__key:hover,
+:root[data-theme='dark'] .kb__key:active,
+:root[data-theme='dark'] .kb__key--thumb,
+:root[data-theme='dark'] .kb__key--thumb:hover,
+:root[data-theme='dark'] .sticker,
+:root[data-theme='dark'] .sticker span,
+:root[data-theme='dark'] .wall__sticker,
+:root[data-theme='dark'] .cs__spotlight,
+:root[data-theme='dark'] .cs__spotlight h3,
+:root[data-theme='dark'] .cs__spotlight p,
+:root[data-theme='dark'] .cs__spotlight span,
+:root[data-theme='dark'] .cs__spotlight strong {
+  color: #1a140c;
 }

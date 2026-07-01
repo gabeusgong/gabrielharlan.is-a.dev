@@ -18,6 +18,7 @@ import DepthGauge from './components/DepthGauge'
 import IdleSurprise from './components/IdleSurprise'
 import Achievements from './components/Achievements'
 import Terminal from './components/Terminal'
+import NowPlaying from './components/NowPlaying'
 import { unlock } from './lib/achievements'
 import { apply as applyPrefs, getMotion } from './lib/prefs'
 
@@ -139,6 +140,7 @@ function App() {
       <IdleSurprise />
       <Achievements />
       <Terminal onToggleCave={toggleCave} />
+      <NowPlaying />
     </MotionConfig>
   )
 }

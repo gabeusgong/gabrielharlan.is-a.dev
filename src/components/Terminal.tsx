@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
 import { setTheme, setMotion, setMuted, resolvedDark } from '../lib/prefs'
+import { unlock } from '../lib/achievements'
 
 type Line = { kind: 'in' | 'out'; text: string }
 
@@ -60,7 +61,10 @@ export default function Terminal({ onToggleCave }: { onToggleCave: () => void })
   }, [open])
 
   useEffect(() => {
-    if (open) setTimeout(() => inputRef.current?.focus(), 30)
+    if (open) {
+      unlock('terminal')
+      setTimeout(() => inputRef.current?.focus(), 30)
+    }
   }, [open])
 
   useEffect(() => {
