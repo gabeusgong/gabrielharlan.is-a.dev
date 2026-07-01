@@ -110,9 +110,6 @@ export default function Contact() {
             view source
           </a>
         </span>
-        <a href="#top" className="footer__top label" data-cursor>
-          back to top ↑
-        </a>
       </footer>
 
       <AnimatePresence>

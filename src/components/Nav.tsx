@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { profile } from '../data'
 import Settings from './Settings'
+import { unlock } from '../lib/achievements'
 
 const sections = [
   { id: 'about', label: 'About' },
@@ -29,32 +30,49 @@ export default function Nav({ cave, onToggleCave }: Props) {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  // scrollspy: highlight the section currently in view
+  // scrollspy: highlight the section currently in view. Some sections (e.g. the
+  // Wall) are lazy-loaded and mount after this runs, so we re-scan via a
+  // MutationObserver and observe them once they appear.
   useEffect(() => {
     const ids = ['about', 'skills', 'process', 'work', 'wall', 'contact']
-    const els = ids.map((id) => document.getElementById(id)).filter(Boolean) as HTMLElement[]
-    if (!els.length) return
+    const observed = new Set<Element>()
+    // root is a thin line at the viewport middle — whichever section that line
+    // is inside becomes active (exactly one at a time)
     const io = new IntersectionObserver(
       (entries) => {
-        const vis = entries
-          .filter((e) => e.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]
-        if (vis) {
+        for (const e of entries) {
+          if (!e.isIntersecting) continue
+          const raw = (e.target as HTMLElement).id
           // map 'process' onto the Work tab (no nav link of its own)
-          const id = vis.target.id === 'process' ? 'work' : vis.target.id
-          setActive(id)
+          setActive(raw === 'process' ? 'work' : raw)
         }
       },
-      { rootMargin: '-45% 0px -45% 0px' },
+      { rootMargin: '-50% 0px -50% 0px' },
     )
-    els.forEach((el) => io.observe(el))
-    return () => io.disconnect()
+    const scan = () => {
+      ids.forEach((id) => {
+        const el = document.getElementById(id)
+        if (el && !observed.has(el)) {
+          observed.add(el)
+          io.observe(el)
+        }
+      })
+    }
+    scan()
+    const main = document.getElementById('main') ?? document.body
+    const mo = new MutationObserver(scan)
+    mo.observe(main, { childList: true, subtree: true })
+    return () => {
+      io.disconnect()
+      mo.disconnect()
+    }
   }, [])
 
   // click the ✸ to sprinkle sparkles
   const sparkle = (e: React.MouseEvent) => {
     e.preventDefault()
     e.stopPropagation()
+    unlock('sparkle')
     clicks.current++
     const r = markRef.current?.getBoundingClientRect()
     const cx = r ? r.left + r.width / 2 : 40

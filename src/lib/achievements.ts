@@ -7,6 +7,7 @@ export const SECRETS: Secret[] = [
   { id: 'fling', label: 'Card flinger', emoji: '🃏', hint: 'flung a project card' },
   { id: 'konami', label: 'Old school', emoji: '🕹️', hint: '↑↑↓↓←→←→ b a' },
   { id: 'terminal', label: 'Power user', emoji: '💻', hint: 'opened the terminal' },
+  { id: 'sparkle', label: 'Stargazer', emoji: '✨', hint: 'clicked the star' },
 ]
 
 const KEY = 'gh-secrets'
