@@ -2654,8 +2654,9 @@
 
 /* ---------- contact form (Formspree) ---------- */
 .cform {
-  margin: 1.6rem 0 0.4rem;
+  margin: 1.6rem auto 3rem;
   max-width: 640px;
+  text-align: left;
 }
 .cform__row {
   display: flex;
@@ -2693,7 +2694,7 @@
   display: flex;
   align-items: center;
   gap: 1rem;
-  margin-top: 0.9rem;
+  margin-top: 1.3rem;
 }
 .cform__err {
   font-family: var(--mono);

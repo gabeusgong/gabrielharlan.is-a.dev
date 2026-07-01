@@ -47,7 +47,12 @@ function App() {
   // tiny hash router so the cave gallery lives on its own page (#/caves) and
   // never appears inline on the main site
   useEffect(() => {
-    const onHash = () => setRoute(getRoute())
+    const onHash = () => {
+      // reset scroll BEFORE the new page renders, so its scroll-in reveals
+      // (whileInView) evaluate in view instead of staying blank
+      window.scrollTo(0, 0)
+      setRoute(getRoute())
+    }
     window.addEventListener('hashchange', onHash)
     return () => window.removeEventListener('hashchange', onHash)
   }, [])
