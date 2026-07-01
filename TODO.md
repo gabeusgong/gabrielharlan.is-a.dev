@@ -39,30 +39,29 @@ Ideas for the next round of work on gabrielharlan.is-a.dev. ⭐ = highest impact
       around with matter-js, then they spring back into place.
 
 ## Bigger / interactive (standouts)
-- [ ] ⭐ **Visitor sticker wall / guestbook (Firebase)** — visitors drop a labeled sticker on a
-      shared wall, persisted in Firestore (reuse spelunk-a-dunk or a new free project). Extends
-      the sticker motif into something social AND shows full-stack/Firebase skill live on the
-      page. Wire security rules to prevent abuse.
-- [ ] ⭐ **"Explorer" achievements** — quietly track discovery of the hidden stuff (cave mode,
-      ring-game win, idle bat, Konami code) → unlock little badges + an "X/5 secrets found" count.
-      Ties to the gamification built in Karst.
+- [x] ⭐ **Visitor sticker wall / guestbook (Firebase)** — live Firestore wall (`gabrielharlan-site`
+      project); "explorer #N" counter via atomic transaction, once per visitor. Firebase lazy-loaded
+      into its own chunk. Security rules (`firestore.rules`): public read, validated creates, no
+      edits/deletes, counter only +1.
+- [x] ⭐ **"Explorer" achievements** — 🗝 X/5 secrets chip + unlock toasts (cave / ring / bat /
+      fling / Konami). See `src/lib/achievements.ts`.
 - [ ] **Interactive Corne keyboard** — on the keyboard project, clickable keycaps that depress
       with a "thock" (pairs with the sound-toggle item). Most on-brand micro-interaction.
 - [ ] **Cave cross-section scroll** — an SVG cave profile you visually descend through as you
       scroll, tied to the depth gauge.
 
 ## More delight ideas
-- [ ] **Deepen cave mode** — idle bat follows the headlamp; faint water-drip ambient (behind the
-      mute toggle); depth gauge recolors in-theme.
-- [ ] **Real cave photos** — a small atmospheric gallery from the Bloomington Indiana Grotto.
+- [~] **Deepen cave mode** — ✅ idle bat now trails the headlamp beam. Still open: faint water-drip
+      ambient (behind a future mute toggle); depth-gauge recolor in-theme.
+- [ ] **Real cave photos** — a small atmospheric gallery from the Bloomington Indiana Grotto. (skipped for now)
 - [ ] **`/` command palette / fake terminal** — jump to sections or run `whoami` / `ls projects`.
 - [ ] **Now-playing chip** — Last.fm / Spotify "currently listening" for a living, personal touch.
 - [ ] **Blob parallax / gyro tilt** — hero blobs drift with the mouse (desktop) or phone tilt (gyro).
-- [ ] **Time-aware greeting** — "good evening" by the visitor's local time; "welcome back" for
-      returning visitors (localStorage).
+- [x] **Time-aware greeting** — hero eyebrow greets by the visitor's local hour; "welcome back"
+      for returning visitors (localStorage).
 - [ ] **Chaos / motion dial** — let visitors turn the animation intensity up or down (fun + a11y).
 - [ ] **Animated nav mark** — the ✸ flaps into a bat on hover.
-- [ ] **Visitor count** — "you're explorer #N" (pairs with the Firebase guestbook).
+- [x] **Visitor count** — "you're explorer #N" (shipped with the Firebase wall).
 - [ ] **First-visit intro** — a brief headlamp-on "descent" before the hero (optional; mind load friction).
 
 ## Practical
