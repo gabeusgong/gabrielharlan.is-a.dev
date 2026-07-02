@@ -9,6 +9,7 @@ export const SECRETS: Secret[] = [
   { id: 'terminal', label: 'Power user', emoji: '💻', hint: 'opened the terminal' },
   { id: 'sparkle', label: 'Stargazer', emoji: '✨', hint: 'clicked the star' },
   { id: 'coffee', label: 'Barista', emoji: '☕', hint: 'sudo make coffee' },
+  { id: 'speed', label: 'Speed demon', emoji: '⚡', hint: '100+ wpm at 100% on the typing test' },
 ]
 
 const KEY = 'gh-secrets'

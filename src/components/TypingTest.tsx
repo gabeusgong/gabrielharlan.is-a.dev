@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react'
+import { unlock } from '../lib/achievements'
 
 const SAMPLE = 'the best tools are the ones you tune yourself'
 
@@ -16,12 +17,22 @@ export default function TypingTest() {
   const acc = typed.length ? Math.round((correct / typed.length) * 100) : 100
 
   const onChange = (v: string) => {
-    if (startedAt === null && v.length) setStartedAt(performance.now())
+    const begin = startedAt ?? (v.length ? performance.now() : null)
+    if (startedAt === null && begin) setStartedAt(begin)
     // light up the pressed key on the keymap above
     if (v.length > typed.length) {
       window.dispatchEvent(new CustomEvent('corne-key', { detail: v[v.length - 1] }))
     }
-    setTyped(v.slice(0, SAMPLE.length))
+    const next = v.slice(0, SAMPLE.length)
+    setTyped(next)
+    // secret: finish the phrase at 100+ wpm and 100% accuracy
+    if (next.length === SAMPLE.length && begin) {
+      const correctN = [...next].filter((c, i) => c === SAMPLE[i]).length
+      const mins = (performance.now() - begin) / 60000
+      const w = mins > 0 ? Math.round(correctN / 5 / mins) : 0
+      const a = Math.round((correctN / next.length) * 100)
+      if (w >= 100 && a === 100) unlock('speed')
+    }
   }
   const reset = () => {
     setTyped('')
