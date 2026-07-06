@@ -14,6 +14,8 @@
   background: var(--coral);
   pointer-events: none;
   z-index: 9999;
+  /* transform-driven (x/y) so it composites on the GPU instead of repainting */
+  will-change: transform;
 }
 @media (pointer: fine) {
   /* custom cursor everywhere — !important beats per-element cursor:pointer so the
