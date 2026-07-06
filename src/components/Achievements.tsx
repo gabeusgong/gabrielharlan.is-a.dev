@@ -1,18 +1,7 @@
 import { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { motion, AnimatePresence } from 'motion/react'
-import { SECRETS, getUnlocked, unlock, type Secret } from '../lib/achievements'
-
-const KONAMI = [
-  'arrowup', 'arrowup', 'arrowdown', 'arrowdown',
-  'arrowleft', 'arrowright', 'arrowleft', 'arrowright', 'b', 'a',
-]
-
-// Konami needs a keyboard, so drop it on touch devices — it isn't attainable
-// there and shouldn't sit in the count as an impossible secret.
-const isCoarse =
-  typeof window !== 'undefined' && !!window.matchMedia?.('(pointer: coarse)').matches
-const VISIBLE_SECRETS = isCoarse ? SECRETS.filter((s) => s.id !== 'konami') : SECRETS
+import { SECRETS, getUnlocked, type Secret } from '../lib/achievements'
 
 const PARTY_COLORS = ['#f4502a', '#2d4df5', '#c8f02c', '#ff9ece', '#ffc23d']
 function rainConfetti() {
@@ -30,7 +19,7 @@ function rainConfetti() {
 }
 
 /* Tracks hidden "secrets" the visitor discovers (cave mode, ring win, the bat,
-   flinging a card, the Konami code) and shows a count + unlock toasts. */
+   flinging a card, the terminal, etc.) and shows unlock toasts + all-found confetti. */
 export default function Achievements() {
   const [unlocked, setUnlocked] = useState<string[]>([])
   const [toast, setToast] = useState<Secret | null>(null)
@@ -49,21 +38,13 @@ export default function Achievements() {
     }
     window.addEventListener('secret-unlocked', onUnlock)
 
-    let seq: string[] = []
-    const onKey = (e: KeyboardEvent) => {
-      seq = [...seq, e.key.toLowerCase()].slice(-KONAMI.length)
-      if (KONAMI.every((k, i) => k === seq[i])) unlock('konami')
-    }
-    window.addEventListener('keydown', onKey)
-
     return () => {
       window.removeEventListener('secret-unlocked', onUnlock)
-      window.removeEventListener('keydown', onKey)
     }
   }, [])
 
-  const total = VISIBLE_SECRETS.length
-  const count = unlocked.filter((id) => VISIBLE_SECRETS.some((s) => s.id === id)).length
+  const total = SECRETS.length
+  const count = unlocked.filter((id) => SECRETS.some((s) => s.id === id)).length
 
   // celebrate once when every secret is found
   useEffect(() => {

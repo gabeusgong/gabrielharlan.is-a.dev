@@ -34,9 +34,6 @@ const HELP = [
   '  clear             clear the screen',
 ]
 
-const isCoarse =
-  typeof window !== 'undefined' && window.matchMedia?.('(pointer: coarse)').matches
-
 const LINES_KEY = 'gh-term-lines'
 const HIST_KEY = 'gh-term-hist'
 const MAX_SAVED = 200
@@ -223,7 +220,7 @@ export default function Terminal({ onToggleCave }: { onToggleCave: () => void })
       case '/secrets':
       case 'secret':
       case 'secrets': {
-        const list = isCoarse ? SECRETS.filter((s) => s.id !== 'konami') : SECRETS
+        const list = SECRETS
         const got = getUnlocked()
         const found = list.filter((s) => got.includes(s.id)).length
         print([
