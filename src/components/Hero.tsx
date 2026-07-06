@@ -177,7 +177,7 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.05 }}
         >
-          ✦ {lead} · {profile.location}
+          ✦ {lead} ✦
         </motion.p>
 
         <KineticName text={profile.name} />
