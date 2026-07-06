@@ -2975,3 +2975,11 @@
   transform: translateY(2.5px);
   box-shadow: 0 0 0 var(--ink);
 }
+
+/* phones: extra gap between the "/now" line (…Fallout 4) and the sticker game's
+   "grab & fling" note where the columns stack */
+@media (max-width: 720px) {
+  .about__stickers-col {
+    margin-top: 2.5rem;
+  }
+}
