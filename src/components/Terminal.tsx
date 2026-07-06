@@ -224,9 +224,7 @@ export default function Terminal({ onToggleCave }: { onToggleCave: () => void })
         print([
           `secrets · ${found}/${list.length} found`,
           ...list.map((s) =>
-            got.includes(s.id)
-              ? `  ${s.emoji} ${s.label} — ${s.hint}`
-              : `  🔒 ??? — ${s.hint}`,
+            got.includes(s.id) ? `  ${s.emoji} ${s.label} — ${s.hint}` : '  🔒 ???',
           ),
           found === list.length ? '🎉 you found them all. respect.' : 'keep poking around…',
         ])
