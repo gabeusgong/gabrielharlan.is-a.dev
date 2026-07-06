@@ -29,14 +29,6 @@ const tiltFor = (id: string) => {
   return (s % 13) - 6
 }
 
-// spread stickers across the whole theme palette. Derived from the id (not the
-// stored color, which historically all landed on one hue) so every sticker
-// gets a stable, varied color and the board reads as a proper rainbow.
-const colorFor = (id: string): ColorKey => {
-  let s = 0
-  for (const c of id) s = (s * 31 + c.charCodeAt(0)) >>> 0
-  return COLORS[s % COLORS.length]
-}
 
 export default function Wall() {
   const [marks, setMarks] = useState<Mark[]>([])
@@ -156,11 +148,13 @@ export default function Wall() {
 
       <div className="wall__board">
         <AnimatePresence initial={false}>
-          {marks.map((m) => (
+          {marks.map((m, i) => (
             <motion.div
               key={m.id}
               className="wall__sticker"
-              style={{ background: tones[colorFor(m.id)], rotate: tiltFor(m.id) }}
+              // color by position so neighbours never match — any run of five is
+              // fully distinct across the theme palette
+              style={{ background: tones[COLORS[i % COLORS.length]], rotate: tiltFor(m.id) }}
               initial={{ opacity: 0, scale: 0.6 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.6 }}
