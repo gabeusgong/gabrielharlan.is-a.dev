@@ -14,6 +14,8 @@
   background: var(--coral);
   pointer-events: none;
   z-index: 9999;
+  /* transform-driven (x/y) so it composites on the GPU instead of repainting */
+  will-change: transform;
 }
 @media (pointer: fine) {
   /* custom cursor everywhere — !important beats per-element cursor:pointer so the
@@ -362,9 +364,13 @@
   position: absolute;
   border-radius: 46% 54% 60% 40% / 50% 45% 55% 50%;
   filter: blur(2px);
-  opacity: 0.85;
+  opacity: 0.62;
   z-index: 1;
-  mix-blend-mode: multiply;
+  /* no mix-blend-mode: it forced a per-frame re-blend against the backdrop
+     every time the blobs animated or moved with the parallax — the dominant
+     desktop lag. Plain opacity keeps the soft translucent wash and lets the
+     layer stay cheaply GPU-composited. */
+  will-change: transform;
 }
 .blob--coral {
   width: 260px;
@@ -2120,10 +2126,9 @@
   background: rgba(26, 21, 14, 0.96);
 }
 
-/* blobs use multiply on cream; switch to screen so they read on dark */
+/* on dark, just soften the opacity so the blobs glow rather than blend */
 :root[data-theme='dark'] .blob {
-  mix-blend-mode: screen;
-  opacity: 0.5;
+  opacity: 0.42;
 }
 
 /* ---------- parallax wrapper for hero blobs ---------- */

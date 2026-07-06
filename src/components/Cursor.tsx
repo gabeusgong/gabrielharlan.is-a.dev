@@ -46,7 +46,7 @@ export default function Cursor() {
     <motion.div
       aria-hidden
       className="cursor-blob"
-      style={{ left: sx, top: sy }}
+      style={{ x: sx, y: sy }}
       animate={{
         scale: active ? 2.2 : 1,
         opacity: visible ? (active ? 0.5 : 1) : 0,
