@@ -14,8 +14,6 @@
   background: var(--coral);
   pointer-events: none;
   z-index: 9999;
-  /* transform-driven (x/y) so it composites on the GPU instead of repainting */
-  will-change: transform;
 }
 @media (pointer: fine) {
   /* custom cursor everywhere — !important beats per-element cursor:pointer so the
@@ -84,10 +82,8 @@
   backface-visibility: hidden;
 }
 .nav--scrolled {
-  /* opaque-ish instead of backdrop-filter: blur() — the blur forced a full
-     re-composite of everything behind the fixed bar on every scroll frame,
-     which was the main desktop scroll stutter */
-  background: rgba(244, 236, 216, 0.96);
+  background: rgba(244, 236, 216, 0.82);
+  backdrop-filter: blur(10px);
   padding: 0.7rem 2rem;
   box-shadow: 0 2px 0 var(--ink);
   border-bottom: 2.5px solid var(--ink);
@@ -1937,7 +1933,8 @@
   justify-content: space-between;
   gap: 1rem;
   padding: 1rem 2rem;
-  background: rgba(244, 236, 216, 0.96);
+  background: rgba(244, 236, 216, 0.82);
+  backdrop-filter: blur(10px);
   border-bottom: 2.5px solid var(--ink);
 }
 .cavespage__back {
@@ -2113,10 +2110,10 @@
 
 /* dark-theme nav/gallery bars (cream translucent -> dark translucent) */
 :root[data-theme='dark'] .nav--scrolled {
-  background: rgba(26, 21, 14, 0.96);
+  background: rgba(26, 21, 14, 0.85);
 }
 :root[data-theme='dark'] .cavespage__bar {
-  background: rgba(26, 21, 14, 0.96);
+  background: rgba(26, 21, 14, 0.85);
 }
 
 /* blobs use multiply on cream; switch to screen so they read on dark */
