@@ -143,7 +143,11 @@ export default function Wall() {
             stick it →
           </button>
         </form>
-        {blocked && <p className="wall__blocked label">let&apos;s keep it friendly ✌️</p>}
+        {blocked && (
+          <p className="wall__blocked label" role="alert">
+            let&apos;s keep it friendly ✌️
+          </p>
+        )}
       </Reveal>
 
       <div className="wall__board">

@@ -21,7 +21,9 @@ type Props = {
 export default function Nav({ cave, onToggleCave, route }: Props) {
   const [scrolled, setScrolled] = useState(false)
   const [active, setActive] = useState('about')
+  const [menuOpen, setMenuOpen] = useState(false)
   const markRef = useRef<HTMLSpanElement>(null)
+  const menuRef = useRef<HTMLDivElement>(null)
   const clicks = useRef(0)
 
   useEffect(() => {
@@ -30,6 +32,23 @@ export default function Nav({ cave, onToggleCave, route }: Props) {
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
+
+  // mobile menu: close on Escape or an outside click
+  useEffect(() => {
+    if (!menuOpen) return
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setMenuOpen(false)
+    }
+    const onDoc = (e: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) setMenuOpen(false)
+    }
+    window.addEventListener('keydown', onKey)
+    document.addEventListener('mousedown', onDoc)
+    return () => {
+      window.removeEventListener('keydown', onKey)
+      document.removeEventListener('mousedown', onDoc)
+    }
+  }, [menuOpen])
 
   // scrollspy: highlight the section currently in view. Some sections (e.g. the
   // Wall) are lazy-loaded and mount after this runs, so we re-scan via a
@@ -123,7 +142,33 @@ export default function Nav({ cave, onToggleCave, route }: Props) {
         })}
       </ul>
 
-      <div className="nav__controls">
+      <div className="nav__controls" ref={menuRef}>
+        <button
+          type="button"
+          className={`nav__menu-btn ${menuOpen ? 'is-open' : ''}`}
+          onClick={() => setMenuOpen((o) => !o)}
+          aria-expanded={menuOpen}
+          aria-controls="nav-sheet"
+          aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+          data-cursor
+        >
+          {menuOpen ? '✕' : '☰'}
+        </button>
+        {menuOpen && (
+          <ul className="nav__sheet" id="nav-sheet">
+            {sections.map((s) => (
+              <li key={s.id}>
+                <a
+                  href={s.href ?? `#${s.id}`}
+                  onClick={() => setMenuOpen(false)}
+                  className={(route === 'caves' ? 'caves' : active) === s.id ? 'is-active' : ''}
+                >
+                  {s.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        )}
         <button
           type="button"
           className="nav__term"

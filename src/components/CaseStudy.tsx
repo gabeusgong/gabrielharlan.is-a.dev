@@ -188,7 +188,7 @@ function KeyboardLayers() {
           </button>
         ))}
       </div>
-      <div className="kb__grid" ref={gridRef} role="img" aria-label={`${L.name} layer keymap`}>
+      <div className="kb__grid" ref={gridRef} role="group" aria-label={`${L.name} layer keymap`}>
         {L.rows.map((row, r) => (
           <div className="kb__row" key={r}>
             {half(row.slice(0, 6))}
@@ -590,7 +590,7 @@ export default function CaseStudy({
             className="cs__panel"
             role="dialog"
             aria-modal="true"
-            aria-label={`${data.slug} case study`}
+            aria-labelledby="cs-title"
             onClick={(e) => e.stopPropagation()}
             initial={{ opacity: 0, y: 40, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -605,7 +605,7 @@ export default function CaseStudy({
               <p className="label">
                 <span className="tick">CASE STUDY</span> · {data.year}
               </p>
-              <h2 className="cs__title">{data.title}</h2>
+              <h2 className="cs__title" id="cs-title">{data.title}</h2>
               <p className="cs__lede">{data.lede}</p>
               <div className="cs__meta">
                 {data.meta.map((m) => (
@@ -682,11 +682,11 @@ export default function CaseStudy({
                                 <span />
                                 <span />
                               </span>
-                              <img src={s.src} alt={s.cap} loading="lazy" />
+                              <img src={s.src} alt={s.cap} loading="lazy" decoding="async" />
                             </div>
                           ) : (
                             <div className="cs__phone">
-                              <img src={s.src} alt={s.cap} loading="lazy" />
+                              <img src={s.src} alt={s.cap} loading="lazy" decoding="async" />
                             </div>
                           )}
                           <figcaption>{s.cap}</figcaption>

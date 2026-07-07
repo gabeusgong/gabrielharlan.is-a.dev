@@ -7,6 +7,7 @@ export default function Settings() {
   const [open, setOpen] = useState(false)
   const [, force] = useState(0)
   const ref = useRef<HTMLDivElement>(null)
+  const btnRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
     const onDoc = (e: MouseEvent) => {
@@ -14,7 +15,11 @@ export default function Settings() {
     }
     const onPref = () => force((x) => x + 1)
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setOpen(false)
+      // Escape closes and returns focus to the trigger (only when open)
+      if (e.key === 'Escape' && open) {
+        setOpen(false)
+        btnRef.current?.focus()
+      }
     }
     document.addEventListener('mousedown', onDoc)
     window.addEventListener('pref-change', onPref)
@@ -24,7 +29,7 @@ export default function Settings() {
       window.removeEventListener('pref-change', onPref)
       window.removeEventListener('keydown', onKey)
     }
-  }, [])
+  }, [open])
 
   const dark = resolvedDark()
   const muted = isMuted()
@@ -32,6 +37,7 @@ export default function Settings() {
   return (
     <div className="settings" ref={ref}>
       <button
+        ref={btnRef}
         className="settings__btn"
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
@@ -42,11 +48,10 @@ export default function Settings() {
         ⚙
       </button>
       {open && (
-        <div className="settings__pop" role="menu">
+        <div className="settings__pop" role="group" aria-label="Preferences">
           <button
             className="settings__row"
-            role="menuitemcheckbox"
-            aria-checked={dark}
+            aria-pressed={dark}
             onClick={() => setTheme(dark ? 'light' : 'dark')}
             data-cursor
           >
@@ -56,8 +61,7 @@ export default function Settings() {
           </button>
           <button
             className="settings__row"
-            role="menuitemcheckbox"
-            aria-checked={!muted}
+            aria-pressed={!muted}
             onClick={() => setMuted(!muted)}
             data-cursor
           >

@@ -42,7 +42,7 @@ function TiltCard({
   // it would otherwise be orphaned alone on a 2-column row
   const big = index === 0 || (index === total - 1 && (total - 1) % 2 === 1)
   const isCase = !!(p.caseStudy && onOpen)
-  const cta = isCase ? 'Read the case study' : p.href ? 'Visit' : 'Case study soon'
+  const cta = isCase ? 'Read the case study' : p.href ? 'Visit' : null
 
   const common = {
     className: `card ${big ? 'card--feature' : ''}`,
@@ -81,9 +81,11 @@ function TiltCard({
           </span>
         ))}
       </div>
-      <span className="card__cta">
-        {cta} <span className="card__arrow">→</span>
-      </span>
+      {cta && (
+        <span className="card__cta">
+          {cta} <span className="card__arrow">→</span>
+        </span>
+      )}
     </>
   )
 

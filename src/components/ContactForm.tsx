@@ -34,7 +34,9 @@ export default function ContactForm() {
     <Reveal delay={0.1}>
       <form className="cform" onSubmit={onSubmit}>
         {status === 'ok' ? (
-          <p className="cform__done">Thanks — I&apos;ll get back to you soon. 🦇</p>
+          <p className="cform__done" role="status">
+            Thanks — I&apos;ll get back to you soon. 🦇
+          </p>
         ) : (
           <>
             <div className="cform__row">
@@ -72,7 +74,9 @@ export default function ContactForm() {
                 {status === 'sending' ? 'sending…' : 'send it →'}
               </button>
               {status === 'error' && (
-                <span className="cform__err">something broke — email me instead?</span>
+                <span className="cform__err" role="alert">
+                  something broke — email me instead?
+                </span>
               )}
             </div>
           </>
