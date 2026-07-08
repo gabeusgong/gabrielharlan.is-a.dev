@@ -1064,6 +1064,24 @@
 .footer__top:hover {
   color: var(--coral);
 }
+/* terminal hint — desktop only (no "/" key on touch; use the nav menu there) */
+.footer__hint {
+  color: var(--ink-soft);
+  opacity: 0.85;
+}
+.footer__kbd {
+  font-family: var(--mono);
+  font-size: 0.85em;
+  padding: 0.05em 0.4em;
+  border: 1.5px solid var(--ink);
+  border-radius: 5px;
+  background: var(--paper-2);
+}
+@media (max-width: 720px) {
+  .footer__hint {
+    display: none;
+  }
+}
 
 /* ---------- résumé button spacing ---------- */
 .contact__resume {
@@ -1421,6 +1439,10 @@
 .kb__tab.is-active {
   background: var(--cobalt);
   color: var(--paper);
+}
+/* the default cobalt focus ring would vanish on the cobalt active tab */
+.kb__tab.is-active:focus-visible {
+  outline-color: var(--ink);
 }
 .kb__grid {
   display: flex;
@@ -1886,7 +1908,7 @@
 }
 .wall__input::placeholder {
   color: var(--ink-soft);
-  opacity: 0.7;
+  opacity: 1; /* --ink-soft is already muted; extra opacity dropped it below AA */
 }
 .wall__input:focus {
   outline: none;
@@ -2838,7 +2860,7 @@ button.term__dot:hover {
 }
 .cform__input::placeholder {
   color: var(--ink-soft);
-  opacity: 0.75;
+  opacity: 1; /* --ink-soft is already muted; extra opacity dropped it below AA */
 }
 .cform__input:focus {
   outline: none;

@@ -110,6 +110,9 @@ export default function Contact() {
 
       <footer className="footer">
         <span className="label">© {profile.name} · built with care, thanks for scrolling</span>
+        <span className="footer__hint label" aria-hidden>
+          psst — press <kbd className="footer__kbd">/</kbd> for a terminal
+        </span>
         <a href={REPO} target="_blank" rel="noreferrer" className="footer__src label" data-cursor>
           view source ↗
         </a>

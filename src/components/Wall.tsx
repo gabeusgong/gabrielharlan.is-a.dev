@@ -152,21 +152,29 @@ export default function Wall() {
 
       <div className="wall__board">
         <AnimatePresence initial={false}>
-          {marks.map((m, i) => (
-            <motion.div
-              key={m.id}
-              className="wall__sticker"
-              // color by position so neighbours never match — any run of five is
-              // fully distinct across the theme palette
-              style={{ background: tones[COLORS[i % COLORS.length]], rotate: tiltFor(m.id) }}
-              initial={{ opacity: 0, scale: 0.6 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.6 }}
-              transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-            >
-              {m.text}
-            </motion.div>
-          ))}
+          {marks.map((m, i) => {
+            // color by position so neighbours never match — any run of five is
+            // fully distinct across the theme palette
+            const key = COLORS[i % COLORS.length]
+            return (
+              <motion.div
+                key={m.id}
+                className="wall__sticker"
+                // dark ink fails contrast on the cobalt sticker — use light text there
+                style={{
+                  background: tones[key],
+                  color: key === 'cobalt' ? 'var(--paper)' : undefined,
+                  rotate: tiltFor(m.id),
+                }}
+                initial={{ opacity: 0, scale: 0.6 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.6 }}
+                transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+              >
+                {m.text}
+              </motion.div>
+            )
+          })}
         </AnimatePresence>
         {marks.length === 0 && (
           <p className="wall__empty label">be the first to leave a sticker ↑</p>
