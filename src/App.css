@@ -1526,34 +1526,35 @@
   color: var(--paper);
 }
 .kb__row--thumbs {
-  margin-top: 1.2rem; /* clear the inner columns' downward stagger */
-  justify-content: center;
-  align-items: flex-start;
+  margin-top: 1rem; /* clear the inner columns' downward stagger */
 }
-/* Fan each thumb key individually, like the physical board: rotation increases
-   toward the centre, the keys step down as they splay, and the inner-most key of
-   each hand is a longer keycap. --tx/--ty/--rot feed the shared key transform. */
+/* Each thumb half is the same width as a main half and shares the row's gap, so
+   it lines up directly under its columns. Keys are placed absolutely: the outer
+   key sits upright under the C/V (left) and M/comma (right) column gaps, and the
+   cluster spreads inward with increasing rotation to the tall inner key.
+   Column pitch = 2.15rem key + 0.3rem gap = 2.45rem; key centre i = 1.075 + i·2.45. */
 .kb__half--thumbs {
+  display: block;
+  position: relative;
+  width: 14.4rem;
+  height: 4.6rem;
   margin: 0;
-  gap: 0;
-  align-items: flex-start;
 }
-/* left cluster: outer upright & high → inner most-rotated & long (tall) */
-.kb__half--thumbs:first-child .kb__key:nth-child(1) { --rot: 6deg; --ty: 0rem; --tx: 0.5rem; }
-.kb__half--thumbs:first-child .kb__key:nth-child(2) { --rot: 20deg; --ty: 0.5rem; --tx: 0rem; }
-.kb__half--thumbs:first-child .kb__key:nth-child(3) { --rot: 38deg; --ty: 0.55rem; --tx: -0.55rem; }
-.kb__row--thumbs .kb__half--thumbs:first-child { margin-right: 1.2rem; }
-/* right cluster: mirror */
-.kb__half--thumbs:last-child .kb__key:nth-child(1) { --rot: -38deg; --ty: 0.55rem; --tx: 0.55rem; }
-.kb__half--thumbs:last-child .kb__key:nth-child(2) { --rot: -20deg; --ty: 0.5rem; --tx: 0rem; }
-.kb__half--thumbs:last-child .kb__key:nth-child(3) { --rot: -6deg; --ty: 0rem; --tx: -0.5rem; }
-.kb__row--thumbs .kb__half--thumbs:last-child { margin-left: 1.2rem; }
-/* the two outer thumb keys are regular-sized… */
 .kb__key--thumb {
+  position: absolute;
+  top: 0;
   width: 2.15rem;
   background: var(--sun);
 }
-/* …the inner-most (bottom-most) thumb key on each hand is a longer, taller cap */
+/* left cluster: outer (upright, under C/V) → inner (tall, rotated toward centre) */
+.kb__half--thumbs:first-child .kb__key:nth-child(1) { left: 8.575rem; top: 0; --rot: 0deg; }
+.kb__half--thumbs:first-child .kb__key:nth-child(2) { left: 10.35rem; top: 0.7rem; --rot: -20deg; }
+.kb__half--thumbs:first-child .kb__key:nth-child(3) { left: 12.125rem; top: 0.55rem; --rot: -38deg; }
+/* right cluster: mirror — outer (upright, under M/comma) → inner (tall) */
+.kb__half--thumbs:last-child .kb__key:nth-child(3) { left: 3.675rem; top: 0; --rot: 0deg; }
+.kb__half--thumbs:last-child .kb__key:nth-child(2) { left: 1.9rem; top: 0.7rem; --rot: 20deg; }
+.kb__half--thumbs:last-child .kb__key:nth-child(1) { left: 0.125rem; top: 0.55rem; --rot: 38deg; }
+/* the inner-most (bottom-most) key on each hand is a longer, taller cap */
 .kb__half--thumbs:first-child .kb__key:nth-child(3),
 .kb__half--thumbs:last-child .kb__key:nth-child(1) {
   height: 3.4rem;
