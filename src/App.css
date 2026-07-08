@@ -1526,7 +1526,7 @@
   color: var(--paper);
 }
 .kb__row--thumbs {
-  margin-top: 1rem; /* clear the inner columns' downward stagger */
+  margin-top: 0.5rem; /* sits just below the main rows */
 }
 /* Each thumb half is the same width as a main half and shares the row's gap, so
    it lines up directly under its columns. Keys are placed absolutely: the outer
@@ -1548,12 +1548,12 @@
 }
 /* left cluster: outer (upright, under C/V) → inner (tall, rotated toward centre) */
 .kb__half--thumbs:first-child .kb__key:nth-child(1) { left: 9.275rem; top: 0; --rot: 0deg; }
-.kb__half--thumbs:first-child .kb__key:nth-child(2) { left: 11.425rem; top: 0.7rem; --rot: 20deg; }
-.kb__half--thumbs:first-child .kb__key:nth-child(3) { left: 14.125rem; top: 0.55rem; --rot: 38deg; }
+.kb__half--thumbs:first-child .kb__key:nth-child(2) { left: 11.775rem; top: 0.7rem; --rot: 20deg; }
+.kb__half--thumbs:first-child .kb__key:nth-child(3) { left: 14.475rem; top: 0.55rem; --rot: 38deg; }
 /* right cluster: mirror — outer (upright, under M/comma) → inner (tall) */
 .kb__half--thumbs:last-child .kb__key:nth-child(3) { left: 3.975rem; top: 0; --rot: 0deg; }
-.kb__half--thumbs:last-child .kb__key:nth-child(2) { left: 1.825rem; top: 0.7rem; --rot: -20deg; }
-.kb__half--thumbs:last-child .kb__key:nth-child(1) { left: -0.875rem; top: 0.55rem; --rot: -38deg; }
+.kb__half--thumbs:last-child .kb__key:nth-child(2) { left: 1.475rem; top: 0.7rem; --rot: -20deg; }
+.kb__half--thumbs:last-child .kb__key:nth-child(1) { left: -1.225rem; top: 0.55rem; --rot: -38deg; }
 /* the inner-most (bottom-most) key on each hand is a longer, taller cap */
 .kb__half--thumbs:first-child .kb__key:nth-child(3),
 .kb__half--thumbs:last-child .kb__key:nth-child(1) {
