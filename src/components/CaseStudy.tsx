@@ -318,14 +318,15 @@ const STUDIES: Record<string, Study> = {
     year: '2025',
     lede: (
       <>
-        <strong>IT Inventory Tracker</strong> — a semi-automated hardware tracker for small
-        businesses, built with a four-person Scrum team for the IU Informatics senior capstone.
+        <strong>IT Inventory Tracker</strong> — a semi-automated inventory system for small
+        businesses, built with a four-person Scrum team over two semesters for the IU Informatics
+        senior capstone.
       </>
     ),
     meta: [
-      { label: 'Role', value: 'Web design & front-end' },
-      { label: 'Team', value: '4 · Agile / Scrum' },
-      { label: 'Stack', value: 'PHP · MySQL · JavaScript · IoT' },
+      { label: 'Role', value: 'Front-end & design' },
+      { label: 'Team', value: '4 · Scrum, 2 semesters' },
+      { label: 'Stack', value: 'PHP · Slim · MariaDB · IoT' },
     ],
     live: {
       href: 'https://zion.luddy.indiana.edu/info-capstone-2026/itit',
@@ -333,11 +334,13 @@ const STUDIES: Record<string, Study> = {
     },
     problem: (
       <>
-        Small businesses track their hardware in Google Sheets, notes apps, or on paper —
-        approaches that are quick to start but error-prone and easy to outgrow. Enterprise systems
-        like SAP solve it, but they&apos;re expensive and far more than a small shop needs. ITIT
-        bridges that gap: a <strong>scalable, affordable, semi-automated</strong> tracker sized for
-        small teams.
+        Enterprise inventory systems like SAP run most of the Fortune 500 — but at roughly
+        $100K+ to implement, they&apos;re wildly out of reach for a small shop. So small businesses
+        fall back on spreadsheets, sticky notes, and phone Notes apps: quick to start, but
+        error-prone and impossible to scale. ITIT bridges that gap — an{' '}
+        <strong>affordable, self-hostable</strong> tracker that pairs a simple physical device with
+        a web dashboard for real-time counts, low-stock alerts, and usage analytics, minus the
+        enterprise price tag and complexity.
       </>
     ),
     spotlight: {
@@ -345,28 +348,29 @@ const STUDIES: Record<string, Study> = {
       h: 'A physical tracker that syncs to the web',
       body: (
         <>
-          ITIT pairs a physical <strong>IoT tracker device</strong> with a web app, kept in{' '}
-          <strong>real-time sync</strong>. Update inventory in the physical world and the database
-          stays in agreement — no manual reconciliation, and no enterprise price tag.
+          A notecard-sized <strong>IoT device</strong> shows an item&apos;s count with up/down
+          buttons to adjust stock right where it lives — assign one to a location, or use your own
+          phone as a virtual tracker. Either way it stays in <strong>real-time sync</strong> with
+          the web dashboard: no manual reconciliation, no enterprise price tag.
         </>
       ),
     },
     decisions: [
       {
+        h: 'A design system, then a full overhaul',
+        p: 'We optimized for function over form early, then in the back half I led a visual overhaul: a five-color dark dashboard palette, clearer hierarchy and labeling, and proper desktop + mobile layouts — turning a working prototype into something people actually wanted to use.',
+      },
+      {
+        h: 'Design for how people really behave',
+        p: 'Usability testing was blunt — 6 of 8 participants blew straight past our on-screen instructions. So I leaned on explicit success/error messages, confirmation redirects after actions, and empty-state prompts, instead of assuming anyone reads the page.',
+      },
+      {
         h: 'Model how businesses actually organize',
-        p: 'The app mirrors the real hierarchy — Deployments → Locations → Items → Linked Items — so the data structure matches how a shop already thinks about its gear.',
+        p: 'The app mirrors a real hierarchy — Deployments → Locations → Trackers → Items → Linked Items. After instructor feedback we reworked “Deployment” into a selected context each session scopes to, so users only ever see the one setup they’re working in.',
       },
       {
-        h: 'Drop into existing workflows',
-        p: 'CSV export to Excel and Google Login let a team adopt ITIT without migrating their data or learning a new account system.',
-      },
-      {
-        h: 'Semi-automated on purpose',
-        p: 'The hardware handles the tedious capture while people stay in the loop for judgment calls — cheaper and more trustworthy than a full enterprise RFID rollout.',
-      },
-      {
-        h: 'Ship as a team, on sprints',
-        p: 'Four Informatics students, Agile/Scrum, defined roles. I owned the web design and front-end — turning the team’s requirements into the interface users actually touch.',
+        h: 'Know when to cut',
+        p: 'I built full team collaboration — invites, roles, permissions — as a stretch goal, then helped make the call to roll it back in the final days to keep the core stable for the fair. It’s a prototype, not a finished product; a coherent, shippable core beats an ambitious half-integrated one.',
       },
     ],
     diagram: { heading: 'How it fits together', node: <ITITDiagram /> },
@@ -374,10 +378,11 @@ const STUDIES: Record<string, Study> = {
       h: 'Where it landed',
       body: (
         <>
-          ITIT was built and demoed for the IU Informatics Capstone showcase, with a live
-          deployment for testing (teammates: Eric Walker, Tanner Wathen, and Nick Delgado). My
-          biggest takeaways were designing inside a team&apos;s constraints and shipping a real
-          product against a hard deadline.
+          ITIT shipped as a working MVP — a self-hostable PHP/MariaDB app with Google login,
+          barcode lookup, and CSV export, plus a 3D-printed IoT tracker — and was demoed at the IU
+          Informatics Capstone fair (teammates: Nicolas Delgado, Eric Walker, Tanner Wathen). Two
+          semesters of Scrum taught me to design inside a team&apos;s constraints, cut scope without
+          losing the plot, and ship real software against a hard deadline.
         </>
       ),
     },
