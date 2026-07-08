@@ -7,7 +7,7 @@ const CONFETTI = ['#f4502a', '#2d4df5', '#c8f02c', '#ff9ece', '#ffc23d']
 const GAP_H = 128 // ring opening height
 // bordered box height — smaller on mobile; the hidden zone is kept above it
 const boxHeight = () => (window.innerWidth <= 720 ? 400 : 540)
-const extHeight = () => (window.innerWidth <= 720 ? 220 : 310)
+const extHeight = () => (window.innerWidth <= 720 ? 220 : 210)
 
 /* Gravity sandbox + hidden game. Stickers pile in the bordered box (which is
    aligned beside the text). The play area secretly extends above the top
