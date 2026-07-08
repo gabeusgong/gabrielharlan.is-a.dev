@@ -2,14 +2,16 @@ import { useEffect, useState } from 'react'
 import { unlock } from '../lib/achievements'
 
 /* After a stretch of no input, a little bat flutters across the screen.
-   Any activity dismisses it and resets the timer. */
+   Activity resets the idle timer, but a bat already in flight finishes its
+   trip (it clears itself when the animation ends). */
 export default function IdleSurprise() {
   const [flying, setFlying] = useState(false)
 
   useEffect(() => {
     let timer: number | undefined
+    // reset the idle countdown on activity — but DON'T cancel a bat already in
+    // flight; let it finish its trip (it clears itself on animation end).
     const arm = () => {
-      setFlying(false)
       window.clearTimeout(timer)
       timer = window.setTimeout(() => {
         setFlying(true)

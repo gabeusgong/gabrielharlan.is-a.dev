@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'motion/react'
 /* A brief "headlamp on, descending" curtain on the very first visit. Skippable
    (tap / any key), auto-lifts after ~2s, and never shows again (localStorage).
    Skipped for automation/bots so it doesn't affect audits. */
-export default function Intro() {
+export default function Intro({ onDone }: { onDone?: () => void }) {
   const [show, setShow] = useState(() => {
     try {
       return !localStorage.getItem('gh-intro-seen') && !navigator.webdriver
@@ -14,6 +14,11 @@ export default function Intro() {
   })
   const depthRef = useRef<HTMLSpanElement>(null)
 
+  const dismiss = () => {
+    setShow(false)
+    onDone?.() // hand off to the cave→light fade
+  }
+
   useEffect(() => {
     if (!show) return
     try {
@@ -22,7 +27,6 @@ export default function Intro() {
       /* ignore */
     }
     document.body.style.overflow = 'hidden'
-    const dismiss = () => setShow(false)
     const t = window.setTimeout(dismiss, 2100)
     window.addEventListener('keydown', dismiss)
 
@@ -50,7 +54,7 @@ export default function Intro() {
       {show && (
         <motion.div
           className="intro"
-          onClick={() => setShow(false)}
+          onClick={dismiss}
           exit={{ y: '-100%' }}
           transition={{ duration: 0.7, ease: [0.7, 0, 0.25, 1] }}
         >

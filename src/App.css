@@ -252,10 +252,21 @@
   }
 }
 
-/* mobile menu button (hamburger) — hidden on desktop, shown when the inline
-   links are hidden */
-.nav__menu-btn {
+/* mobile menu — the hamburger + its dropdown, sitting just right of the brand.
+   Hidden entirely on desktop (the inline links are used instead). */
+.nav__menu {
   display: none;
+  position: relative;
+}
+@media (max-width: 720px) {
+  .nav__menu {
+    display: flex;
+    align-items: center;
+  }
+}
+.nav__menu-btn {
+  display: inline-flex;
+  align-items: center;
   background: none;
   border: 0;
   font-size: 1.25rem;
@@ -263,21 +274,12 @@
   color: var(--ink);
   padding: 0.2rem 0.35rem;
 }
-@media (max-width: 720px) {
-  .nav__menu-btn {
-    display: inline-flex;
-    align-items: center;
-    order: -1; /* first control on the left of the cluster */
-  }
-}
-.nav__controls {
-  position: relative;
-}
-/* dropdown sheet of section links on mobile */
+/* dropdown sheet of section links on mobile — opens below the hamburger,
+   aligned to its left edge */
 .nav__sheet {
   position: absolute;
   top: calc(100% + 0.7rem);
-  right: 0;
+  left: 0;
   min-width: 12rem;
   list-style: none;
   margin: 0;
@@ -298,18 +300,37 @@
     transform: translateY(-6px);
   }
 }
-.nav__sheet a {
+.nav__sheet a,
+.nav__sheet-term {
   display: block;
+  width: 100%;
+  text-align: left;
   padding: 0.6rem 0.7rem;
   border-radius: 8px;
   font-weight: 600;
+  font-family: inherit;
+  font-size: inherit;
+  background: none;
+  border: 0;
+  color: var(--ink);
 }
 .nav__sheet a:hover,
-.nav__sheet a:focus-visible {
+.nav__sheet a:focus-visible,
+.nav__sheet-term:hover,
+.nav__sheet-term:focus-visible {
   background: var(--paper-2);
 }
 .nav__sheet a.is-active {
   color: var(--coral);
+}
+/* set the terminal item apart with a hairline above it */
+.nav__sheet-term {
+  margin-top: 0.15rem;
+  border-top: 1.5px solid var(--paper-2);
+  border-radius: 0 0 8px 8px;
+  color: var(--ink-soft);
+  font-family: var(--mono);
+  letter-spacing: 0.02em;
 }
 
 /* ---------- hero ---------- */
@@ -2992,6 +3013,27 @@ button.term__dot:hover {
   background: #0b0805;
   overflow: hidden;
   cursor: pointer;
+}
+
+/* first-visit: as the intro curtain lifts, the site emerges from cave darkness
+   (dark + warm headlamp glow) and slowly fades to light */
+.cavefade {
+  position: fixed;
+  inset: 0;
+  z-index: 9500;
+  pointer-events: none;
+  background:
+    radial-gradient(60% 48% at 50% 38%, rgba(255, 176, 74, 0.22), transparent 72%),
+    #0b0805;
+  animation: cavefade-out 2.6s ease 0.15s forwards;
+}
+@keyframes cavefade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
 .intro__beam {
   position: absolute;

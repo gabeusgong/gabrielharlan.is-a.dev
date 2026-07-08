@@ -124,25 +124,7 @@ export default function Nav({ cave, onToggleCave, route }: Props) {
         {profile.name.split(' ')[0]}
       </a>
 
-      <span className="nav__status">
-        <span className="nav__dot" />
-        {profile.status}
-      </span>
-
-      <ul className="nav__links">
-        {sections.map((s) => {
-          const activeId = route === 'caves' ? 'caves' : active
-          return (
-            <li key={s.id}>
-              <a href={s.href ?? `#${s.id}`} className={activeId === s.id ? 'is-active' : ''}>
-                {s.label}
-              </a>
-            </li>
-          )
-        })}
-      </ul>
-
-      <div className="nav__controls" ref={menuRef}>
+      <div className="nav__menu" ref={menuRef}>
         <button
           type="button"
           className={`nav__menu-btn ${menuOpen ? 'is-open' : ''}`}
@@ -167,8 +149,41 @@ export default function Nav({ cave, onToggleCave, route }: Props) {
                 </a>
               </li>
             ))}
+            <li>
+              <button
+                type="button"
+                className="nav__sheet-term"
+                onClick={() => {
+                  setMenuOpen(false)
+                  window.dispatchEvent(new Event('toggle-terminal'))
+                }}
+              >
+                ❯_ Terminal
+              </button>
+            </li>
           </ul>
         )}
+      </div>
+
+      <span className="nav__status">
+        <span className="nav__dot" />
+        {profile.status}
+      </span>
+
+      <ul className="nav__links">
+        {sections.map((s) => {
+          const activeId = route === 'caves' ? 'caves' : active
+          return (
+            <li key={s.id}>
+              <a href={s.href ?? `#${s.id}`} className={activeId === s.id ? 'is-active' : ''}>
+                {s.label}
+              </a>
+            </li>
+          )
+        })}
+      </ul>
+
+      <div className="nav__controls">
         <button
           type="button"
           className={`nav__lamp ${cave ? 'nav__lamp--on' : ''}`}

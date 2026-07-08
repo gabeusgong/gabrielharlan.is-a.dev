@@ -32,6 +32,9 @@ const getRoute = () =>
 function App() {
   const [cave, setCave] = useState(false)
   const [route, setRoute] = useState(getRoute)
+  // first-visit flourish: after the intro lifts, the site emerges from cave
+  // darkness into light via a slow-fading overlay
+  const [caveFade, setCaveFade] = useState(false)
 
   // keep the theme attribute in sync with the pref and the OS
   useEffect(() => {
@@ -146,7 +149,14 @@ function App() {
       <Terminal onToggleCave={toggleCave} />
       <NowPlaying />
       <ScrollTop />
-      <Intro />
+      <Intro onDone={() => setCaveFade(true)} />
+      {caveFade && (
+        <div
+          className="cavefade"
+          aria-hidden
+          onAnimationEnd={() => setCaveFade(false)}
+        />
+      )}
     </MotionConfig>
   )
 }
