@@ -245,7 +245,7 @@
     display: none;
   }
 }
-@media (max-width: 720px) {
+@media (max-width: 800px) {
   .nav__status,
   .nav__links {
     display: none;
@@ -257,7 +257,7 @@
 .nav__menu {
   display: none;
 }
-@media (max-width: 720px) {
+@media (max-width: 800px) {
   .nav__menu {
     display: flex;
     align-items: center;
