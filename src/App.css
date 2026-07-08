@@ -281,12 +281,13 @@
 /* dropdown sheet of section links on mobile — opens below the hamburger,
    aligned to its left edge */
 .nav__sheet {
-  /* centered horizontally beneath the header */
+  /* centered on the "Gabriel" wordmark (its center sits ~5.44rem from the left);
+     width trimmed so the centered sheet still fits on a narrow phone */
   position: absolute;
   top: calc(100% + 0.4rem);
-  left: 50%;
+  left: 5.44rem;
   transform: translateX(-50%);
-  min-width: 12rem;
+  min-width: 10.5rem;
   list-style: none;
   margin: 0;
   padding: 0.5rem;
@@ -650,9 +651,11 @@
   animation: hud-in 0.6s 0.25s ease both; /* fade in gently after the box slides */
 }
 /* cramped 2-column About layout: left-anchor the pill so it stays in the sticker
-   column instead of hanging into the text column's heading */
+   column, and nudge it up + left to sit clear of the heading */
 @media (min-width: 861px) and (max-width: 1200px) {
   .game-hud {
+    left: -1.5rem;
+    bottom: calc(var(--box-h, 540px) + 0.7rem + 130px);
     transform: rotate(-4deg);
     transform-origin: left center;
   }
@@ -3222,10 +3225,10 @@ button.term__dot:hover {
   box-shadow: 0 0 0 var(--ink);
 }
 
-/* phones: extra gap between the "/now" line (…Fallout 4) and the sticker game's
-   "grab & fling" note where the columns stack */
+/* phones: a little gap between the "/now" line (…Fallout 4) and the stacked
+   sticker game — trimmed so the game HUD doesn't sit too far below it */
 @media (max-width: 720px) {
   .about__stickers-col {
-    margin-top: 2.5rem;
+    margin-top: 1.25rem;
   }
 }
