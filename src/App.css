@@ -1526,30 +1526,36 @@
   color: var(--paper);
 }
 .kb__row--thumbs {
-  margin-top: 1.6rem; /* clear the inner columns' downward stagger */
+  margin-top: 1.2rem; /* clear the inner columns' downward stagger */
   justify-content: center;
   align-items: flex-start;
 }
 /* Fan each thumb key individually, like the physical board: rotation increases
-   toward the centre, and the keys step down as they splay. --tx/--ty/--rot feed
-   the shared key transform. Negative gaps let the keycaps tuck together. */
+   toward the centre, the keys step down as they splay, and the inner-most key of
+   each hand is a longer keycap. --tx/--ty/--rot feed the shared key transform. */
 .kb__half--thumbs {
   margin: 0;
   gap: 0;
 }
-/* left cluster: outer (Ctrl) upright & high → inner (Tab) most-rotated & low */
-.kb__half--thumbs:first-child .kb__key:nth-child(1) { --rot: 10deg; --ty: -0.55rem; --tx: 0.2rem; }
-.kb__half--thumbs:first-child .kb__key:nth-child(2) { --rot: 26deg; --ty: 0.15rem; --tx: -0.35rem; }
-.kb__half--thumbs:first-child .kb__key:nth-child(3) { --rot: 44deg; --ty: 1.15rem; --tx: -0.7rem; }
-.kb__row--thumbs .kb__half--thumbs:first-child { margin-right: 2.6rem; }
+/* left cluster: outer upright & high → inner most-rotated, low & long */
+.kb__half--thumbs:first-child .kb__key:nth-child(1) { --rot: 10deg; --ty: -0.45rem; --tx: 0.4rem; }
+.kb__half--thumbs:first-child .kb__key:nth-child(2) { --rot: 28deg; --ty: 0.35rem; --tx: -0.35rem; }
+.kb__half--thumbs:first-child .kb__key:nth-child(3) { --rot: 46deg; --ty: 1.35rem; --tx: -1rem; }
+.kb__row--thumbs .kb__half--thumbs:first-child { margin-right: 1.6rem; }
 /* right cluster: mirror */
-.kb__half--thumbs:last-child .kb__key:nth-child(1) { --rot: -44deg; --ty: 1.15rem; --tx: 0.7rem; }
-.kb__half--thumbs:last-child .kb__key:nth-child(2) { --rot: -26deg; --ty: 0.15rem; --tx: 0.35rem; }
-.kb__half--thumbs:last-child .kb__key:nth-child(3) { --rot: -10deg; --ty: -0.55rem; --tx: -0.2rem; }
-.kb__row--thumbs .kb__half--thumbs:last-child { margin-left: 2.6rem; }
+.kb__half--thumbs:last-child .kb__key:nth-child(1) { --rot: -46deg; --ty: 1.35rem; --tx: 1rem; }
+.kb__half--thumbs:last-child .kb__key:nth-child(2) { --rot: -28deg; --ty: 0.35rem; --tx: 0.35rem; }
+.kb__half--thumbs:last-child .kb__key:nth-child(3) { --rot: -10deg; --ty: -0.45rem; --tx: -0.4rem; }
+.kb__row--thumbs .kb__half--thumbs:last-child { margin-left: 1.6rem; }
+/* the two outer thumb keys are regular-sized… */
 .kb__key--thumb {
-  width: 2.7rem;
+  width: 2.15rem;
   background: var(--sun);
+}
+/* …the inner-most (bottom-most) thumb key on each hand is an elongated keycap */
+.kb__half--thumbs:first-child .kb__key:nth-child(3),
+.kb__half--thumbs:last-child .kb__key:nth-child(1) {
+  width: 3.4rem;
 }
 .kb__key--thumb.is-blank {
   background: var(--paper);
