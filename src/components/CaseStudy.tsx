@@ -369,8 +369,8 @@ const STUDIES: Record<string, Study> = {
         p: 'The app mirrors a real hierarchy — Deployments → Locations → Trackers → Items → Linked Items. After instructor feedback we reworked “Deployment” into a selected context each session scopes to, so users only ever see the one setup they’re working in.',
       },
       {
-        h: 'Know when to cut',
-        p: 'I built full team collaboration — invites, roles, permissions — as a stretch goal, then helped make the call to roll it back in the final days to keep the core stable for the fair. It’s a prototype, not a finished product; a coherent, shippable core beats an ambitious half-integrated one.',
+        h: 'Fit the tools they already use',
+        p: 'Google login means no new account to manage, a barcode/UPC lookup fills in an item’s details from a single scan, and one-click CSV/XLSX export drops everything into the spreadsheets a team already lives in — so adopting ITIT never means migrating your whole world first.',
       },
     ],
     diagram: { heading: 'How it fits together', node: <ITITDiagram /> },
