@@ -1536,26 +1536,27 @@
 .kb__half--thumbs {
   margin: 0;
   gap: 0;
+  align-items: flex-start;
 }
-/* left cluster: outer upright & high → inner most-rotated, low & long */
-.kb__half--thumbs:first-child .kb__key:nth-child(1) { --rot: 10deg; --ty: -0.45rem; --tx: 0.4rem; }
-.kb__half--thumbs:first-child .kb__key:nth-child(2) { --rot: 28deg; --ty: 0.35rem; --tx: -0.35rem; }
-.kb__half--thumbs:first-child .kb__key:nth-child(3) { --rot: 46deg; --ty: 1.35rem; --tx: -1rem; }
-.kb__row--thumbs .kb__half--thumbs:first-child { margin-right: 1.6rem; }
+/* left cluster: outer upright & high → inner most-rotated & long (tall) */
+.kb__half--thumbs:first-child .kb__key:nth-child(1) { --rot: 6deg; --ty: 0rem; --tx: 0.5rem; }
+.kb__half--thumbs:first-child .kb__key:nth-child(2) { --rot: 20deg; --ty: 0.5rem; --tx: 0rem; }
+.kb__half--thumbs:first-child .kb__key:nth-child(3) { --rot: 38deg; --ty: 0.55rem; --tx: -0.55rem; }
+.kb__row--thumbs .kb__half--thumbs:first-child { margin-right: 1.2rem; }
 /* right cluster: mirror */
-.kb__half--thumbs:last-child .kb__key:nth-child(1) { --rot: -46deg; --ty: 1.35rem; --tx: 1rem; }
-.kb__half--thumbs:last-child .kb__key:nth-child(2) { --rot: -28deg; --ty: 0.35rem; --tx: 0.35rem; }
-.kb__half--thumbs:last-child .kb__key:nth-child(3) { --rot: -10deg; --ty: -0.45rem; --tx: -0.4rem; }
-.kb__row--thumbs .kb__half--thumbs:last-child { margin-left: 1.6rem; }
+.kb__half--thumbs:last-child .kb__key:nth-child(1) { --rot: -38deg; --ty: 0.55rem; --tx: 0.55rem; }
+.kb__half--thumbs:last-child .kb__key:nth-child(2) { --rot: -20deg; --ty: 0.5rem; --tx: 0rem; }
+.kb__half--thumbs:last-child .kb__key:nth-child(3) { --rot: -6deg; --ty: 0rem; --tx: -0.5rem; }
+.kb__row--thumbs .kb__half--thumbs:last-child { margin-left: 1.2rem; }
 /* the two outer thumb keys are regular-sized… */
 .kb__key--thumb {
   width: 2.15rem;
   background: var(--sun);
 }
-/* …the inner-most (bottom-most) thumb key on each hand is an elongated keycap */
+/* …the inner-most (bottom-most) thumb key on each hand is a longer, taller cap */
 .kb__half--thumbs:first-child .kb__key:nth-child(3),
 .kb__half--thumbs:last-child .kb__key:nth-child(1) {
-  width: 3.4rem;
+  height: 3.4rem;
 }
 .kb__key--thumb.is-blank {
   background: var(--paper);
