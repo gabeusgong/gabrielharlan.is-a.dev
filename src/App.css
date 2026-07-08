@@ -256,7 +256,6 @@
    Hidden entirely on desktop (the inline links are used instead). */
 .nav__menu {
   display: none;
-  position: relative;
 }
 @media (max-width: 720px) {
   .nav__menu {
@@ -282,9 +281,11 @@
 /* dropdown sheet of section links on mobile — opens below the hamburger,
    aligned to its left edge */
 .nav__sheet {
+  /* positioned relative to the fixed nav so its left edge lines up with the
+     star at the start of the brand (nav padding-left = 2rem) */
   position: absolute;
-  top: calc(100% + 0.7rem);
-  left: 0;
+  top: calc(100% + 0.4rem);
+  left: 2rem;
   min-width: 12rem;
   list-style: none;
   margin: 0;
@@ -642,12 +643,19 @@
   border-radius: 100px;
   font-size: 0.66rem;
   white-space: nowrap;
-  /* anchor to the box's left edge and extend right, so the pill never hangs
-     left into the neighbouring text column (was translateX(-50%), which
-     overlapped the "Nice to meet you" heading at cramped 2-column widths) */
-  transform: rotate(-4deg); /* tilts up toward the right */
-  transform-origin: left center;
+  /* centered on the box's left border (original placement); the cramped 2-column
+     range below re-anchors it so it can't overlap the "Nice to meet you" heading */
+  transform: translateX(-50%) rotate(-4deg); /* tilts up toward the right */
+  transform-origin: center;
   animation: hud-in 0.6s 0.25s ease both; /* fade in gently after the box slides */
+}
+/* cramped 2-column About layout: left-anchor the pill so it stays in the sticker
+   column instead of hanging into the text column's heading */
+@media (min-width: 861px) and (max-width: 1200px) {
+  .game-hud {
+    transform: rotate(-4deg);
+    transform-origin: left center;
+  }
 }
 @keyframes hud-in {
   from {
@@ -1063,24 +1071,6 @@
 }
 .footer__top:hover {
   color: var(--coral);
-}
-/* terminal hint — desktop only (no "/" key on touch; use the nav menu there) */
-.footer__hint {
-  color: var(--ink-soft);
-  opacity: 0.85;
-}
-.footer__kbd {
-  font-family: var(--mono);
-  font-size: 0.85em;
-  padding: 0.05em 0.4em;
-  border: 1.5px solid var(--ink);
-  border-radius: 5px;
-  background: var(--paper-2);
-}
-@media (max-width: 720px) {
-  .footer__hint {
-    display: none;
-  }
 }
 
 /* ---------- résumé button spacing ---------- */
