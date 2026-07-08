@@ -3238,11 +3238,10 @@ button.term__dot:hover {
   box-shadow: 0 0 0 var(--ink);
 }
 
-/* phones (mobile): breathing room between the "/now" line (…Fallout 4) and the
-   stacked sticker game's "grab & fling" note. The 1/3-width range (501–720px)
-   keeps the tighter default. */
-@media (max-width: 500px) {
+/* once the About columns stack (<=860px), the sticker game drops below the text —
+   give the "/now" line clear separation from the "grab & fling" note */
+@media (max-width: 860px) {
   .about__stickers-col {
-    margin-top: 2rem;
+    margin-top: 3.5rem;
   }
 }
