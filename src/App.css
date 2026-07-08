@@ -1548,12 +1548,12 @@
 }
 /* left cluster: outer (upright, under C/V) → inner (tall, rotated toward centre) */
 .kb__half--thumbs:first-child .kb__key:nth-child(1) { left: 8.575rem; top: 0; --rot: 0deg; }
-.kb__half--thumbs:first-child .kb__key:nth-child(2) { left: 10.35rem; top: 0.7rem; --rot: -20deg; }
-.kb__half--thumbs:first-child .kb__key:nth-child(3) { left: 12.125rem; top: 0.55rem; --rot: -38deg; }
+.kb__half--thumbs:first-child .kb__key:nth-child(2) { left: 10.175rem; top: 0.7rem; --rot: 20deg; }
+.kb__half--thumbs:first-child .kb__key:nth-child(3) { left: 11.775rem; top: 0.55rem; --rot: 38deg; }
 /* right cluster: mirror — outer (upright, under M/comma) → inner (tall) */
 .kb__half--thumbs:last-child .kb__key:nth-child(3) { left: 3.675rem; top: 0; --rot: 0deg; }
-.kb__half--thumbs:last-child .kb__key:nth-child(2) { left: 1.9rem; top: 0.7rem; --rot: 20deg; }
-.kb__half--thumbs:last-child .kb__key:nth-child(1) { left: 0.125rem; top: 0.55rem; --rot: 38deg; }
+.kb__half--thumbs:last-child .kb__key:nth-child(2) { left: 2.075rem; top: 0.7rem; --rot: -20deg; }
+.kb__half--thumbs:last-child .kb__key:nth-child(1) { left: 0.475rem; top: 0.55rem; --rot: -38deg; }
 /* the inner-most (bottom-most) key on each hand is a longer, taller cap */
 .kb__half--thumbs:first-child .kb__key:nth-child(3),
 .kb__half--thumbs:last-child .kb__key:nth-child(1) {
