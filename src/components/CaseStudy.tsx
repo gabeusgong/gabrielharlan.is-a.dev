@@ -484,10 +484,12 @@ const STUDIES: Record<string, Study> = {
     ],
     problem: (
       <>
-        The preserve&apos;s real web presence is dense and dated — the things that matter most
-        (access permits, White-Nose Syndrome decontamination, the management plan) are buried in
-        walls of text. I rebuilt it as a welcoming, responsive site that still leads with the
-        preserve&apos;s conservation-first mission.
+        I&apos;ve caved Buckner many times — and volunteered there on graffiti-removal restoration —
+        so I know the preserve firsthand. Its real site, though, is a text-heavy, un-responsive
+        early-2000s build where the things that matter most (access permits, White-Nose Syndrome
+        decontamination, the management plan) sit buried in walls of text. I rebuilt it as a
+        welcoming, responsive site that still leads with the preserve&apos;s conservation-first
+        mission.
       </>
     ),
     spotlight: {
@@ -518,7 +520,7 @@ const STUDIES: Record<string, Study> = {
       },
       {
         h: 'An earthy, on-site palette',
-        p: 'Colors and type were chosen to feel like the cave, not a generic template — warm limestone neutrals, a topographic-line motif, and a restrained serif/sans pairing.',
+        p: 'The clay red is the National Speleological Society’s own brand color — fitting, since the NSS manages the preserve — set against limestone neutrals and a topographic-line motif that runs through the banners and footer. Rustic but modern, drawn from the place rather than a template.',
       },
     ],
     gallery: {
@@ -543,9 +545,12 @@ const STUDIES: Record<string, Study> = {
       h: 'Where it stands',
       body: (
         <>
-          A hand-coded static site — HTML, CSS, and vanilla JS, no frameworks — built for I360 Web
-          Design. It&apos;s the project that first fused the two things this whole portfolio is about:
-          caving and building for the web. A direct ancestor of Karst.
+          My first website built from scratch — hand-coded HTML, CSS, and vanilla JS, no frameworks.
+          Two lessons stuck: wrangling JavaScript before I really knew the language, and a mid-build
+          pivot from desktop-first to mobile-first after the phone view fell apart (goodbye, fixed
+          pixel widths). It landed well in class, and it&apos;s the direct ancestor of Karst — which
+          even reuses this site&apos;s topographic header background. The project that first fused the
+          two halves of this portfolio: caving and building for the web.
         </>
       ),
     },
