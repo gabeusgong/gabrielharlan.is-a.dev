@@ -488,12 +488,13 @@ const STUDIES: Record<string, Study> = {
     ),
     spotlight: {
       tag: '★ Signature',
-      h: 'Designed around photos I shot underground',
+      h: 'Designed around real cave photography',
       body: (
         <>
-          The hero slideshow and the blurred backdrop are <strong>my own photography from inside
-          Buckner Cave</strong>, and the palette is pulled straight from the rock — limestone tans,
-          cave-water blue, and a clay red — set in Libre Baskerville over Poppins. The design starts
+          The hero slideshow and the blurred backdrop lean on cave photography —{' '}
+          <strong>most of it my own from inside Buckner Cave, the rest sourced from the Bloomington
+          Indiana Grotto</strong> — and the palette is pulled straight from the rock: limestone tans,
+          cave-water blue, and a clay red, set in Libre Baskerville over Poppins. The design starts
           from the place itself.
         </>
       ),

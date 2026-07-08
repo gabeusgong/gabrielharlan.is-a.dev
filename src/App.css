@@ -238,8 +238,9 @@
     margin-left: auto;
   }
 }
-/* when it gets tight, drop the status pill so the tabs still fit without clipping */
-@media (min-width: 721px) and (max-width: 940px) {
+/* when it gets tight, drop the status pill so the tabs + controls still fit
+   without the cluster clipping off the right edge */
+@media (min-width: 721px) and (max-width: 1100px) {
   .nav__status {
     display: none;
   }
@@ -394,6 +395,13 @@
   margin: 1rem auto 0;
   color: var(--ink-soft);
   opacity: 0.9;
+}
+@media (max-width: 720px) {
+  /* keep the availability line clearly smaller than the tagline above it */
+  .hero__avail {
+    font-size: 0.58rem;
+    letter-spacing: 0.12em;
+  }
 }
 .hero__rotator {
   display: inline-flex;
@@ -607,8 +615,11 @@
   border-radius: 100px;
   font-size: 0.66rem;
   white-space: nowrap;
-  transform: translateX(-50%) rotate(-4deg); /* tilts up toward the right */
-  transform-origin: center;
+  /* anchor to the box's left edge and extend right, so the pill never hangs
+     left into the neighbouring text column (was translateX(-50%), which
+     overlapped the "Nice to meet you" heading at cramped 2-column widths) */
+  transform: rotate(-4deg); /* tilts up toward the right */
+  transform-origin: left center;
   animation: hud-in 0.6s 0.25s ease both; /* fade in gently after the box slides */
 }
 @keyframes hud-in {

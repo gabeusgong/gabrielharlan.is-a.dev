@@ -9,7 +9,7 @@ const sections = [
   { id: 'work', label: 'Work' },
   { id: 'wall', label: 'Wall' },
   { id: 'contact', label: 'Say hi' },
-  { id: 'caves', label: 'Caves', href: '#/caves' },
+  { id: 'caves', label: 'Gallery', href: '#/caves' },
 ]
 
 type Props = {
@@ -169,16 +169,6 @@ export default function Nav({ cave, onToggleCave, route }: Props) {
             ))}
           </ul>
         )}
-        <button
-          type="button"
-          className="nav__term"
-          onClick={() => window.dispatchEvent(new Event('toggle-terminal'))}
-          data-cursor
-          title="Terminal ( / )"
-          aria-label="Open terminal"
-        >
-          ❯_
-        </button>
         <button
           type="button"
           className={`nav__lamp ${cave ? 'nav__lamp--on' : ''}`}

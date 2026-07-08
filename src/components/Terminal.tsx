@@ -30,7 +30,7 @@ const HELP = [
   '  cave              toggle cave mode',
   '  resume            open my résumé',
   '  whoami            who is this',
-  '  /secret           your discovered secrets',
+  '  secret            your discovered secrets',
   '  clear             clear the screen',
 ]
 

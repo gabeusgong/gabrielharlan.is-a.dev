@@ -1,8 +1,11 @@
 import { useEffect, useRef } from 'react'
 import { skills, tones } from '../data'
 
-function Chips({ k }: { k: string }) {
-  const row = [...skills, ...skills]
+function Chips({ k, start = 0 }: { k: string; start?: number }) {
+  // rotate the list so the two marquees don't line up the same skills on top of
+  // each other
+  const rotated = [...skills.slice(start), ...skills.slice(0, start)]
+  const row = [...rotated, ...rotated]
   return (
     <>
       {row.map((s, i) => (
@@ -107,7 +110,7 @@ export default function Skills() {
         </div>
         <div className="marquee">
           <div className="marquee__track" ref={t2}>
-            <Chips k="b" />
+            <Chips k="b" start={Math.floor(skills.length / 2)} />
           </div>
         </div>
       </div>

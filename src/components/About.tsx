@@ -57,7 +57,7 @@ export default function About() {
                 height={1200}
                 loading="lazy"
               />
-              <figcaption>the culprit, off the clock</figcaption>
+              <figcaption>that&apos;s me, off the clock</figcaption>
             </figure>
           </Reveal>
           <Reveal delay={0.12}>
