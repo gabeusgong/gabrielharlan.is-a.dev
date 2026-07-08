@@ -262,6 +262,9 @@
   .nav__menu {
     display: flex;
     align-items: center;
+    /* cancel most of the nav's 1.5rem flex gap so the hamburger sits the same
+       0.45rem from "Gabriel" as the star does on the other side */
+    margin-left: -1.05rem;
   }
 }
 .nav__menu-btn {
@@ -273,6 +276,8 @@
   line-height: 1;
   color: var(--ink);
   padding: 0.2rem 0.35rem;
+  /* the ☰ glyph sits low in its em box; nudge up to the word's visual center */
+  transform: translateY(-2px);
 }
 /* dropdown sheet of section links on mobile — opens below the hamburger,
    aligned to its left edge */
