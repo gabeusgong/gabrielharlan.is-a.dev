@@ -216,13 +216,13 @@ export default function Hero() {
           </a>
           <a
             className="btn btn--ghost btn--resume"
-            href="./Gabriel-Harlan-Resume.pdf"
+            href="./resume/"
             target="_blank"
             rel="noreferrer"
             data-cursor
             onClick={() => track('resume')}
           >
-            Résumé ↓
+            Résumé ↗
           </a>
         </motion.div>
       </div>

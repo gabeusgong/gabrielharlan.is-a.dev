@@ -208,7 +208,7 @@ export default function Terminal({ onToggleCave }: { onToggleCave: () => void })
         break
       case 'resume':
       case 'cv':
-        window.open('./Gabriel-Harlan-Resume.pdf', '_blank')
+        window.open('./resume/', '_blank')
         print(['opening résumé…'])
         break
       case 'whoami':

@@ -96,28 +96,16 @@ export default function Contact() {
       </Reveal>
 
       <Reveal delay={0.18}>
-        <div className="contact__resume-actions">
-          <a
-            className="btn btn--solid"
-            href="./resume/"
-            target="_blank"
-            rel="noreferrer"
-            data-cursor
-            onClick={() => track('resume-view')}
-          >
-            View résumé ↗
-          </a>
-          <a
-            className="btn btn--ghost contact__resume"
-            href="./Gabriel-Harlan-Resume.pdf"
-            target="_blank"
-            rel="noreferrer"
-            data-cursor
-            onClick={() => track('resume')}
-          >
-            Download PDF ↓
-          </a>
-        </div>
+        <a
+          className="btn btn--solid contact__resume"
+          href="./resume/"
+          target="_blank"
+          rel="noreferrer"
+          data-cursor
+          onClick={() => track('resume')}
+        >
+          View résumé ↗
+        </a>
       </Reveal>
 
       <footer className="footer">

@@ -353,9 +353,54 @@
         body { padding: 0; background: #fff; display: block; }
         .sheet { box-shadow: none; width: 8.5in; min-height: 0; }
       }
+
+      /* screen-only download toolbar (never appears in the printed/downloaded PDF) */
+      .rtoolbar {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 100;
+        display: flex;
+        gap: 10px;
+      }
+      .rtoolbar a {
+        font-family: var(--mono);
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+        text-decoration: none;
+        color: var(--paper);
+        background: var(--ink);
+        border: 2px solid var(--ink);
+        border-radius: 100px;
+        padding: 9px 15px;
+        box-shadow: 3px 3px 0 rgba(33, 27, 20, 0.32);
+        transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+      }
+      .rtoolbar a:hover {
+        transform: translate(-1px, -1px);
+        box-shadow: 4px 4px 0 rgba(33, 27, 20, 0.4);
+        background: var(--coral);
+      }
+      .rtoolbar a.alt {
+        background: var(--paper);
+        color: var(--ink);
+      }
+      .rtoolbar a.alt:hover {
+        background: var(--sun);
+        color: var(--ink);
+      }
+      @media print {
+        .rtoolbar { display: none !important; }
+      }
     </style>
   </head>
   <body>
+    <!-- download toolbar (screen only; hidden when printed to PDF) -->
+    <nav class="rtoolbar" aria-label="Download résumé">
+      <a href="../Gabriel-Harlan-Resume.pdf" download>↓ PDF</a>
+      <a class="alt" href="../Gabriel-Harlan-Resume.docx" download>↓ Word</a>
+    </nav>
     <!-- ===== EDIT YOUR CONTENT BELOW =====
          Change only the text inside the tags (e.g. the words in a <li>…</li>).
          To add a bullet, copy a whole <li>…</li> line; to remove one, delete it.
