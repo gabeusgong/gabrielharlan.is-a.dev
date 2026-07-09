@@ -390,12 +390,58 @@
         background: var(--sun);
         color: var(--ink);
       }
+
+      /* back-to-site arrow (screen only) */
+      .rback {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 100;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 42px;
+        height: 42px;
+        font-family: var(--mono);
+        font-size: 18px;
+        font-weight: 700;
+        text-decoration: none;
+        color: var(--paper);
+        background: var(--ink);
+        border: 2px solid var(--ink);
+        border-radius: 50%;
+        box-shadow: 3px 3px 0 rgba(33, 27, 20, 0.32);
+        transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+      }
+      .rback:hover {
+        transform: translate(-1px, -1px);
+        box-shadow: 4px 4px 0 rgba(33, 27, 20, 0.4);
+        background: var(--coral);
+      }
       @media print {
-        .rtoolbar { display: none !important; }
+        .rtoolbar,
+        .rback { display: none !important; }
+      }
+
+      /* mobile: scale the fixed 8.5in sheet down to fit the screen width.
+         --fit is set by the script below; scoped to screen so the printed/
+         downloaded PDF (print media) is never scaled. */
+      @media screen and (max-width: 815px) {
+        body {
+          display: block;
+          padding: 62px 0 0; /* clear the fixed back arrow above the sheet */
+          overflow-x: hidden;
+        }
+        .sheet {
+          zoom: var(--fit, 1);
+          box-shadow: none;
+        }
       }
     </style>
   </head>
   <body>
+    <!-- back to the site (screen only) -->
+    <a class="rback" href="../" id="rback" aria-label="Back to site" title="Back to site">←</a>
     <!-- download toolbar (screen only; hidden when printed to PDF) -->
     <nav class="rtoolbar" aria-label="Download résumé">
       <a href="../Gabriel-Harlan-Resume.pdf" download>↓ PDF</a>
@@ -563,5 +609,31 @@
         </aside>
       </div>
     </div>
+    <script>
+      // Scale the fixed 8.5in sheet to fit narrow screens (screen media only —
+      // the CSS var is used solely inside the mobile @media rule, so the
+      // printed/downloaded PDF is never scaled).
+      (function () {
+        function fit() {
+          var vw = document.documentElement.clientWidth
+          document.documentElement.style.setProperty(
+            '--fit',
+            vw < 816 ? (vw / 816).toFixed(4) : '1',
+          )
+        }
+        window.addEventListener('resize', fit)
+        window.addEventListener('orientationchange', fit)
+        fit()
+        // back arrow: return to the previous page if there's history, else the site root
+        var back = document.getElementById('rback')
+        if (back)
+          back.addEventListener('click', function (e) {
+            if (window.history.length > 1 && document.referrer) {
+              e.preventDefault()
+              window.history.back()
+            }
+          })
+      })()
+    </script>
   </body>
 </html>
