@@ -173,12 +173,8 @@ export const uses: UseGroup[] = [
     tone: 'coral',
     items: [
       {
-        name: 'Corne 42 — hand-built',
-        note: 'Split, wireless, low-profile on custom ZMK · Kailh Choc Silver linears (lubed, o-ring + tape mod) · nice!nano v2, per-half OLEDs, page-up/down knob. My own build — full story in the Corne case study.',
-      },
-      {
-        name: 'GMMK Pro',
-        note: 'Gateron Black Ink V2 linears · tape mod · JTK Dreaming Girl keycaps',
+        name: 'Hibi June R2 (60%)',
+        note: 'Gateron Baby Kangaroo tactiles · NicePBT Peaches n Cream Lite keycaps',
       },
       {
         name: 'QK100 (tri-mode)',
@@ -189,12 +185,16 @@ export const uses: UseGroup[] = [
         note: 'Gateron Pro North Pole linears · Infinikey Delight keycaps',
       },
       {
-        name: 'Hibi June R2 (60%)',
-        note: 'Gateron Baby Kangaroo tactiles · NicePBT Peaches n Cream Lite keycaps',
-      },
-      {
         name: 'Voice (mini macropad)',
         note: 'Gateron Black Ink V2 linears · JTK Night Sakura keycaps',
+      },
+      {
+        name: 'Corne 42 — hand-built',
+        note: 'Split, wireless, low-profile on custom ZMK · Kailh Choc Silver linears (lubed, o-ring + tape mod) · nice!nano v2, per-half OLEDs, page-up/down knob. My own build — full story in the Corne case study.',
+      },
+      {
+        name: 'GMMK Pro',
+        note: 'Gateron Black Ink V2 linears · tape mod · JTK Dreaming Girl keycaps',
       },
     ],
   },
