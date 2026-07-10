@@ -617,10 +617,10 @@
           <section class="sec g-sun">
             <div class="sec__head"><span class="chip chip--sun"></span>Projects</div>
             <ul class="side-list side-list--proj">
+              <li><strong>TRACI SMS Gateway</strong> — text Tire Rack&apos;s AI agent (Twilio · Cloud Run)</li>
               <li><strong>Karst</strong> — caving field guide (Next.js + Firebase)</li>
               <li><strong>ITIT</strong> — IoT inventory tracker (capstone)</li>
               <li><strong>Corne 42</strong> — split wireless keyboard (ZMK)</li>
-              <li><strong>Blenz</strong> — NSS cave-preserve site</li>
             </ul>
           </section>
 
@@ -654,6 +654,34 @@
         window.addEventListener('resize', fit)
         window.addEventListener('orientationchange', fit)
         fit()
+        // force the toolbar links to download (prompt) rather than open the
+        // file in the browser — works even where the `download` attr is ignored
+        document.querySelectorAll('.rtoolbar a[download]').forEach(function (a) {
+          a.addEventListener('click', function (e) {
+            e.preventDefault()
+            var url = a.getAttribute('href')
+            var name = url.split('/').pop()
+            fetch(url)
+              .then(function (r) {
+                return r.blob()
+              })
+              .then(function (blob) {
+                var u = URL.createObjectURL(blob)
+                var t = document.createElement('a')
+                t.href = u
+                t.download = name
+                document.body.appendChild(t)
+                t.click()
+                setTimeout(function () {
+                  URL.revokeObjectURL(u)
+                  t.remove()
+                }, 1500)
+              })
+              .catch(function () {
+                window.location.href = url // fallback
+              })
+          })
+        })
         // back arrow: return to the previous page if there's history, else the site root
         var back = document.getElementById('rback')
         if (back)

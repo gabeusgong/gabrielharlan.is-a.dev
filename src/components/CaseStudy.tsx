@@ -49,17 +49,42 @@ function ITITDiagram() {
   )
 }
 
+/* ---- TRACI SMS gateway: a request-flow diagram ---- */
+function SMSGatewayDiagram() {
+  const steps = ['Webhook ACKs', 'Worker calls agent', 'Classify events', 'Render → SMS']
+  return (
+    <div className="cs__flow" aria-hidden>
+      <div className="cs__sync">
+        <span className="cs__sync-node cs__sync-node--hw">📱 Texter</span>
+        <span className="cs__sync-link">⇄ SMS · Twilio ⇄</span>
+        <span className="cs__sync-node cs__sync-node--web">🤖 TRACI agent</span>
+      </div>
+      <div className="cs__hier">
+        {steps.map((s, i) => (
+          <span className="cs__hier-step" key={s}>
+            {s}
+            {i < steps.length - 1 && <span className="cs__hier-arrow">→</span>}
+          </span>
+        ))}
+      </div>
+      <p className="cs__flow-cap label">
+        the gateway owns the conversation · the AI agent stays untouched
+      </p>
+    </div>
+  )
+}
+
 /* ---- Corne keymap: an interactive, tabbed layer diagram ---- */
 const KB_LAYERS = [
   {
     name: 'Base',
-    note: 'QWERTY with Shift / Ctrl on the outer columns. The thumbs carry the layer holds, Space and Enter — there’s no dedicated Esc, it lives on the layers.',
+    note: 'QWERTY with Shift / Ctrl on the outer columns. The thumbs carry the layer holds, Space, Enter, and a media play/pause key — there’s no dedicated Esc, it lives on the layers.',
     rows: [
       ['Tab', 'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '⌫'],
       ['Shift', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ';', "'"],
       ['Ctrl', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', ',', '.', '/', 'GUI'],
     ],
-    thumbs: ['Raise', '', 'Space', 'Enter', 'Lower', 'GUI'],
+    thumbs: ['Raise', '', 'Space', 'Enter', 'Lower', '⏯'],
   },
   {
     name: 'Lower',
@@ -201,12 +226,85 @@ function KeyboardLayers() {
         </div>
       </div>
       <p className="kb__note label">{L.note}</p>
-      <p className="kb__encoder label">🎛 rotary encoder → volume up / down · 🔊 tap a key</p>
+      <p className="kb__encoder label">🎛 rotary encoder → page up / down · 🔊 tap a key</p>
     </div>
   )
 }
 
 const STUDIES: Record<string, Study> = {
+  tracisms: {
+    slug: 'tracisms',
+    title: (
+      <>
+        TRACI SMS Gateway <span className="cs__cube">💬</span>
+      </>
+    ),
+    year: '2026',
+    lede: (
+      <>
+        An <strong>SMS gateway</strong> that lets customers text Tire Rack&apos;s TRACI AI tire
+        agent — built as an Innovation &amp; AI intern. Inbound texts reach the agent; its replies
+        are rendered back into SMS.
+      </>
+    ),
+    meta: [
+      { label: 'Role', value: 'Design, build & deploy (solo)' },
+      { label: 'Stack', value: 'Python · FastAPI · Cloud Run' },
+      { label: 'Channel', value: 'Twilio SMS · RCS-ready' },
+    ],
+    problem: (
+      <>
+        TRACI, Tire Rack&apos;s AI tire agent, lived on the web — but plenty of customers would
+        rather just <strong>text</strong>. The goal: let anyone message a plain phone number and get
+        the full agent — tire questions, comparisons, sizes, recommendations — over SMS, without
+        modifying the agent itself.
+      </>
+    ),
+    spotlight: {
+      tag: '★ The hard part',
+      h: 'The vehicle picker, reinvented for text',
+      body: (
+        <>
+          The website resolves your car with a year/make/model <strong>picker widget</strong> — which
+          can&apos;t render in a text, and the agent can&apos;t reliably parse a vehicle from free
+          text. So the gateway resolves it itself: a <strong>numbered-reply drill-down</strong> over
+          the site&apos;s vehicle APIs that walks Year → Make → Model → trim and auto-supplies the
+          factory tire size, so a texter never needs to know their own size.
+        </>
+      ),
+    },
+    decisions: [
+      {
+        h: 'Sit in front, change nothing behind',
+        p: 'The gateway is only a caller of the agent’s message endpoint — the AI agent is untouched. Because that endpoint is stateless, the gateway owns conversation continuity by keying each thread to the texter (a hashed phone number), so a series of texts still feels like one continuous chat.',
+      },
+      {
+        h: 'Render an event stream into a text',
+        p: 'The agent answers with a raw, ordered stream of “events” — text, cards, UI bits. The gateway classifies each: text to keep, noise to drop, cards to reformat for SMS. It uses a denylist rather than an allowlist, so a brand-new kind of agent card is never silently dropped — only ever reformatted.',
+      },
+      {
+        h: 'Answer fast, even when the model is slow',
+        p: 'Agent replies can take many seconds. The webhook acknowledges the carrier immediately and hands off to a background worker that calls the agent and sends the reply — so inbound texts never time out waiting on inference.',
+      },
+      {
+        h: 'Production-shaped from day one',
+        p: 'Python/FastAPI on Google Cloud Run, Twilio for SMS (RCS-ready for richer cards later), Redis-backed session state, a job queue for the async workers, 42 tests, and keyless CI/CD via GitHub Actions + Workload Identity Federation — no stored credentials.',
+      },
+    ],
+    diagram: { heading: 'How a text becomes an answer', node: <SMSGatewayDiagram /> },
+    closing: {
+      h: 'Where it stands',
+      body: (
+        <>
+          Live end-to-end — text the number and TRACI answers over SMS: tire questions, comparisons,
+          sizes, sales contacts, and the full vehicle → recommendation path. Built solo during my
+          Tire Rack Innovation &amp; AI internship, it&apos;s my first production service on cloud
+          infrastructure — and the clearest proof that a good AI product is mostly the plumbing
+          around the model.
+        </>
+      ),
+    },
+  },
   karst: {
     slug: 'karst',
     title: (
@@ -445,8 +543,8 @@ const STUDIES: Record<string, Study> = {
         p: 'Kailh Choc low-profile Silver linears, lubed and finished with an o-ring gummy mod and a tape mod for sound and feel. Blank 3D-printed low-profile keycaps and a 3D-printed case round it out.',
       },
       {
-        h: 'A volume knob, wired by hand',
-        p: 'Hand-wired rotary encoders driven through ZMK’s EC11 support. Getting them to read reliably took real trial and error — in the soldering and the firmware — but after a lot of work the sensor-binding now maps the knob to volume up/down, turning the finest bit of soldering on the board into its most tactile control.',
+        h: 'A scroll knob, wired by hand',
+        p: 'Hand-wired rotary encoders driven through ZMK’s EC11 support. Getting them to read reliably took real trial and error — in the soldering and the firmware — but after a lot of work the sensor-binding now maps the knob to page up / down, turning the finest bit of soldering on the board into the fastest way to move through a doc or codebase (with media play/pause parked on a thumb).',
       },
     ],
     diagram: { heading: 'The keymap', node: <KeyboardLayers /> },

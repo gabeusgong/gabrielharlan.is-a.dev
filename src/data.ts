@@ -75,10 +75,21 @@ export type Project = {
   year?: string
   emoji: string
   caseStudy?: boolean
-  study?: 'karst' | 'itit' | 'corne' | 'blenz'
+  study?: 'karst' | 'itit' | 'corne' | 'blenz' | 'tracisms'
 }
 
 export const projects: Project[] = [
+  {
+    title: 'TRACI SMS Gateway',
+    blurb:
+      "An SMS gateway that lets customers text Tire Rack's TRACI AI tire agent. A Python/FastAPI service on Google Cloud Run that fronts the agent over Twilio — a text-driven vehicle picker (year/make/model → factory tire size), an event-stream-to-SMS renderer, async workers so slow AI replies never time out, Redis session state, and keyless CI/CD. Built solo as an Innovation & AI intern.",
+    tags: ['Python', 'FastAPI', 'Cloud Run', 'Twilio'],
+    tone: 'coral',
+    year: '2026',
+    emoji: '💬',
+    caseStudy: true,
+    study: 'tracisms',
+  },
   {
     title: 'Karst',
     blurb:
