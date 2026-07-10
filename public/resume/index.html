@@ -666,7 +666,10 @@
                 return r.blob()
               })
               .then(function (blob) {
-                var u = URL.createObjectURL(blob)
+                // re-wrap as a generic type so iOS Safari can't preview the PDF
+                // inline — it forces a download/save, same as the .docx
+                var dl = new Blob([blob], { type: 'application/octet-stream' })
+                var u = URL.createObjectURL(dl)
                 var t = document.createElement('a')
                 t.href = u
                 t.download = name
