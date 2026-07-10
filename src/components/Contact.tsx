@@ -110,6 +110,9 @@ export default function Contact() {
 
       <footer className="footer">
         <span className="label">© {profile.name} · built with care, thanks for scrolling</span>
+        <a href="#/uses" className="footer__src label" data-cursor>
+          /uses →
+        </a>
         <a href={REPO} target="_blank" rel="noreferrer" className="footer__src label" data-cursor>
           view source ↗
         </a>

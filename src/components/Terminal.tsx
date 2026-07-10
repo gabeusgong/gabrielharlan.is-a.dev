@@ -25,6 +25,7 @@ const HELP = [
   '  ls                list sections',
   '  open <section>    jump to a section (about, work, wall, contact…)',
   '  caves             open the cave photo gallery',
+  '  uses              my gear, stack & setup',
   '  mute / unmute     toggle sound',
   '  cave              toggle cave mode',
   '  flashlight        toggle the headlamp beam',
@@ -183,6 +184,11 @@ export default function Terminal({ onToggleCave }: { onToggleCave: () => void })
       case 'caves':
         print(['opening the cave gallery…'])
         window.location.hash = '#/caves'
+        setOpen(false)
+        break
+      case 'uses':
+        print(['opening /uses…'])
+        window.location.hash = '#/uses'
         setOpen(false)
         break
       case 'mute':

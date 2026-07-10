@@ -162,3 +162,74 @@ export const testimonials: Testimonial[] = [
     role: 'Computer Information Systems Instructor · ACATEC',
   },
 ]
+
+// ---- /uses page: gear, stack, and what's on (and off) the desk ----
+export type UseItem = { name: string; note?: string }
+export type UseGroup = { group: string; tone: keyof typeof tones; items: UseItem[] }
+
+export const uses: UseGroup[] = [
+  {
+    group: 'The keyboard',
+    tone: 'coral',
+    items: [
+      {
+        name: 'Corne 42 — hand-built',
+        note: 'Split, wireless, low-profile · 42 keys on custom ZMK firmware. My own build — full story in the Corne case study.',
+      },
+      {
+        name: 'Kailh Choc Silver linears',
+        note: 'Lubed, with an o-ring gummy + tape mod for sound and feel.',
+      },
+      {
+        name: 'nice!nano v2 · per-half OLEDs · rotary encoder',
+        note: 'Bluetooth with five profiles; blank 3D-printed caps and case; the knob scrolls page up/down.',
+      },
+    ],
+  },
+  {
+    group: 'Languages & frameworks',
+    tone: 'cobalt',
+    items: [
+      { name: 'JavaScript / TypeScript' },
+      { name: 'React / Next.js' },
+      { name: 'Python' },
+      { name: 'PHP' },
+      { name: 'MySQL' },
+      { name: 'HTML / CSS' },
+      { name: 'Firebase' },
+    ],
+  },
+  {
+    group: 'Software & tools',
+    tone: 'lime',
+    items: [
+      { name: 'VS Code', note: 'main editor' },
+      { name: 'Git & GitHub' },
+      { name: 'Figma', note: 'design + prototyping' },
+      { name: 'Docker' },
+      { name: 'Google Cloud · Firebase' },
+      { name: 'Claude Code', note: 'AI pair for shipping fast' },
+      { name: 'Tableau' },
+    ],
+  },
+  {
+    group: 'Machines',
+    tone: 'sun',
+    items: [
+      { name: 'Hand-built Windows PC', note: 'built it myself — PC building is a hobby' },
+      { name: 'macOS', note: 'day-to-day laptop' },
+    ],
+  },
+  {
+    group: 'Off the desk',
+    tone: 'pink',
+    items: [
+      { name: 'Caving', note: 'Bloomington Indiana Grotto' },
+      { name: 'Pour-over coffee' },
+      { name: 'Plants' },
+      { name: 'Reading' },
+      { name: 'Swimming' },
+      { name: 'Gym' },
+    ],
+  },
+]

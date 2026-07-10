@@ -15,6 +15,7 @@ import Testimonials from './components/Testimonials'
 const Wall = lazy(() => import('./components/Wall'))
 // lazy so the cave photos load only when the gallery is reached
 const CaveGallery = lazy(() => import('./components/CaveGallery'))
+const Uses = lazy(() => import('./components/Uses'))
 import CaveMode from './components/CaveMode'
 import DepthGauge from './components/DepthGauge'
 import IdleSurprise from './components/IdleSurprise'
@@ -25,8 +26,12 @@ import ScrollTop from './components/ScrollTop'
 import Intro from './components/Intro'
 import { unlock } from './lib/achievements'
 
-const getRoute = () =>
-  typeof window !== 'undefined' && window.location.hash === '#/caves' ? 'caves' : 'home'
+const getRoute = () => {
+  const h = typeof window !== 'undefined' ? window.location.hash : ''
+  if (h === '#/caves') return 'caves'
+  if (h === '#/uses') return 'uses'
+  return 'home'
+}
 
 function App() {
   const [cave, setCave] = useState(false)
@@ -128,8 +133,6 @@ function App() {
     }
   }, [])
 
-  const onCaves = route === 'caves'
-
   return (
     <MotionConfig reducedMotion="user">
       <a href="#main" className="skip-link">
@@ -138,10 +141,16 @@ function App() {
       <Cursor />
       <DepthGauge />
       <Nav cave={cave} onToggleCave={toggleCave} route={route} />
-      {onCaves ? (
+      {route === 'caves' ? (
         <main id="main" tabIndex={-1}>
           <Suspense fallback={null}>
             <CaveGallery />
+          </Suspense>
+        </main>
+      ) : route === 'uses' ? (
+        <main id="main" tabIndex={-1}>
+          <Suspense fallback={null}>
+            <Uses />
           </Suspense>
         </main>
       ) : (

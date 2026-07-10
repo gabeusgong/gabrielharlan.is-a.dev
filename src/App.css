@@ -2136,6 +2136,94 @@
 }
 
 /* the cave gallery lives on its own page (#/caves) */
+/* ---------- /uses page ---------- */
+.usespage {
+  min-height: 100vh;
+}
+.usespage__inner {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding-top: 7rem;
+}
+.uses__heading {
+  font-family: var(--display);
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-size: clamp(2rem, 6vw, 3.4rem);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.uses__word {
+  color: var(--coral);
+}
+.uses__sub {
+  max-width: 48ch;
+  margin-top: 1rem;
+  color: var(--ink-soft);
+  font-size: 1.05rem;
+}
+.uses__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(255px, 1fr));
+  gap: 1.4rem;
+  margin-top: 2.6rem;
+}
+.uses__group {
+  background: var(--paper-2);
+  border: var(--border-ink);
+  border-radius: var(--r);
+  box-shadow: var(--shadow-hard);
+  padding: 1.3rem 1.4rem;
+}
+.uses__group-head {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink);
+  margin-bottom: 1rem;
+}
+.uses__group-head .chip {
+  width: 0.85rem;
+  height: 0.85rem;
+  border-radius: 4px;
+  border: 2px solid var(--ink);
+  flex: none;
+}
+.chip--coral { background: var(--coral); }
+.chip--cobalt { background: var(--cobalt); }
+.chip--lime { background: var(--lime); }
+.chip--sun { background: var(--sun); }
+.chip--pink { background: var(--pink); }
+.uses__list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.uses__item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+.uses__item-name {
+  font-weight: 600;
+  color: var(--ink);
+}
+.uses__item-note {
+  font-size: 0.85rem;
+  line-height: 1.4;
+  color: var(--ink-soft);
+}
+.uses__back {
+  margin-top: 2.6rem;
+}
+
 .cavespage {
   min-height: 100vh;
 }
