@@ -8,6 +8,7 @@ type Line = { kind: 'in' | 'out'; text: string }
 
 const BANNER = "type 'help' for commands · esc to close"
 
+// in-page anchors on the home route (scrolled to)
 const SECTIONS: Record<string, string> = {
   about: 'about',
   skills: 'skills',
@@ -19,12 +20,24 @@ const SECTIONS: Record<string, string> = {
   home: 'top',
 }
 
+// standalone routes (navigated to via the hash). 'home' returns to the main page.
+const PAGES: Record<string, string> = {
+  home: '#top',
+  notes: '#/notes',
+  caves: '#/caves',
+  gallery: '#/caves',
+  uses: '#/uses',
+}
+
 const HELP = [
   'available commands:',
   '  help              this list',
-  '  ls                list sections',
-  '  open <section>    jump to a section (about, work, wall, contact…)',
-  '  caves             open the cave photo gallery',
+  '  ls                list pages & sections',
+  '  open <name>       jump to any page or section (see ls)',
+  '  home              back to the main page',
+  '  about / skills / work / wall / contact',
+  '  notes             read my field notes',
+  '  gallery / caves   the cave photo gallery',
   '  uses              my gear, stack & setup',
   '  mute / unmute     toggle sound',
   '  cave              toggle cave mode',
@@ -132,8 +145,22 @@ export default function Terminal({ onToggleCave }: { onToggleCave: () => void })
     setLines((l) => [...l, ...out.map((text) => ({ kind: 'out' as const, text }))])
 
   const go = (id: string) => {
-    if (id === 'top') window.scrollTo({ top: 0, behavior: 'smooth' })
-    else document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+    const scroll = () => {
+      if (id === 'top') window.scrollTo({ top: 0, behavior: 'smooth' })
+      else document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+    }
+    // on a standalone route (#/notes, #/caves…) the home sections aren't
+    // mounted, so return home first, then scroll once it's rendered
+    if (window.location.hash.startsWith('#/')) {
+      window.location.hash = '#top'
+      setTimeout(scroll, 90)
+    } else scroll()
+  }
+
+  // navigate to a standalone route (or home) and close the terminal
+  const openPage = (hash: string) => {
+    window.location.hash = hash
+    setOpen(false)
   }
 
   const run = (raw: string) => {
@@ -158,17 +185,26 @@ export default function Terminal({ onToggleCave }: { onToggleCave: () => void })
         print(HELP)
         break
       case 'ls':
-        print(['about  skills  work  caves  wall  contact', 'projects: karst  itit  corne  blenz'])
+        print([
+          'pages:    home  notes  gallery  uses',
+          'sections: about  skills  work  wall  contact',
+          'projects: karst  tracisms  itit  corne  blenz',
+        ])
         break
       case 'open':
       case 'cd':
       case 'go': {
+        if (arg && arg in PAGES) {
+          print([`→ ${arg}`])
+          openPage(PAGES[arg])
+          break
+        }
         const id = arg && SECTIONS[arg]
         if (id) {
           print([`→ ${arg}`])
           go(id)
           setOpen(false)
-        } else print([`no section "${arg ?? ''}". try: ls`])
+        } else print([`no page or section "${arg ?? ''}". try: ls`])
         break
       }
       case 'about':
@@ -181,15 +217,24 @@ export default function Terminal({ onToggleCave }: { onToggleCave: () => void })
         go(SECTIONS[name])
         setOpen(false)
         break
+      case 'home':
+        print(['→ home'])
+        openPage('#top')
+        break
+      case 'notes':
+      case 'blog':
+      case 'writing':
+        print(['opening field notes…'])
+        openPage('#/notes')
+        break
       case 'caves':
+      case 'gallery':
         print(['opening the cave gallery…'])
-        window.location.hash = '#/caves'
-        setOpen(false)
+        openPage('#/caves')
         break
       case 'uses':
         print(['opening /uses…'])
-        window.location.hash = '#/uses'
-        setOpen(false)
+        openPage('#/uses')
         break
       case 'mute':
         setMuted(true)
