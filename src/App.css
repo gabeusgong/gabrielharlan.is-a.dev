@@ -2442,6 +2442,114 @@
   margin-top: 1.5rem;
 }
 
+/* ---- note ↔ project cross-links ---- */
+.note__crosslink,
+.cs__crosslink {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2.5rem;
+  padding: 1.2rem 1.4rem;
+  background: var(--paper-2);
+  border: var(--border-ink);
+  border-left: 8px solid var(--cobalt);
+  border-radius: var(--r);
+  box-shadow: var(--shadow-hard);
+  color: var(--ink);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.note__crosslink:hover,
+.cs__crosslink:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: var(--shadow-hard-lg);
+}
+.note__crosslink-emoji {
+  font-size: 2rem;
+  flex: none;
+}
+.note__crosslink-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+.note__crosslink-tag,
+.cs__crosslink-tag {
+  color: var(--ink-soft);
+}
+.note__crosslink-title,
+.cs__crosslink-title {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: var(--ink);
+}
+.note__crosslink-go,
+.cs__crosslink-go {
+  margin-left: auto;
+  font-weight: 700;
+  color: var(--cobalt);
+  white-space: nowrap;
+}
+.cs__crosslink {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.35rem;
+}
+.cs__crosslink-go {
+  margin-left: 0;
+  margin-top: 0.3rem;
+}
+@media (max-width: 560px) {
+  .note__crosslink {
+    flex-wrap: wrap;
+  }
+  .note__crosslink-go {
+    margin-left: 0;
+    width: 100%;
+  }
+}
+
+/* ---- home-page field-notes teaser ---- */
+.noteteaser__head {
+  max-width: 720px;
+}
+.noteteaser__heading {
+  font-family: var(--display);
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-size: clamp(1.9rem, 5vw, 3rem);
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-top: 0.4rem;
+}
+.noteteaser__under {
+  color: var(--coral);
+}
+.noteteaser__sub {
+  max-width: 54ch;
+  margin-top: 0.9rem;
+  color: var(--ink-soft);
+  font-size: 1.05rem;
+}
+.noteteaser__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.3rem;
+  margin-top: 2.6rem;
+}
+.noteteaser__grid .notecard {
+  height: 100%;
+}
+.noteteaser__all {
+  margin-top: 2.2rem;
+}
+@media (max-width: 900px) {
+  .noteteaser__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .cavespage {
   min-height: 100vh;
 }

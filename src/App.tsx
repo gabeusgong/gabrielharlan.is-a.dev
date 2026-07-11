@@ -8,6 +8,7 @@ import About from './components/About'
 import Skills from './components/Skills'
 import Process from './components/Process'
 import Projects from './components/Projects'
+import NotesTeaser from './components/NotesTeaser'
 import Contact from './components/Contact'
 import Testimonials from './components/Testimonials'
 
@@ -170,6 +171,7 @@ function App() {
           <Skills />
           <Process />
           <Projects />
+          <NotesTeaser />
           <Suspense fallback={null}>
             <Wall />
           </Suspense>

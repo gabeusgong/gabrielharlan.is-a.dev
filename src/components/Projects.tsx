@@ -1,4 +1,4 @@
-import { useState, type MouseEvent } from 'react'
+import { useState, useEffect, type MouseEvent } from 'react'
 import { motion, useMotionValue, useSpring, useTransform } from 'motion/react'
 import { projects, tones, type Project } from '../data'
 import Reveal from './Reveal'
@@ -112,8 +112,31 @@ function TiltCard({
   )
 }
 
+// the case study is driven by the hash (#/work/<slug>) so it deep-links and is
+// shareable — a field note can point straight at the story behind a project
+const studyFromHash = () => {
+  const m = typeof window !== 'undefined' && window.location.hash.match(/^#\/work\/(.+)$/)
+  return m ? decodeURIComponent(m[1]) : null
+}
+
 export default function Projects() {
-  const [study, setStudy] = useState<string | null>(null)
+  const [study, setStudy] = useState<string | null>(studyFromHash)
+
+  useEffect(() => {
+    const onHash = () => setStudy(studyFromHash())
+    window.addEventListener('hashchange', onHash)
+    return () => window.removeEventListener('hashchange', onHash)
+  }, [])
+
+  const openStudy = (slug: string) => {
+    track(`case-${slug}`)
+    window.location.hash = `#/work/${slug}`
+  }
+  const closeStudy = () => {
+    // drop the slug from the hash without scroll-jumping the page
+    if (window.location.hash.startsWith('#/work/')) history.replaceState(null, '', '#work')
+    setStudy(null)
+  }
 
   return (
     <section className="section work" id="work">
@@ -137,19 +160,12 @@ export default function Projects() {
             p={p}
             index={i}
             total={projects.length}
-            onOpen={
-              p.caseStudy && p.study
-                ? () => {
-                    track(`case-${p.study}`)
-                    setStudy(p.study!)
-                  }
-                : undefined
-            }
+            onOpen={p.caseStudy && p.study ? () => openStudy(p.study!) : undefined}
           />
         ))}
       </div>
 
-      <CaseStudy study={study} onClose={() => setStudy(null)} />
+      <CaseStudy study={study} onClose={closeStudy} />
     </section>
   )
 }

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import Reveal from './Reveal'
-import { notes, type Note, type NoteBlock } from '../data'
+import { notes, projects, type Note, type NoteBlock } from '../data'
 
 /* "Field Notes" — a small writing section on its own route. #/notes shows the
    index; #/notes/<slug> shows one note. It reads the slug straight off the hash
@@ -40,6 +40,8 @@ function Block({ block }: { block: NoteBlock }) {
 }
 
 function Article({ note }: { note: Note }) {
+  // the project this note is the story behind, if any
+  const project = note.study ? projects.find((p) => p.study === note.study) : null
   return (
     <article className="note">
       <Reveal>
@@ -74,6 +76,22 @@ function Article({ note }: { note: Note }) {
           </Reveal>
         ))}
       </div>
+
+      {project && (
+        <Reveal delay={0.05}>
+          <a className="note__crosslink" href={`#/work/${project.study}`} data-cursor>
+            <span className="note__crosslink-emoji" aria-hidden>
+              {project.emoji}
+            </span>
+            <span className="note__crosslink-text">
+              <span className="note__crosslink-tag label">The project</span>
+              <span className="note__crosslink-title">{project.title}</span>
+            </span>
+            <span className="note__crosslink-go">See the case study →</span>
+          </a>
+        </Reveal>
+      )}
+
       <Reveal delay={0.05}>
         <a href="#/notes" className="btn btn--ghost note__back" data-cursor>
           ← all field notes

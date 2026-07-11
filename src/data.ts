@@ -284,6 +284,7 @@ export type Note = {
   tags: string[]
   minutes: number // rough read time
   body: NoteBlock[]
+  study?: Project['study'] // the case study this note is the story behind
 }
 
 // Newest first — the list renders in this order.
@@ -295,6 +296,7 @@ export const notes: Note[] = [
     date: '2026-07-07',
     tags: ['UX', 'Privacy', 'Maps'],
     minutes: 5,
+    study: 'karst',
     body: [
       'The hardest decision in Karst wasn’t a technical one. It was a map with a pin on it. Publishing the exact mouth of a wild cave invites vandalism and injury, wrecks fragile bat habitat, and — since a lot of Indiana’s caves sit on private land — can burn a landowner relationship the local grotto spent years building. But a caving field guide that won’t tell you where anything is isn’t a field guide.',
       'So the design question became: how do you build trust into a map that deliberately withholds its most precise data?',
@@ -324,6 +326,7 @@ export const notes: Note[] = [
     date: '2026-06-30',
     tags: ['Engineering', 'AI', 'SMS'],
     minutes: 6,
+    study: 'tracisms',
     body: [
       'Tire Rack’s TRACI is an AI agent that helps you find tires. It lived on the web. Plenty of customers, though, would rather just text a phone number. My internship project was to make that work — let anyone SMS the full agent — without touching the agent itself.',
       'I expected the model to be the hard part. It wasn’t. The model was the easy part. Almost everything that mattered was the plumbing around it.',
@@ -347,6 +350,7 @@ export const notes: Note[] = [
     date: '2026-06-25',
     tags: ['UX', 'Leadership'],
     minutes: 4,
+    study: 'itit',
     body: [
       'Before I called myself a designer I spent two years leading a campus IT support team at IU. On paper that’s a job about fixing computers. In practice it was a job about watching people fail at interfaces all day — and it shaped how I design more than any single class.',
       { h: 'People don’t read' },

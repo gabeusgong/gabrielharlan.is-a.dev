@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
 import { isMuted } from '../lib/prefs'
 import { useFocusTrap } from '../lib/useFocusTrap'
+import { notes } from '../data'
 import TypingTest from './TypingTest'
 
 const base = import.meta.env.BASE_URL
@@ -704,8 +705,12 @@ export default function CaseStudy({
   study: string | null
   onClose: () => void
 }) {
-  const open = study !== null
-  const data = study ? STUDIES[study] : null
+  const data = study ? STUDIES[study] ?? null : null
+  // only "open" when the slug resolves to a real study — a bogus #/work/<x>
+  // hash must not lock body scroll behind an invisible modal
+  const open = data !== null
+  // the field note that tells the story behind this project, if any
+  const note = data ? notes.find((n) => n.study === data.slug) : null
   const panelRef = useRef<HTMLElement>(null)
   useFocusTrap(open, panelRef)
 
@@ -851,6 +856,14 @@ export default function CaseStudy({
               <h3 className="cs__h3">{data.closing.h}</h3>
               <p className="cs__body">{data.closing.body}</p>
             </section>
+
+            {note && (
+              <a className="cs__crosslink" href={`#/notes/${note.slug}`} data-cursor>
+                <span className="cs__crosslink-tag label">✦ Field note</span>
+                <span className="cs__crosslink-title">{note.title}</span>
+                <span className="cs__crosslink-go">Read the story behind it →</span>
+              </a>
+            )}
           </motion.article>
         </motion.div>
       )}
