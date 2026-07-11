@@ -19,6 +19,7 @@ import { readFileSync, writeFileSync, mkdirSync } from 'node:fs'
 import { resolve, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { notes, projects, type NoteBlock } from '../src/data'
+import { renderOgCard } from './og'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const DIST = resolve(__dirname, '../dist')
@@ -57,13 +58,15 @@ type PageOpts = {
   description: string
   path: string // e.g. "/notes/foo/" — canonical + og:url
   type?: 'article' | 'website'
+  image?: string // absolute og:image url; falls back to the site card
   body: string
 }
 
-function page({ title, description, path, type = 'website', body }: PageOpts): string {
+function page({ title, description, path, type = 'website', image = OG_IMAGE, body }: PageOpts): string {
   const url = `${SITE}${path}`
   const t = esc(title)
   const d = esc(description)
+  const img = esc(image)
   return `<!doctype html>
 <html lang="en">
   <head>
@@ -79,14 +82,14 @@ function page({ title, description, path, type = 'website', body }: PageOpts): s
     <meta property="og:description" content="${d}" />
     <meta property="og:type" content="${type}" />
     <meta property="og:url" content="${url}" />
-    <meta property="og:image" content="${OG_IMAGE}" />
+    <meta property="og:image" content="${img}" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="${t}" />
     <meta name="twitter:description" content="${d}" />
-    <meta name="twitter:image" content="${OG_IMAGE}" />
+    <meta name="twitter:image" content="${img}" />
 ${FONTS}
     <link rel="stylesheet" href="${CSS_HREF}" />
     <!-- these are standalone read/share pages with no custom cursor, so undo the
@@ -122,10 +125,10 @@ function renderBlocks(body: NoteBlock[]): string {
     .join('\n        ')
 }
 
-function write(relPath: string, html: string) {
+function write(relPath: string, data: string | Buffer) {
   const full = resolve(DIST, relPath)
   mkdirSync(dirname(full), { recursive: true })
-  writeFileSync(full, html)
+  writeFileSync(full, data)
   console.log(`  ✓ ${relPath}`)
 }
 
@@ -137,6 +140,16 @@ console.log('prerender: emitting static pages')
 // ---- individual note pages ----
 for (const n of notes) {
   const project = n.study ? projects.find((p) => p.study === n.study) : null
+  // a custom social card, tinted with the related project's tone
+  const noteCard = await renderOgCard({
+    kicker: 'Field Note',
+    title: n.title,
+    dek: n.dek,
+    tone: project?.tone ?? 'coral',
+    tags: n.tags,
+  })
+  write(`og/notes-${n.slug}.png`, noteCard)
+  const ogImage = `${SITE}/og/notes-${n.slug}.png`
   const crosslink = project
     ? `<a class="note__crosslink" href="/work/${project.study}/">
           <span class="note__crosslink-emoji" aria-hidden>${project.emoji}</span>
@@ -168,6 +181,7 @@ for (const n of notes) {
       description: n.dek,
       path: `/notes/${n.slug}/`,
       type: 'article',
+      image: ogImage,
       body,
     }),
   )
@@ -209,6 +223,15 @@ for (const n of notes) {
 for (const p of projects) {
   if (!p.caseStudy || !p.study) continue
   const note = notes.find((n) => n.study === p.study)
+  const workCard = await renderOgCard({
+    kicker: 'Case Study',
+    title: p.title,
+    dek: p.blurb,
+    tone: p.tone,
+    tags: p.tags,
+  })
+  write(`og/work-${p.study}.png`, workCard)
+  const ogImage = `${SITE}/og/work-${p.study}.png`
   const live = p.href
     ? `<a class="btn btn--ghost" href="${esc(p.href)}" target="_blank" rel="noreferrer">Visit the live project →</a>`
     : ''
@@ -241,6 +264,7 @@ for (const p of projects) {
       description: p.blurb,
       path: `/work/${p.study}/`,
       type: 'article',
+      image: ogImage,
       body,
     }),
   )
