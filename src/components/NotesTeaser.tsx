@@ -26,7 +26,7 @@ export default function NotesTeaser() {
         </Reveal>
         <Reveal delay={0.05}>
           <h2 className="noteteaser__heading">
-            Lately, I&apos;ve been <span className="noteteaser__under">writing.</span>
+            The stories <span className="noteteaser__under">behind the work.</span>
           </h2>
         </Reveal>
         <Reveal delay={0.1}>
