@@ -254,15 +254,4 @@ export const uses: UseGroup[] = [
       { name: 'Iced chai latte', note: '★ the favorite drink' },
     ],
   },
-  {
-    group: 'Off the desk',
-    tone: 'pink',
-    items: [
-      { name: 'Caving', note: 'Bloomington Indiana Grotto' },
-      { name: 'Plants' },
-      { name: 'Reading' },
-      { name: 'Swimming' },
-      { name: 'Gym' },
-    ],
-  },
 ]

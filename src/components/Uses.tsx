@@ -6,7 +6,7 @@ import { uses } from '../data'
 
 // explicit column layout so each column packs tightly (no grid row gaps)
 const COLUMNS = [
-  ['Keyboards', 'Off the desk'],
+  ['Keyboards'],
   ['Languages & frameworks', 'Coffee'],
   ['Software & tools', 'Machines'],
 ]
