@@ -292,25 +292,25 @@ export const notes: Note[] = [
   {
     slug: 'the-knob-that-wouldnt-turn',
     title: 'The knob that wouldn’t turn',
-    dek: 'Adding one rotary knob to my keyboard was a weekend job that ran a week — and every layer of the stack had its own lie waiting.',
+    dek: 'Adding one rotary knob to my keyboard should have been an afternoon. It ate a full day of coding and soldering — and every layer of the stack had its own lie waiting.',
     date: '2026-07-11',
     tags: ['Firmware', 'Hardware', 'Debugging'],
     minutes: 6,
     body: [
-      'I wanted one small thing: a scroll knob on my keyboard — a split Corne running ZMK. Solder on an encoder, add a few lines of config, page up and down. A weekend job, tops. It took the better part of a week, and the knob itself was almost never the real problem. Every layer of the stack had a lie waiting in it, and I had to disprove one to reach the next.',
+      'I wanted one small thing: a scroll knob on my keyboard — a split Corne running ZMK. Solder on an encoder, add a few lines of config, page up and down. An afternoon, tops. It ate a full day of coding and soldering, and the knob itself was almost never the real problem. Every layer of the stack had a lie waiting in it, and I had to disprove one to reach the next.',
       { h: 'The bleeding edge cuts' },
       'My config tracked ZMK’s development branch, which feels responsible and is a trap. Between builds the firmware had migrated to a new underlying OS version that quietly renamed my board. My build still compiled, still booted, still drew the little OLED — and typed nothing at all, over USB or Bluetooth. A green build that produces a dead keyboard is the worst kind of green. The fix was a single line: pin to a tagged release instead of chasing the latest commit. Everything I’d been blaming on hardware was a version I never chose to be on.',
       { h: 'It wasn’t the encoder I thought it was' },
       'I had wired it as the standard keyboard encoder — common pin in the middle. It wasn’t that part. It was a Panasonic encoder whose common sits at the end of the pin row, not the center. So for hours I was faithfully soldering a ground onto a signal leg and reading a signal where the firmware expected ground, earning exactly the silence that wiring deserves. The datasheet knew the whole time. I didn’t, because I pattern-matched to the part I expected instead of the one in my hand.',
-      { h: 'Measure, don’t guess' },
-      'The ugliest stretch was reflowing joints on a hunch, again and again, each pass risking fresh damage to a component that doesn’t love heat. It ended the moment I stopped looking and started measuring. A cheap multimeter turns “this looks fine” into “this exact segment is broken.” Even better was a free trick: bridge a switch’s two pads with tweezers and watch the keyboard’s own display flip layers — a keypress with no key, and instant proof of whether the fault was the switch or everything downstream of it.',
+      { h: 'Prove it, don’t guess' },
+      'The ugliest stretch was reflowing joints on a hunch, again and again, each pass risking fresh damage to a component that doesn’t love heat — and eventually the damage came. Two of the encoder’s pins lifted clean off their legs, leaving only flat, thin pads on the body to solder to. Working a wire onto a bare pad with no leg to grab is breath-held, tweezers-and-flux work; slip once and the pad is gone for good. The guessing only ended when I forced each fault to prove itself instead of trusting my eyes. My favorite trick cost nothing: bridge a switch’s two pads with tweezers and watch the keyboard’s own display flip layers — a keypress with no key, and instant proof of whether the fault was the switch or everything downstream of it.',
       {
         quote:
           'Bring-up isn’t one hard problem. It’s a stack of small wrong assumptions — the version, the pinout, the cold joint — and the only way through is to disprove them one at a time until the last one falls.',
       },
       { h: 'Every fix cost a neighbor' },
       'The hardware kept handing me humility. Fixing the knob meant soldering next to keys that had nothing to do with it, and the heat kept knocking those loose — a dead M, then a dead slash, then a whole thumb key. For a while it was whack-a-mole where every mole I hit spawned another. The lesson wasn’t subtle: near fragile work, move slowly, change one thing, and re-test before you reach for the iron again.',
-      'The knob scrolls now. What I actually kept wasn’t a knob — it was a debugging loop. Assume the layer you trust is the one lying to you, prove it before you move on, and measure before you melt anything. It’s the same discipline I lean on in software; the soldering iron just makes the price of skipping a step a little more literal.',
+      'The knob scrolls now. What I actually kept wasn’t a knob — it was a debugging loop. Assume the layer you trust is the one lying to you, prove it before you move on, and test before you melt anything. It’s the same discipline I lean on in software; the soldering iron just makes the price of skipping a step a little more literal.',
     ],
   },
   {
