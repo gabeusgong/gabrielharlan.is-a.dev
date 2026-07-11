@@ -1451,11 +1451,18 @@
   outline-color: var(--ink);
 }
 .kb__grid {
+  /* clips the scale wrapper's reserved (unscaled) box after the JS fit scales
+     it down to fit narrow screens; the wrapper's height is set inline by JS */
+  overflow: hidden;
+}
+.kb__scale {
   display: flex;
   flex-direction: column;
   gap: 0.5rem; /* vertical space between rows */
-  overflow-x: auto;
   padding-bottom: 3rem; /* room for the staggered + fanned thumb clusters */
+  width: max-content;
+  margin: 0 auto;
+  transform-origin: top left;
 }
 .kb__row {
   display: flex;

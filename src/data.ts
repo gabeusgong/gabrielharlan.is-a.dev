@@ -249,6 +249,7 @@ export const uses: UseGroup[] = [
       { name: 'AeroPress' },
       { name: 'Bodum French press' },
       { name: 'Bambino espresso machine' },
+      { name: 'Moka pot' },
       { name: 'Vietnamese phin filter' },
       { name: 'Turkish cezve' },
       { name: 'Iced chai latte', note: '★ the favorite drink' },

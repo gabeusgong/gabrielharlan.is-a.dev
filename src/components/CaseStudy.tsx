@@ -160,7 +160,40 @@ function thock() {
 function KeyboardLayers() {
   const [i, setI] = useState(0)
   const gridRef = useRef<HTMLDivElement>(null)
+  const scaleRef = useRef<HTMLDivElement>(null)
   const L = KB_LAYERS[i]
+
+  // scale the keymap down to fit narrow screens, so both halves stay on screen
+  // (instead of overflowing / horizontal-scrolling)
+  useEffect(() => {
+    const fit = () => {
+      const grid = gridRef.current
+      const sc = scaleRef.current
+      if (!grid || !sc) return
+      sc.style.transform = 'none'
+      const natural = sc.scrollWidth
+      const avail = grid.clientWidth
+      if (!avail || !natural) return
+      const s = natural > avail ? avail / natural : 1
+      if (s < 1) {
+        sc.style.transformOrigin = 'top left'
+        sc.style.transform = `scale(${s})`
+        grid.style.height = `${Math.ceil(sc.scrollHeight * s)}px`
+      } else {
+        sc.style.transform = 'none'
+        grid.style.height = ''
+      }
+    }
+    fit()
+    const raf = requestAnimationFrame(fit)
+    const t = window.setTimeout(fit, 380) // after the modal open animation settles
+    window.addEventListener('resize', fit)
+    return () => {
+      cancelAnimationFrame(raf)
+      window.clearTimeout(t)
+      window.removeEventListener('resize', fit)
+    }
+  }, [])
 
   // light up a key when the typing test (or a real press) reports it
   useEffect(() => {
@@ -214,15 +247,17 @@ function KeyboardLayers() {
         ))}
       </div>
       <div className="kb__grid" ref={gridRef} role="group" aria-label={`${L.name} layer keymap`}>
-        {L.rows.map((row, r) => (
-          <div className="kb__row" key={r}>
-            {half(row.slice(0, 6))}
-            {half(row.slice(6))}
+        <div className="kb__scale" ref={scaleRef}>
+          {L.rows.map((row, r) => (
+            <div className="kb__row" key={r}>
+              {half(row.slice(0, 6))}
+              {half(row.slice(6))}
+            </div>
+          ))}
+          <div className="kb__row kb__row--thumbs">
+            {half(L.thumbs.slice(0, 3), true)}
+            {half(L.thumbs.slice(3), true)}
           </div>
-        ))}
-        <div className="kb__row kb__row--thumbs">
-          {half(L.thumbs.slice(0, 3), true)}
-          {half(L.thumbs.slice(3), true)}
         </div>
       </div>
       <p className="kb__note label">{L.note}</p>
