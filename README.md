@@ -15,36 +15,26 @@ npm run preview  # preview the production build
 
 **All site content lives in [`src/data.ts`](src/data.ts).** Edit that one file — name, tagline, about, skills, hobby stickers, projects, and links — and the whole site updates. Spots that still need real content are marked with `TODO`.
 
-## Deploy (GitHub Pages → gabrielharlan.design)
+## Deploy (GitHub Pages → gabrielharlan.is-a.dev)
 
-A GitHub Actions workflow ([`.github/workflows/deploy.yml`](.github/workflows/deploy.yml)) builds and deploys on every push to `main`.
+A GitHub Actions workflow ([`.github/workflows/deploy.yml`](.github/workflows/deploy.yml)) type-checks, runs the data-integrity check, builds, and deploys on every push to `main`.
 
 **One-time setup:**
 
-1. Create a GitHub repo and push this project to `main`.
+1. Push this project to `main` on GitHub.
 2. Repo **Settings → Pages → Build and deployment → Source: GitHub Actions**.
-3. Under **Settings → Pages → Custom domain**, enter `gabrielharlan.design` and save. (`public/CNAME` already pins this so the domain survives each deploy.)
-4. Configure DNS at your domain registrar:
+3. Claim the free subdomain from [is-a.dev](https://is-a.dev): open a PR against [`is-a-dev/register`](https://github.com/is-a-dev/register) adding `domains/gabrielharlan.json`, which CNAMEs the subdomain to GitHub Pages:
 
-   **Apex (`gabrielharlan.design`) — four A records + four AAAA records:**
+   ```json
+   {
+     "owner": { "username": "gabeusgong", "email": "you@example.com" },
+     "records": { "CNAME": "gabeusgong.github.io" }
+   }
+   ```
 
-   | Type | Value |
-   |------|-------|
-   | A | 185.199.108.153 |
-   | A | 185.199.109.153 |
-   | A | 185.199.110.153 |
-   | A | 185.199.111.153 |
-   | AAAA | 2606:50c0:8000::153 |
-   | AAAA | 2606:50c0:8001::153 |
-   | AAAA | 2606:50c0:8002::153 |
-   | AAAA | 2606:50c0:8003::153 |
+   Once merged (this site's was [PR #41704](https://github.com/is-a-dev/register/pull/41704)), `gabrielharlan.is-a.dev` resolves to GitHub Pages — no registrar or DNS records to manage yourself.
 
-   **`www` subdomain (optional, recommended):**
-
-   | Type | Name | Value |
-   |------|------|-------|
-   | CNAME | www | `<your-github-username>.github.io` |
-
-5. Back in **Settings → Pages**, tick **Enforce HTTPS** once the certificate is issued (can take a few minutes to an hour after DNS propagates).
+4. Under **Settings → Pages → Custom domain**, enter `gabrielharlan.is-a.dev` and save. (`public/CNAME` already pins this so the domain survives each deploy.)
+5. Tick **Enforce HTTPS** once the certificate is issued (a few minutes to an hour after the record propagates).
 
 After that, every `git push` to `main` redeploys automatically.
