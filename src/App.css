@@ -2509,6 +2509,68 @@
   margin-top: 1.5rem;
 }
 
+/* ---- interactive geoprivacy map (Karst case study) ---- */
+.mapdemo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+.mapdemo__toggle {
+  display: inline-flex;
+  align-self: flex-start;
+  border: var(--border-ink);
+  border-radius: 100px;
+  overflow: hidden;
+  box-shadow: var(--shadow-hard);
+}
+.mapdemo__toggle button {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--ink);
+  background: var(--paper);
+  border: none;
+  padding: 0.5em 1.1em;
+  transition: background 0.14s ease, color 0.14s ease;
+}
+.mapdemo__toggle button + button {
+  border-left: 2px solid var(--ink);
+}
+.mapdemo__toggle button.is-active {
+  background: var(--ink);
+  color: var(--paper);
+}
+.mapdemo__map {
+  height: 380px;
+  width: 100%;
+  border: var(--border-ink);
+  border-radius: var(--r);
+  box-shadow: var(--shadow-hard);
+  overflow: hidden;
+  z-index: 0; /* keep Leaflet panes under the modal chrome */
+}
+.mapdemo__cap {
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+.mapdemo__loading {
+  color: var(--ink-soft);
+  padding: 2rem 0;
+}
+/* Leaflet popups on-brand */
+.mapdemo .leaflet-popup-content-wrapper,
+.mapdemo .leaflet-popup-tip {
+  background: var(--paper);
+  color: var(--ink);
+  border: 2px solid var(--ink);
+  box-shadow: none;
+}
+.mapdemo .leaflet-popup-content {
+  font-family: var(--body);
+  font-weight: 600;
+  margin: 0.5rem 0.8rem;
+}
+
 /* ---- copy-link button ---- */
 .note__copy {
   margin-top: 1.4rem;
