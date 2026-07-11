@@ -22,16 +22,6 @@ export const profile = {
   ],
 }
 
-// A skimmable "impact" strip — quantified, honest, recruiter-friendly. Each is
-// a figure + one-line label. Edit anytime; keep them true.
-export type Stat = { figure: string; label: string; tone: keyof typeof tones }
-export const impact: Stat[] = [
-  { figure: '2 yrs', label: 'leading a campus IT support team at IU', tone: 'coral' },
-  { figure: '6', label: 'projects shipped — cave nav to an AI SMS gateway', tone: 'cobalt' },
-  { figure: '4', label: 'person Scrum team · two-semester senior capstone', tone: 'lime' },
-  { figure: 'Dec ’26', label: 'graduating · open to UX & front-end roles', tone: 'sun' },
-]
-
 export type Skill = { name: string; tone: keyof typeof tones }
 export const tones = {
   coral: 'var(--coral)',

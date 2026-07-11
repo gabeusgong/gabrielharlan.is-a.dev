@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect, useRef, useState } from 'react'
-import { profile, hobbies, impact } from '../data'
+import { profile, hobbies } from '../data'
 import Reveal from './Reveal'
 
 const base = import.meta.env.BASE_URL
@@ -80,15 +80,6 @@ export default function About() {
             </Suspense>
           )}
         </Reveal>
-      </div>
-
-      <div className="about__stats">
-        {impact.map((s, i) => (
-          <Reveal key={s.label} delay={i * 0.06} className={`stat stat--${s.tone}`}>
-            <span className="stat__figure">{s.figure}</span>
-            <span className="stat__label">{s.label}</span>
-          </Reveal>
-        ))}
       </div>
 
       {/* The playground is an interactive Easter-egg game, not keyboard-operable,
