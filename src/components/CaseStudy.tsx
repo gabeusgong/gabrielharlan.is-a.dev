@@ -536,7 +536,7 @@ const STUDIES: Record<string, Study> = {
         Corne 42 <span className="cs__cube">⌨️</span>
       </>
     ),
-    year: '2024',
+    year: '2022–2026',
     lede: (
       <>
         A hand-built <strong>split, wireless, low-profile Corne</strong> — 42 ortholinear keys on

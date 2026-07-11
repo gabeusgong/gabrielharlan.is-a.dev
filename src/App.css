@@ -2442,6 +2442,114 @@
   margin-top: 1.5rem;
 }
 
+/* ---- reading-progress bar ---- */
+.readbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  z-index: 8700; /* above the nav */
+  background: transparent;
+  pointer-events: none;
+}
+.readbar__fill {
+  height: 100%;
+  background: var(--coral);
+  transform-origin: left;
+  transform: scaleX(0);
+}
+
+/* ---- related notes ---- */
+.note__related {
+  margin-top: 2.8rem;
+  padding-top: 1.8rem;
+  border-top: var(--border-ink);
+}
+.note__related-head {
+  color: var(--ink-soft);
+  margin-bottom: 1rem;
+}
+.note__related-list {
+  list-style: none;
+  display: grid;
+  gap: 0.9rem;
+}
+.note__related-link {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 1rem 1.2rem;
+  background: var(--paper-2);
+  border: var(--border-ink);
+  border-radius: var(--r);
+  box-shadow: var(--shadow-hard);
+  color: var(--ink);
+  transition: transform 0.16s ease, box-shadow 0.16s ease;
+}
+.note__related-link:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: var(--shadow-hard-lg);
+}
+.note__related-title {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 1.15rem;
+}
+.note__related-dek {
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+  line-height: 1.4;
+}
+
+/* ---- prev/next pager ---- */
+.note__pager {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+.note__pager-link {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 1rem 1.2rem;
+  border: var(--border-ink);
+  border-radius: var(--r);
+  color: var(--ink);
+  transition: transform 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
+}
+.note__pager-link:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: var(--shadow-hard);
+  background: var(--paper-2);
+}
+.note__pager-link--next {
+  text-align: right;
+}
+.note__pager-dir {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--coral);
+  font-weight: 700;
+}
+.note__pager-title {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 1.05rem;
+  line-height: 1.15;
+}
+@media (max-width: 560px) {
+  .note__pager {
+    grid-template-columns: 1fr;
+  }
+  .note__pager-link--next {
+    text-align: left;
+  }
+}
+
 /* ---- note ↔ project cross-links ---- */
 .note__crosslink,
 .cs__crosslink {

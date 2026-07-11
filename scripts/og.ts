@@ -49,9 +49,10 @@ export type OgOpts = {
   dek: string
   tone: string
   tags: string[]
+  hideName?: boolean // when the title already is the name (home card)
 }
 
-export async function renderOgCard({ kicker, title, dek, tone, tags }: OgOpts): Promise<Buffer> {
+export async function renderOgCard({ kicker, title, dek, tone, tags, hideName }: OgOpts): Promise<Buffer> {
   const accent = TONE_HEX[tone] ?? TONE_HEX.coral
   const titleSize = title.length > 42 ? 56 : title.length > 26 ? 66 : 78
 
@@ -129,18 +130,30 @@ export async function renderOgCard({ kicker, title, dek, tone, tags }: OgOpts): 
           ]),
           // lower block: name/site · tags
           h('div', { display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between' }, [
-            h('div', { display: 'flex', flexDirection: 'column' }, [
-              h(
-                'div',
-                { fontFamily: 'Fraunces', fontWeight: 700, fontSize: '34px', color: INK },
-                'Gabriel Harlan',
-              ),
-              h(
-                'div',
-                { fontFamily: 'Space Mono', fontSize: '22px', color: INK_SOFT, marginTop: '6px' },
-                'gabrielharlan.is-a.dev',
-              ),
-            ]),
+            h(
+              'div',
+              { display: 'flex', flexDirection: 'column' },
+              hideName
+                ? [
+                    h(
+                      'div',
+                      { fontFamily: 'Space Mono', fontSize: '24px', color: INK_SOFT },
+                      'gabrielharlan.is-a.dev',
+                    ),
+                  ]
+                : [
+                    h(
+                      'div',
+                      { fontFamily: 'Fraunces', fontWeight: 700, fontSize: '34px', color: INK },
+                      'Gabriel Harlan',
+                    ),
+                    h(
+                      'div',
+                      { fontFamily: 'Space Mono', fontSize: '22px', color: INK_SOFT, marginTop: '6px' },
+                      'gabrielharlan.is-a.dev',
+                    ),
+                  ],
+            ),
             h(
               'div',
               { display: 'flex' },

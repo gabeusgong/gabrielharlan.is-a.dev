@@ -120,7 +120,7 @@ export const projects: Project[] = [
       'A hand-built split, wireless, low-profile Corne — 42 ortholinear keys on custom ZMK firmware. Bluetooth profiles, per-half OLED screens, a removable hotswap controller, and magnetic USB-C ports. Tuned Choc switches, blank 3D-printed caps, built entirely by hand.',
     tags: ['ZMK', 'Firmware', 'Hardware'],
     tone: 'coral',
-    year: '2024',
+    year: '2022–2026',
     emoji: '⌨️',
     caseStudy: true,
     study: 'corne',
@@ -282,16 +282,17 @@ export const notes: Note[] = [
   {
     slug: 'the-knob-that-wouldnt-turn',
     title: 'The knob that wouldn’t turn',
-    dek: 'Adding one rotary knob to my keyboard should have been an afternoon. It ate a full day of coding and soldering — and every layer of the stack had its own lie waiting.',
+    dek: 'A rotary knob on my keyboard should have been an afternoon. Instead it took four years, three builds, and a whole stack of wrong assumptions before it finally turned.',
     date: '2026-07-11',
     tags: ['Firmware', 'Hardware', 'Debugging'],
     minutes: 6,
+    study: 'corne',
     body: [
-      'I wanted one small thing: a scroll knob on my keyboard — a split Corne running ZMK. Solder on an encoder, add a few lines of config, page up and down. An afternoon, tops. It ate a full day of coding and soldering, and the knob itself was almost never the real problem. Every layer of the stack had a lie waiting in it, and I had to disprove one to reach the next.',
+      'I wanted one small thing: a scroll knob on my keyboard — a hand-built split Corne running ZMK. It was only the second keyboard I’d ever built: I finished one kit and then jumped straight into a fully custom, wireless board. I soldered the encoder on during that first build in 2022 and never got the firmware to read it. I came back in 2024, resoldered it, rewrote the config — and still nothing. For four years that one knob sat dead on an otherwise finished board. Yesterday I finally cracked it, and the maddening part is that the knob itself was almost never the real problem. Every layer of the stack had a lie waiting in it, and I had to disprove one to reach the next.',
       { h: 'The bleeding edge cuts' },
       'My config tracked ZMK’s development branch, which feels responsible and is a trap. Between builds the firmware had migrated to a new underlying OS version that quietly renamed my board. My build still compiled, still booted, still drew the little OLED — and typed nothing at all, over USB or Bluetooth. A green build that produces a dead keyboard is the worst kind of green. The fix was a single line: pin to a tagged release instead of chasing the latest commit. Everything I’d been blaming on hardware was a version I never chose to be on.',
       { h: 'The right part, the wrong pins' },
-      'I knew exactly what the encoder was — a Panasonic — from the start. What I got wrong was the wiring. I’d soldered it the way I’d wired every encoder before, with the common pin in the middle, out of pure muscle memory. But this Panasonic’s common sits at the end of the pin row, not the center. So for hours I was faithfully soldering a ground onto a signal leg and reading a signal where the firmware expected ground, earning exactly the silence that wiring deserves. The datasheet had the real pinout the whole time. I never checked it, because I trusted the layout in my head instead of the one on the page.',
+      'I knew exactly what the encoder was — a Panasonic — the whole time. What I got wrong was the wiring, and I got it wrong the same way twice. I’d soldered the common to the middle pin, the way most encoders are laid out, and never questioned it — not in 2022, not in 2024. But this Panasonic’s common sits at the end of the pin row, not the center. So across both builds I was faithfully soldering a ground onto a signal leg and reading a signal where the firmware expected ground, earning exactly the silence that wiring deserves. The datasheet had the real pinout all four years. I never checked it, because I trusted the layout in my head instead of the one on the page.',
       { h: 'Prove it, don’t guess' },
       'The ugliest stretch was reflowing joints on a hunch, again and again, each pass risking fresh damage to a component that doesn’t love heat — and eventually the damage came. Two of the encoder’s pins lifted clean off their legs, leaving only flat, thin pads on the body to solder to. Working a wire onto a bare pad with no leg to grab is breath-held, tweezers-and-flux work; slip once and the pad is gone for good. The guessing only ended when I forced each fault to prove itself instead of trusting my eyes. My favorite trick cost nothing: bridge a switch’s two pads with tweezers and watch the keyboard’s own display flip layers — a keypress with no key, and instant proof of whether the fault was the switch or everything downstream of it.',
       {
@@ -300,7 +301,7 @@ export const notes: Note[] = [
       },
       { h: 'Every fix cost a neighbor' },
       'The hardware kept handing me humility. Fixing the knob meant soldering next to keys that had nothing to do with it, and the heat kept knocking those loose — a dead M, then a dead slash, then a whole thumb key. For a while it was whack-a-mole where every mole I hit spawned another. The lesson wasn’t subtle: near fragile work, move slowly, change one thing, and re-test before you reach for the iron again.',
-      'The knob scrolls now. What I actually kept wasn’t a knob — it was a debugging loop. Assume the layer you trust is the one lying to you, prove it before you move on, and test before you melt anything. It’s the same discipline I lean on in software; the soldering iron just makes the price of skipping a step a little more literal.',
+      'The knob scrolls now — four years, three builds, and one very long evening later. What I actually kept wasn’t a knob; it was a debugging loop. Assume the layer you trust is the one lying to you, prove it before you move on, and test before you melt anything. It’s the same discipline I lean on in software; the soldering iron just makes the price of skipping a step a little more literal.',
     ],
   },
   {
@@ -380,3 +381,28 @@ export const notes: Note[] = [
     ],
   },
 ]
+
+// ---- notes navigation helpers (shared by the app and the pre-render) ----
+// `notes` is newest-first, so the previous index is the *newer* post.
+export function noteNav(slug: string): { newer: Note | null; older: Note | null } {
+  const i = notes.findIndex((n) => n.slug === slug)
+  if (i < 0) return { newer: null, older: null }
+  return {
+    newer: i > 0 ? notes[i - 1] : null,
+    older: i < notes.length - 1 ? notes[i + 1] : null,
+  }
+}
+
+// other notes that share the most tags with this one, best match first
+export function relatedNotes(slug: string, limit = 2): Note[] {
+  const current = notes.find((n) => n.slug === slug)
+  if (!current) return []
+  const tags = new Set(current.tags)
+  return notes
+    .filter((n) => n.slug !== slug)
+    .map((n) => ({ n, score: n.tags.filter((t) => tags.has(t)).length }))
+    .filter((x) => x.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, limit)
+    .map((x) => x.n)
+}

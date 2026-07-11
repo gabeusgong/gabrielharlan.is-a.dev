@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import Reveal from './Reveal'
-import { notes, projects, type Note, type NoteBlock } from '../data'
+import { notes, projects, noteNav, relatedNotes, type Note, type NoteBlock } from '../data'
 
 /* "Field Notes" — a small writing section on its own route. #/notes shows the
    index; #/notes/<slug> shows one note. It reads the slug straight off the hash
@@ -19,6 +19,30 @@ const fmtDate = (iso: string) =>
     month: 'long',
     day: 'numeric',
   })
+
+// a thin bar that fills as you scroll the article
+function ReadingProgress() {
+  const [pct, setPct] = useState(0)
+  useEffect(() => {
+    const onScroll = () => {
+      const h = document.documentElement
+      const max = h.scrollHeight - h.clientHeight
+      setPct(max > 0 ? Math.min(1, h.scrollTop / max) : 0)
+    }
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll)
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+    }
+  }, [])
+  return (
+    <div className="readbar" aria-hidden>
+      <div className="readbar__fill" style={{ transform: `scaleX(${pct})` }} />
+    </div>
+  )
+}
 
 function Block({ block }: { block: NoteBlock }) {
   if (typeof block === 'string') return <p className="note__p">{block}</p>
@@ -42,6 +66,8 @@ function Block({ block }: { block: NoteBlock }) {
 function Article({ note }: { note: Note }) {
   // the project this note is the story behind, if any
   const project = note.study ? projects.find((p) => p.study === note.study) : null
+  const { newer, older } = noteNav(note.slug)
+  const related = relatedNotes(note.slug)
   return (
     <article className="note">
       <Reveal>
@@ -91,6 +117,45 @@ function Article({ note }: { note: Note }) {
           </a>
         </Reveal>
       )}
+
+      {related.length > 0 && (
+        <Reveal delay={0.05}>
+          <div className="note__related">
+            <p className="label note__related-head">Related notes</p>
+            <ul className="note__related-list">
+              {related.map((r) => (
+                <li key={r.slug}>
+                  <a href={`#/notes/${r.slug}`} className="note__related-link" data-cursor>
+                    <span className="note__related-title">{r.title}</span>
+                    <span className="note__related-dek">{r.dek}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </Reveal>
+      )}
+
+      <Reveal delay={0.05}>
+        <nav className="note__pager" aria-label="More field notes">
+          {newer ? (
+            <a href={`#/notes/${newer.slug}`} className="note__pager-link note__pager-link--prev" data-cursor>
+              <span className="note__pager-dir">← Newer</span>
+              <span className="note__pager-title">{newer.title}</span>
+            </a>
+          ) : (
+            <span />
+          )}
+          {older ? (
+            <a href={`#/notes/${older.slug}`} className="note__pager-link note__pager-link--next" data-cursor>
+              <span className="note__pager-dir">Older →</span>
+              <span className="note__pager-title">{older.title}</span>
+            </a>
+          ) : (
+            <span />
+          )}
+        </nav>
+      </Reveal>
 
       <Reveal delay={0.05}>
         <a href="#/notes" className="btn btn--ghost note__back" data-cursor>
@@ -170,6 +235,7 @@ export default function FieldNotes() {
 
   return (
     <div className="notespage" id="notes">
+      {note && <ReadingProgress />}
       <div className="notespage__inner section">
         {slug && !note ? (
           <>
