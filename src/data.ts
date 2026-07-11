@@ -284,7 +284,7 @@ export const notes: Note[] = [
     title: 'The knob that wouldn’t turn',
     dek: 'A rotary knob on my keyboard should have been an afternoon. Instead it took four years, three builds, and a whole stack of wrong assumptions before it finally turned.',
     date: '2026-07-11',
-    tags: ['Firmware', 'Hardware', 'Debugging'],
+    tags: ['Hardware', 'Debugging'],
     minutes: 6,
     study: 'corne',
     body: [
@@ -309,7 +309,7 @@ export const notes: Note[] = [
     title: 'Fuzzing cave locations',
     dek: 'Designing privacy into a map when the honest answer is “I can’t show you that.”',
     date: '2026-07-07',
-    tags: ['UX', 'Privacy', 'Maps'],
+    tags: ['UX', 'Privacy'],
     minutes: 5,
     study: 'karst',
     body: [
@@ -339,7 +339,7 @@ export const notes: Note[] = [
     title: 'The plumbing is the product',
     dek: 'What building an SMS gateway for an AI tire agent taught me about where the real work lives.',
     date: '2026-06-30',
-    tags: ['Engineering', 'AI', 'SMS'],
+    tags: ['Engineering', 'AI'],
     minutes: 6,
     study: 'tracisms',
     body: [

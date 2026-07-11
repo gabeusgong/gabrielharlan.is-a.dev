@@ -5,7 +5,7 @@ import Reveal from './Reveal'
 import ContactForm from './ContactForm'
 import { track } from '../lib/track'
 
-const REPO = 'https://github.com/gabeusgong/gabrielharlan.design'
+const REPO = 'https://github.com/gabeusgong/gabrielharlan.is-a.dev'
 
 const rows = [
   { key: 'email', label: 'Email', value: links.email, href: `mailto:${links.email}` },

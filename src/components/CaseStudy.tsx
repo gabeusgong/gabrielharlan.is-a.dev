@@ -1,12 +1,9 @@
-import { useEffect, useRef, useState, lazy, Suspense, type ReactNode } from 'react'
+import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
 import { isMuted } from '../lib/prefs'
 import { useFocusTrap } from '../lib/useFocusTrap'
 import { notes } from '../data'
 import TypingTest from './TypingTest'
-
-// Leaflet is heavy — load the geoprivacy map only when the Karst study opens
-const MapDemo = lazy(() => import('./MapDemo'))
 
 const base = import.meta.env.BASE_URL
 
@@ -836,15 +833,6 @@ export default function CaseStudy({
               <section className="cs__block">
                 <h3 className="cs__h3">Take it for a spin</h3>
                 <TypingTest />
-              </section>
-            )}
-
-            {data.slug === 'karst' && (
-              <section className="cs__block">
-                <h3 className="cs__h3">Try the privacy model</h3>
-                <Suspense fallback={<p className="mapdemo__loading label">loading map…</p>}>
-                  <MapDemo />
-                </Suspense>
               </section>
             )}
 

@@ -1,4 +1,4 @@
-# gabrielharlan.design
+# gabrielharlan.is-a.dev
 
 Personal site for Gabriel Harlan — "Analog Playground" theme. Vite + React + TypeScript, animated with [Motion](https://motion.dev).
 
