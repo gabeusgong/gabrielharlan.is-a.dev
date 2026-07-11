@@ -244,7 +244,7 @@ export const uses: UseGroup[] = [
     group: 'Coffee',
     tone: 'coral',
     items: [
-      { name: 'KX Ultra grinder' },
+      { name: '1Zpresso K-Ultra grinder' },
       { name: 'Hario V60 pour-over' },
       { name: 'AeroPress' },
       { name: 'Bodum French press' },
