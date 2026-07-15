@@ -3,13 +3,15 @@ import { profile } from '../data'
 import Settings from './Settings'
 import { unlock } from '../lib/achievements'
 
+// order mirrors the page's own section flow: About → Skills → Work → Notes →
+// Wall → Say hi, then the standalone route pages (Uses, Gallery)
 const sections = [
   { id: 'about', label: 'About' },
   { id: 'skills', label: 'Skills' },
   { id: 'work', label: 'Work' },
+  { id: 'notes', label: 'Notes', href: '#/notes' },
   { id: 'wall', label: 'Wall' },
   { id: 'contact', label: 'Say hi' },
-  { id: 'notes', label: 'Notes', href: '#/notes' },
   { id: 'uses', label: 'Uses', href: '#/uses' },
   { id: 'caves', label: 'Gallery', href: '#/caves' },
 ]
@@ -60,7 +62,7 @@ export default function Nav({ cave, onToggleCave, route }: Props) {
   // Wall) are lazy-loaded and mount after this runs, so we re-scan via a
   // MutationObserver and observe them once they appear.
   useEffect(() => {
-    const ids = ['about', 'skills', 'process', 'work', 'wall', 'contact']
+    const ids = ['about', 'skills', 'process', 'work', 'notes-teaser', 'wall', 'contact']
     const observed = new Set<Element>()
     // root is a thin line at the viewport middle — whichever section that line
     // is inside becomes active (exactly one at a time)
@@ -69,8 +71,9 @@ export default function Nav({ cave, onToggleCave, route }: Props) {
         for (const e of entries) {
           if (!e.isIntersecting) continue
           const raw = (e.target as HTMLElement).id
-          // map 'process' onto the Work tab (no nav link of its own)
-          setActive(raw === 'process' ? 'work' : raw)
+          // 'process' has no tab of its own → Work; the field-notes teaser
+          // (#notes-teaser) drives the Notes tab so it highlights on scroll
+          setActive(raw === 'process' ? 'work' : raw === 'notes-teaser' ? 'notes' : raw)
         }
       },
       { rootMargin: '-50% 0px -50% 0px' },
