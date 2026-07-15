@@ -3934,3 +3934,89 @@ button.term__dot:hover {
     margin-top: 3.5rem;
   }
 }
+
+/* ---------- snapshot / "the 30-second version" ---------- */
+/* sits directly under the hero, so trim the top padding to keep it close */
+.snapshot {
+  padding-top: 2.5rem;
+}
+.snapshot__card {
+  background: var(--paper-2);
+  border: var(--border-ink);
+  border-radius: var(--r);
+  box-shadow: var(--shadow-hard);
+  padding: 2.4rem 2.4rem 2.2rem;
+}
+.snapshot__kicker {
+  margin-bottom: 1.1rem;
+}
+.snapshot__lead {
+  font-size: clamp(1.15rem, 2.4vw, 1.45rem);
+  line-height: 1.4;
+  color: var(--ink-soft);
+  max-width: 46ch;
+  margin-bottom: 2rem;
+}
+.snapshot__lead strong {
+  color: var(--ink);
+  font-weight: 700;
+}
+.snapshot__list {
+  list-style: none;
+  margin: 0 0 2rem;
+  padding: 0;
+}
+.snapshot__list li + li .snapshot__row {
+  border-top: 2px solid rgba(33, 27, 20, 0.12);
+}
+:root.cave-active .snapshot__list li + li .snapshot__row {
+  border-top-color: rgba(255, 215, 156, 0.16);
+}
+.snapshot__row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.95rem 0.8rem;
+  border-radius: 12px;
+  transition: background 0.18s ease, transform 0.18s ease;
+}
+.snapshot__row:hover {
+  background: var(--paper);
+  transform: translateX(6px);
+}
+.snapshot__swatch {
+  flex: 0 0 auto;
+  width: 1.15rem;
+  height: 1.15rem;
+  border: 2px solid var(--ink);
+  border-radius: 5px;
+}
+.snapshot__row-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  flex: 1 1 auto;
+}
+.snapshot__row-title {
+  font-weight: 700;
+  color: var(--ink);
+}
+.snapshot__row-outcome {
+  font-size: 0.92rem;
+  color: var(--ink-soft);
+  line-height: 1.35;
+}
+.snapshot__row-go {
+  flex: 0 0 auto;
+  font-weight: 700;
+  color: var(--coral);
+  transition: transform 0.2s ease;
+}
+.snapshot__row:hover .snapshot__row-go {
+  transform: translateX(5px);
+}
+.snapshot__cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+}

@@ -6,7 +6,8 @@
 export const profile = {
   name: 'Gabriel Harlan',
   // hero one-liner
-  tagline: 'I turn big ideas into easily accessible, human-centered interfaces.',
+  tagline:
+    'UX-minded front-end engineer who turns big ideas into easily accessible, human-centered interfaces.',
   // rotating words in the hero ("I'm ___.")
   iAm: ['a web designer', 'a UX nerd', 'a caver', 'a keyboard builder', 'an informatics major'],
   about:
@@ -82,7 +83,7 @@ export const projects: Project[] = [
   {
     title: 'TRACI SMS Gateway',
     blurb:
-      "An SMS gateway that lets customers text Tire Rack's TRACI AI tire agent. A Python/FastAPI service on Google Cloud Run that fronts the agent over Twilio — a text-driven vehicle picker (year/make/model → factory tire size), an event-stream-to-SMS renderer, async workers so slow AI replies never time out, Redis session state, and keyless CI/CD. Built solo as an Innovation & AI intern.",
+      "Shipped solo to production as an Innovation & AI intern: a service that lets any customer text Tire Rack's TRACI AI tire agent — live on Google Cloud Run over Twilio. A Python/FastAPI backend with a text-driven vehicle picker (year/make/model → factory tire size), async workers so slow AI replies never time out, Redis-backed sessions, keyless CI/CD, and 42 tests.",
     tags: ['Python', 'FastAPI', 'Cloud Run', 'Twilio'],
     tone: 'coral',
     year: '2026',
@@ -93,7 +94,7 @@ export const projects: Project[] = [
   {
     title: 'Karst',
     blurb:
-      "A caver's field guide to the wild and show caves of southern Indiana's karst country. A Next.js + Firebase app with a privacy-first map that fuzzes sensitive cave locations, dead-reckoning trails you record once and follow in with AR or back out by compass, grotto groups, a community field guide, and a bat / White-Nose Syndrome conservation guide. Ships as a web app and an Android build.",
+      "Shipped as both a live web app and an Android build: a caver's field guide to the wild and show caves of southern Indiana's karst country. Built on Next.js + Firebase around a privacy-first map that fuzzes sensitive cave locations, dead-reckoning trails you record once and follow in with AR or back out by compass, grotto groups, a community field guide, and a bat / White-Nose Syndrome conservation guide.",
     tags: ['Next.js', 'Firebase', 'Leaflet', 'Privacy-first'],
     tone: 'sun',
     year: '2026',
@@ -105,7 +106,7 @@ export const projects: Project[] = [
   {
     title: 'ITIT — IT Inventory Tracker',
     blurb:
-      'Senior capstone with a four-person Scrum team: inventory tracking for small businesses that’s less error-prone than spreadsheets and far cheaper than enterprise systems. Pairs a physical IoT tracker with a web app for deployments, locations, and items — plus CSV export and Google login.',
+      'Delivered as a senior capstone with a four-person Scrum team: inventory tracking for small businesses that’s less error-prone than spreadsheets and far cheaper than enterprise systems. Pairs a physical IoT tracker with a web app for deployments, locations, and items — plus CSV export and Google login.',
     tags: ['JavaScript', 'PHP', 'MySQL', 'IoT'],
     tone: 'cobalt',
     year: '2025',
@@ -117,7 +118,7 @@ export const projects: Project[] = [
   {
     title: 'Corne 42 LP Split Wireless Keyboard',
     blurb:
-      'A hand-built split, wireless, low-profile Corne — 42 ortholinear keys on custom ZMK firmware. Bluetooth profiles, per-half OLED screens, a removable hotswap controller, and magnetic USB-C ports. Tuned Choc switches, blank 3D-printed caps, built entirely by hand.',
+      'A split, wireless, low-profile Corne I built by hand and now type on every day — 42 ortholinear keys on custom ZMK firmware. Bluetooth profiles, per-half OLED screens, a removable hotswap controller, and magnetic USB-C ports. Tuned Choc switches, blank 3D-printed caps, soldered and flashed from scratch.',
     tags: ['ZMK', 'Firmware', 'Hardware'],
     tone: 'coral',
     year: '2022–2026',
@@ -128,7 +129,7 @@ export const projects: Project[] = [
   {
     title: 'Richard Blenz Nature Preserve',
     blurb:
-      "A responsive redesign of the National Speleological Society's Buckner Cave preserve site — my I360 Web Design final. Hand-coded HTML/CSS/JS with an animated nav, a photo slideshow, and accordion geology & biology sections, all built around cave photography I shot on-site.",
+      "Redesigned and shipped for my I360 Web Design final: a responsive rebuild of the National Speleological Society's Buckner Cave preserve site. Hand-coded HTML/CSS/JS with an animated nav, a photo slideshow, and accordion geology & biology sections, all built around cave photography I shot on-site.",
     tags: ['HTML', 'CSS', 'JavaScript', 'Responsive'],
     tone: 'lime',
     year: '2025',

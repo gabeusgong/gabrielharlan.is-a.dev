@@ -4,6 +4,7 @@ import './App.css'
 import Cursor from './components/Cursor'
 import Nav from './components/Nav'
 import Hero from './components/Hero'
+import Snapshot from './components/Snapshot'
 import About from './components/About'
 import Skills from './components/Skills'
 import Process from './components/Process'
@@ -168,6 +169,7 @@ function App() {
       ) : (
         <main id="main" tabIndex={-1}>
           <Hero />
+          <Snapshot />
           <About />
           <Skills />
           <Process />
