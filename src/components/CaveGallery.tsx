@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
 import Reveal from './Reveal'
 import { useFocusTrap } from '../lib/useFocusTrap'
@@ -37,42 +37,10 @@ const PHOTOS = [
 export default function CaveGallery() {
   const [idx, setIdx] = useState<number | null>(null)
   const open = idx !== null
-  const gridRef = useRef<HTMLDivElement>(null)
   const lightboxRef = useRef<HTMLDivElement>(null)
   const stripRef = useRef<HTMLDivElement>(null)
   const touchX = useRef<number | null>(null)
   useFocusTrap(open, lightboxRef)
-
-  // True masonry on a CSS grid: each tile spans however many 1px auto-rows its
-  // photo needs at the current column width (computed from the image's natural
-  // aspect ratio). Reads left-to-right, top-to-bottom and stays row-aligned —
-  // unlike CSS multi-column, which balances columns and drifts out of line.
-  useLayoutEffect(() => {
-    const grid = gridRef.current
-    if (!grid) return
-    const GAP = 14 // px vertical gap between tiles
-    const BORDER = 5 // 2.5px ink border top + bottom
-    const layoutItem = (item: HTMLElement) => {
-      const img = item.querySelector('img')
-      if (!img || !img.naturalWidth) return
-      const h = item.clientWidth * (img.naturalHeight / img.naturalWidth) + BORDER
-      item.style.gridRowEnd = `span ${Math.ceil(h + GAP)}`
-    }
-    const layoutAll = () => grid.querySelectorAll<HTMLElement>('.caves__item').forEach(layoutItem)
-    layoutAll()
-    // re-measure each tile once its (lazy) image actually loads
-    const imgs = Array.from(grid.querySelectorAll('img'))
-    const onLoad = (e: Event) => {
-      const item = (e.target as HTMLElement).closest<HTMLElement>('.caves__item')
-      if (item) layoutItem(item)
-    }
-    for (const img of imgs) if (!(img as HTMLImageElement).complete) img.addEventListener('load', onLoad)
-    window.addEventListener('resize', layoutAll)
-    return () => {
-      for (const img of imgs) img.removeEventListener('load', onLoad)
-      window.removeEventListener('resize', layoutAll)
-    }
-  }, [])
 
   const close = useCallback(() => setIdx(null), [])
   const prev = useCallback(
@@ -153,7 +121,7 @@ export default function CaveGallery() {
           </p>
         </Reveal>
 
-        <div className="caves__grid" ref={gridRef}>
+        <div className="caves__grid">
           {PHOTOS.map((p, i) => (
             <button
               key={p.src}
