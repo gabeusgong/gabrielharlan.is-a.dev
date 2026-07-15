@@ -2108,28 +2108,37 @@
   padding: 0.75em 1em;
   border-top: 2px solid var(--ink);
 }
+/* masonry: CSS columns keep every photo's natural aspect ratio, packed at
+   varied heights instead of cropping to squares */
 .caves__grid {
   margin-top: 1.6rem;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
-  gap: 0.9rem;
+  column-width: 220px;
+  column-gap: 0.9rem;
 }
 @media (max-width: 640px) {
   .caves__grid {
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    column-width: 150px;
+    column-gap: 0.7rem;
   }
 }
 .caves__item {
-  margin: 0;
+  display: block;
+  width: 100%;
+  margin: 0 0 0.9rem;
   padding: 0;
   border: var(--border-ink);
   border-radius: 10px;
   overflow: hidden;
   background: var(--paper);
   box-shadow: 3px 3px 0 var(--ink);
-  /* every tile is a uniform square; images are cropped to fill it */
-  aspect-ratio: 1 / 1;
+  break-inside: avoid; /* don't split a photo across two columns */
+  position: relative;
   transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+@media (max-width: 640px) {
+  .caves__item {
+    margin-bottom: 0.7rem;
+  }
 }
 .caves__item:hover {
   transform: translate(-2px, -2px);
@@ -2137,9 +2146,37 @@
 }
 .caves__item img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
   display: block;
+  transition: transform 0.4s ease;
+}
+.caves__item:hover img,
+.caves__item:focus-visible img {
+  transform: scale(1.05);
+}
+/* caption revealed on hover / keyboard focus (decorative — the button's
+   aria-label already carries the same text for screen readers) */
+.caves__cap {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 1.4rem 0.7rem 0.6rem;
+  font-family: var(--body);
+  font-size: 0.72rem;
+  line-height: 1.32;
+  text-align: left;
+  color: #fff;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.82), rgba(0, 0, 0, 0));
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  pointer-events: none;
+}
+.caves__item:hover .caves__cap,
+.caves__item:focus-visible .caves__cap {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* the cave gallery lives on its own page (#/caves) */
@@ -2903,11 +2940,13 @@
 }
 .lightbox__img {
   max-width: 92vw;
-  max-height: 84vh;
+  /* leave room at the bottom for the filmstrip + caption */
+  max-height: 70vh;
   object-fit: contain;
   border: 2px solid var(--paper);
   border-radius: 6px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+  touch-action: pan-y; /* let vertical scroll pass; we handle horizontal swipe */
 }
 .lightbox__close,
 .lightbox__nav {
@@ -2946,9 +2985,57 @@
 .lightbox__nav:hover {
   background: rgba(255, 255, 255, 0.28);
 }
+/* filmstrip of thumbnails to jump around the set */
+.lightbox__strip {
+  position: fixed;
+  bottom: 3.7rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.4rem;
+  max-width: 92vw;
+  padding: 0.35rem 0.5rem;
+  overflow-x: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.4) transparent;
+  border-radius: 10px;
+}
+.lightbox__thumb {
+  flex: 0 0 auto;
+  width: 56px;
+  height: 42px;
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: 5px;
+  overflow: hidden;
+  background: none;
+  opacity: 0.45;
+  transition: opacity 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+}
+.lightbox__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.lightbox__thumb:hover {
+  opacity: 0.85;
+}
+.lightbox__thumb.is-active {
+  opacity: 1;
+  border-color: var(--paper);
+  transform: translateY(-2px);
+}
+@media (max-width: 560px) {
+  .lightbox__thumb {
+    width: 46px;
+    height: 34px;
+  }
+}
 .lightbox__meta {
   position: fixed;
-  bottom: 1rem;
+  bottom: 0.8rem;
   left: 50%;
   transform: translateX(-50%);
   width: min(92vw, 640px);

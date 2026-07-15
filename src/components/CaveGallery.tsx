@@ -4,6 +4,7 @@ import Reveal from './Reveal'
 import { useFocusTrap } from '../lib/useFocusTrap'
 
 const base = import.meta.env.BASE_URL
+const sm = (src: string) => src.replace('.webp', '-sm.webp')
 
 const FEATURED = {
   src: `${base}caves/main.webp`,
@@ -41,6 +42,8 @@ export default function CaveGallery() {
   const [idx, setIdx] = useState<number | null>(null)
   const open = idx !== null
   const lightboxRef = useRef<HTMLDivElement>(null)
+  const stripRef = useRef<HTMLDivElement>(null)
+  const touchX = useRef<number | null>(null)
   useFocusTrap(open, lightboxRef)
 
   const close = useCallback(() => setIdx(null), [])
@@ -68,6 +71,34 @@ export default function CaveGallery() {
       window.removeEventListener('keydown', onKey)
     }
   }, [open, close, prev, next])
+
+  // preload the neighbouring full-size images so arrow/swipe nav is instant
+  useEffect(() => {
+    if (idx === null) return
+    const n = PHOTOS.length
+    for (const i of [(idx + 1) % n, (idx - 1 + n) % n]) {
+      const im = new Image()
+      im.src = PHOTOS[i].src
+    }
+  }, [idx])
+
+  // keep the active filmstrip thumbnail centred as you navigate
+  useEffect(() => {
+    if (idx === null) return
+    const el = stripRef.current?.querySelector<HTMLElement>(`[data-thumb="${idx}"]`)
+    el?.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' })
+  }, [idx])
+
+  // touch swipe left/right to move between photos
+  const onTouchStart = (e: React.TouchEvent) => {
+    touchX.current = e.touches[0].clientX
+  }
+  const onTouchEnd = (e: React.TouchEvent) => {
+    if (touchX.current === null) return
+    const dx = e.changedTouches[0].clientX - touchX.current
+    touchX.current = null
+    if (Math.abs(dx) > 45) (dx < 0 ? next : prev)()
+  }
 
   // this is its own page — start at the top
   useEffect(() => {
@@ -98,7 +129,7 @@ export default function CaveGallery() {
           <figure className="caves__feature">
             <img
               src={FEATURED.src}
-              srcSet={`${FEATURED.src.replace('.webp', '-sm.webp')} 640w, ${FEATURED.src} 1280w`}
+              srcSet={`${sm(FEATURED.src)} 640w, ${FEATURED.src} 1280w`}
               sizes="(max-width: 680px) 92vw, 620px"
               alt={FEATURED.alt}
               width={1400}
@@ -121,11 +152,14 @@ export default function CaveGallery() {
             >
               <img
                 src={p.src}
-                srcSet={`${p.src.replace('.webp', '-sm.webp')} 640w, ${p.src} 1280w`}
+                srcSet={`${sm(p.src)} 640w, ${p.src} 1280w`}
                 sizes="(max-width: 640px) 45vw, 240px"
                 alt={p.alt}
                 loading="lazy"
               />
+              <span className="caves__cap" aria-hidden="true">
+                {p.alt}
+              </span>
             </button>
           ))}
         </div>
@@ -166,6 +200,8 @@ export default function CaveGallery() {
               src={PHOTOS[idx].src}
               alt={PHOTOS[idx].alt}
               onClick={(e) => e.stopPropagation()}
+              onTouchStart={onTouchStart}
+              onTouchEnd={onTouchEnd}
               initial={{ opacity: 0, scale: 0.98 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.2 }}
@@ -181,6 +217,32 @@ export default function CaveGallery() {
             >
               ›
             </button>
+
+            <div
+              className="lightbox__strip"
+              ref={stripRef}
+              onClick={(e) => e.stopPropagation()}
+              aria-label="All photos"
+            >
+              {PHOTOS.map((p, i) => (
+                <button
+                  key={p.src}
+                  type="button"
+                  data-thumb={i}
+                  className={`lightbox__thumb ${i === idx ? 'is-active' : ''}`}
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    setIdx(i)
+                  }}
+                  data-cursor
+                  aria-label={`Photo ${i + 1}: ${p.alt}`}
+                  aria-current={i === idx}
+                >
+                  <img src={sm(p.src)} alt="" loading="lazy" />
+                </button>
+              ))}
+            </div>
+
             <div className="lightbox__meta">
               <span className="lightbox__count label">
                 {idx + 1} / {PHOTOS.length}
