@@ -324,7 +324,7 @@ const STUDIES: Record<string, Study> = {
       },
       {
         h: 'Production-shaped from day one',
-        p: 'Python/FastAPI on Google Cloud Run, Twilio for SMS (RCS-ready for richer cards later), Redis-backed session state, a job queue for the async workers, 42 tests, and keyless CI/CD via GitHub Actions + Workload Identity Federation — no stored credentials.',
+        p: 'Python/FastAPI on Google Cloud Run, Twilio for SMS (RCS-ready for richer cards later), Redis-backed session state, a job queue for the async workers, and keyless CI/CD via GitHub Actions + Workload Identity Federation — no stored credentials. Hardened for real traffic: idempotent inbound (no duplicate replies), STOP/HELP/START opt-out compliance, per-phone rate limiting, delivery metrics, and 90 tests.',
       },
     ],
     diagram: { heading: 'How a text becomes an answer', node: <SMSGatewayDiagram /> },

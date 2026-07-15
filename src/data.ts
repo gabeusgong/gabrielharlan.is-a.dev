@@ -26,7 +26,7 @@ export const profile = {
   availability: 'Graduating Dec 2026 · open to UX & front-end roles · Bloomington, IN or remote',
   // a little "/now" line — edit anytime to keep the site feeling alive
   now: [
-    'building an SMS gateway for the TRACI tire agent at Tire Rack',
+    'hardening the SMS gateway I shipped for the TRACI tire agent at Tire Rack',
     'reading Kafka on the Shore by Haruki Murakami',
     'playing Fallout 4',
   ],
@@ -92,7 +92,7 @@ export const projects: Project[] = [
   {
     title: 'TRACI SMS Gateway',
     blurb:
-      "Shipped solo to production as an Innovation & AI intern: a service that lets any customer text Tire Rack's TRACI AI tire agent — live on Google Cloud Run over Twilio. A Python/FastAPI backend with a text-driven vehicle picker (year/make/model → factory tire size), async workers so slow AI replies never time out, Redis-backed sessions, keyless CI/CD, and 42 tests.",
+      "Shipped solo to production as an Innovation & AI intern: a service that lets any customer text Tire Rack's TRACI AI tire agent — live on Google Cloud Run over Twilio. A Python/FastAPI backend with a text-driven vehicle picker (year/make/model → factory tire size), async workers so slow AI replies never time out, Redis-backed sessions, TCPA-compliant opt-out and per-phone rate limiting, keyless CI/CD, and 90 tests.",
     tags: ['Python', 'FastAPI', 'Cloud Run', 'Twilio'],
     tone: 'coral',
     year: '2026',
@@ -365,7 +365,7 @@ export const notes: Note[] = [
         quote:
           'A good AI product is mostly the plumbing around the model — the session state, the async workers, the format translation, the graceful failure. The model is a component, not the product.',
       },
-      'It shipped live end-to-end on Google Cloud Run with Redis-backed sessions, a job queue, 42 tests, and keyless CI/CD. My first production service on cloud infrastructure — and the clearest lesson of the internship was that the interesting engineering was everywhere except the model call.',
+      'It shipped live end-to-end on Google Cloud Run with Redis-backed sessions, a job queue, 90 tests, and keyless CI/CD. My first production service on cloud infrastructure — and the clearest lesson of the internship was that the interesting engineering was everywhere except the model call.',
     ],
   },
   {
