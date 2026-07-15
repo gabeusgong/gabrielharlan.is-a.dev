@@ -25,7 +25,7 @@ import { readFileSync, writeFileSync, mkdirSync } from 'node:fs'
 import { resolve, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { notes, projects, profile, noteNav, relatedNotes, type NoteBlock } from '../src/data'
-import { renderOgCard } from './og'
+import { renderOgCard, renderHomeCard } from './og'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const DIST = resolve(__dirname, '../dist')
@@ -434,13 +434,9 @@ ${items}
 
 // ---- homepage social card + head wiring ----
 {
-  const homeCard = await renderOgCard({
-    kicker: 'Web & UX Designer',
-    title: 'Gabriel Harlan',
-    dek: profile.tagline,
-    tone: 'coral',
-    tags: ['UX', 'Front-end', 'Caver'],
-    hideName: true,
+  const homeCard = await renderHomeCard({
+    eyebrow: 'Web & UX Designer',
+    tagline: profile.tagline,
   })
   write('og/home.png', homeCard)
 

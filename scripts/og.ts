@@ -183,3 +183,92 @@ export async function renderOgCard({ kicker, title, dek, tone, tags, hideName }:
   const svg = await satori(card, { width: 1200, height: 630, fonts: FONTS })
   return Buffer.from(new Resvg(svg, { fitTo: { mode: 'width', value: 1200 } }).render().asPng())
 }
+
+/* The home card, styled to echo the site's hero: cream + dot grid, floating
+   tone "blobs", and the big Fraunces name with the same accent letters
+   (G = cobalt, last letter of Gabriel = coral, last of Harlan = pink). */
+export async function renderHomeCard({ eyebrow, tagline }: { eyebrow: string; tagline: string }): Promise<Buffer> {
+  const line = (word: string, accents: Record<number, string>) =>
+    h(
+      'div',
+      { display: 'flex' },
+      word.split('').map((ch, i) => h('div', { display: 'flex', color: accents[i] ?? INK }, ch)),
+    )
+  const blob = (color: string, size: number, pos: Record<string, string>) =>
+    h('div', {
+      position: 'absolute',
+      width: `${size}px`,
+      height: `${size}px`,
+      backgroundColor: color,
+      borderRadius: '46% 54% 60% 40%',
+      opacity: 0.85,
+      display: 'flex',
+      ...pos,
+    })
+
+  const card = h(
+    'div',
+    {
+      width: '1200px',
+      height: '630px',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      position: 'relative',
+      overflow: 'hidden',
+      backgroundColor: CREAM,
+      backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(33,27,20,0.09) 1px, transparent 0)',
+      backgroundSize: '26px 26px',
+      fontFamily: 'Fraunces',
+    },
+    [
+      // floating blobs (rendered first → painted behind the text)
+      blob(TONE_HEX.coral, 240, { top: '46px', left: '64px' }),
+      blob(TONE_HEX.lime, 150, { top: '66px', right: '150px' }),
+      blob(TONE_HEX.cobalt, 190, { bottom: '48px', right: '86px' }),
+      // centred hero content
+      h('div', { display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }, [
+        // eyebrow, flanked by small coral diamonds (drawn, not a ✦ glyph — the
+        // embedded fonts don't include ✦, so a glyph would render as tofu)
+        h('div', { display: 'flex', alignItems: 'center', marginBottom: '26px' }, [
+          h('div', { width: '11px', height: '11px', backgroundColor: TONE_HEX.coral, transform: 'rotate(45deg)', display: 'flex' }),
+          h(
+            'div',
+            { fontFamily: 'Space Mono', fontSize: '24px', letterSpacing: '6px', color: INK_SOFT, margin: '0 18px' },
+            eyebrow.toUpperCase(),
+          ),
+          h('div', { width: '11px', height: '11px', backgroundColor: TONE_HEX.coral, transform: 'rotate(45deg)', display: 'flex' }),
+        ]),
+        h(
+          'div',
+          {
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            fontWeight: 700,
+            fontSize: '132px',
+            lineHeight: 0.82,
+            letterSpacing: '-5px',
+            color: INK,
+          },
+          [line('Gabriel', { 0: TONE_HEX.cobalt, 6: TONE_HEX.coral }), line('Harlan', { 5: TONE_HEX.pink })],
+        ),
+        h(
+          'div',
+          {
+            fontFamily: 'Schibsted Grotesk',
+            fontSize: '27px',
+            lineHeight: 1.34,
+            color: INK_SOFT,
+            marginTop: '36px',
+            maxWidth: '840px',
+          },
+          clamp(tagline, 120),
+        ),
+      ]),
+    ],
+  )
+  const svg = await satori(card, { width: 1200, height: 630, fonts: FONTS })
+  return Buffer.from(new Resvg(svg, { fitTo: { mode: 'width', value: 1200 } }).render().asPng())
+}
