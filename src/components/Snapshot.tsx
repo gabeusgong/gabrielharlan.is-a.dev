@@ -29,8 +29,7 @@ export default function Snapshot() {
         <Reveal delay={0.05}>
           <p className="snapshot__lead">
             Senior Informatics student and <strong>UX-minded front-end engineer</strong> — I
-            design in Figma and ship the whole thing, from the interface through the production
-            backend.
+            design and ship the whole thing, from the interface through the production backend.
           </p>
         </Reveal>
 
