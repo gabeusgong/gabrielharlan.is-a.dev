@@ -43,6 +43,10 @@ const getRoute = () => {
 function App() {
   const [cave, setCave] = useState(false)
   const [route, setRoute] = useState(getRoute)
+  // when we switch to the home route via an in-page section anchor (e.g. #work
+  // clicked from the notes/uses/gallery pages), the target section doesn't
+  // exist until home renders — stash the id and scroll to it in an effect below
+  const [pendingAnchor, setPendingAnchor] = useState<string | null>(null)
   // first-visit flourish: the site loads already wearing the cave (black/amber)
   // colour scheme underneath the intro curtain, then — as the curtain lifts —
   // the actual scheme transitions live into the light scheme. Same check the
@@ -83,18 +87,44 @@ function App() {
     const onHash = () => {
       const next = getRoute()
       // Only react to real page switches (home <-> #/caves). In-page section
-      // anchors (#about, #work, …) don't change the route — let the browser
-      // scroll to them instead of yanking back to the top.
+      // anchors (#about, #work, …) on the home page don't change the route —
+      // let the browser scroll to them instead of yanking back to the top.
       if (next === current) return
       current = next
       // reset scroll BEFORE the new page renders, so its scroll-in reveals
       // (whileInView) evaluate in view instead of staying blank
       window.scrollTo(0, 0)
+      // Leaving a standalone route (#/notes, #/uses, #/caves) via a section
+      // link lands us on home with the hash pointing at a section that hasn't
+      // mounted yet. Remember it and scroll there once home renders (below).
+      const h = window.location.hash
+      setPendingAnchor(next === 'home' && h.length > 1 && !h.startsWith('#/') ? h.slice(1) : null)
       setRoute(next)
     }
     window.addEventListener('hashchange', onHash)
     return () => window.removeEventListener('hashchange', onHash)
   }, [])
+
+  // once home has rendered, scroll to the section a route-page link pointed at.
+  // Poll across a few frames since some sections (e.g. Wall) mount lazily.
+  useEffect(() => {
+    if (route !== 'home' || !pendingAnchor) return
+    let raf = 0
+    let tries = 0
+    const tryScroll = () => {
+      const el = document.getElementById(pendingAnchor)
+      if (el) {
+        el.scrollIntoView()
+        setPendingAnchor(null)
+      } else if (tries++ < 30) {
+        raf = requestAnimationFrame(tryScroll)
+      } else {
+        setPendingAnchor(null)
+      }
+    }
+    tryScroll()
+    return () => cancelAnimationFrame(raf)
+  }, [route, pendingAnchor])
 
   const toggleCave = () =>
     setCave((v) => {
