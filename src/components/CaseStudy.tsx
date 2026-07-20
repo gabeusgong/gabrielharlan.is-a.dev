@@ -398,15 +398,11 @@ const STUDIES: Record<string, Study> = {
       },
       {
         h: 'Built around grotto groups',
-        p: 'Caving is social and local, so Karst is organized around grottos — regional caving clubs. Members form groups, share trip photos and events, and unlock trusted access like exact coordinates and member-only caves.',
+        p: 'Caving is social and local, so Karst is organized around grottos — regional caving clubs. Members form groups, share trip photos and events, and unlock trusted access like exact coordinates and member-only caves. Community credit is computed honestly, too: follow a trail to the exit and you can rate it and log the trip; record a cave’s first trail and you earn first-descent credit, with a leaderboard for the most-followed trails. To keep it fair, phones only ever report raw signals — “recorded a trail,” “made it out” — and every score is tallied server-side in Cloud Functions, so nothing can be forged.',
       },
       {
         h: 'Built to work with zero bars',
         p: 'Caves swallow signal, so Karst is offline-first by design: the trail recorder saves in place and tracks its own sync state, the cave page falls back to the local cache when the network is gone, and trip logs and entrance anchors queue up and sync the moment you resurface.',
-      },
-      {
-        h: 'Community credit, computed honestly',
-        p: 'Follow a trail to the exit and you can rate it and log the trip; record a cave’s first trail and you earn first-descent credit, with a leaderboard for the most-followed trails. To keep it fair, phones only ever report raw signals — “recorded a trail,” “made it out” — and every score is tallied server-side in Cloud Functions, so nothing can be forged.',
       },
     ],
     gallery: {
