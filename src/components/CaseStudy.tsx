@@ -771,9 +771,6 @@ export default function CaseStudy({
               <h2 className="cs__title" id="cs-title">{data.title}</h2>
               <p className="cs__lede">{data.lede}</p>
               <div className="cs__meta-row">
-                <button type="button" className="note__copy cs__copy" onClick={copyLink} data-cursor>
-                  {copied ? '✓ Link copied' : '🔗 Copy link'}
-                </button>
                 <div className="cs__meta">
                   {data.meta.map((m) => (
                     <span key={m.label}>
@@ -781,6 +778,9 @@ export default function CaseStudy({
                     </span>
                   ))}
                 </div>
+                <button type="button" className="note__copy cs__copy" onClick={copyLink} data-cursor>
+                  {copied ? '✓ Link copied' : '🔗 Copy link'}
+                </button>
               </div>
               {data.live && (
                 <a
