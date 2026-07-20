@@ -781,18 +781,18 @@ export default function CaseStudy({
                 <button type="button" className="note__copy cs__copy" onClick={copyLink} data-cursor>
                   {copied ? '✓ Link copied' : '🔗 Copy link'}
                 </button>
+                {data.live && (
+                  <a
+                    className="btn btn--solid cs__live"
+                    href={data.live.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    data-cursor
+                  >
+                    {data.live.label}
+                  </a>
+                )}
               </div>
-              {data.live && (
-                <a
-                  className="btn btn--solid cs__live"
-                  href={data.live.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  data-cursor
-                >
-                  {data.live.label}
-                </a>
-              )}
             </header>
 
             <section className="cs__block">
