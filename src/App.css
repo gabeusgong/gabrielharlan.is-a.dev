@@ -1260,6 +1260,12 @@
   color: var(--ink-soft);
   line-height: 1.6;
 }
+.cs__meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 1rem;
+}
 .cs__meta {
   display: flex;
   flex-wrap: wrap;
@@ -2623,8 +2629,9 @@
   background: var(--paper-2);
 }
 .cs__copy {
-  margin-top: 1rem;
-  margin-left: 0.6rem;
+  margin-top: 1.5rem;
+  margin-left: auto;
+  flex-shrink: 0;
 }
 
 /* ---- table of contents ---- */
