@@ -1019,7 +1019,12 @@ export default function CaseStudy({
           {lightbox && (
             <motion.div
               className="cs__lightbox"
-              onClick={() => setLightbox(null)}
+              onClick={(e) => {
+                // close only the lightbox — don't let the click bubble to the
+                // case-study overlay, which would close the whole case study
+                e.stopPropagation()
+                setLightbox(null)
+              }}
               role="dialog"
               aria-modal="true"
               aria-label="Expanded screenshot"
