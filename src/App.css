@@ -1359,6 +1359,17 @@
   padding: 0 0.28em;
   border-radius: 4px;
 }
+/* the signature-feature card keeps its amber background in dark mode, where
+   --ink flips to amber — so pin its text to near-black (else it's gold-on-gold) */
+:root.cave-active .cs__spotlight-tag,
+:root.cave-active .cs__spotlight-h,
+:root.cave-active .cs__spotlight p {
+  color: #211b14;
+}
+:root.cave-active .cs__spotlight strong {
+  background: #211b14;
+  color: var(--sun);
+}
 .cs__h3 {
   font-size: 1.7rem;
   margin-bottom: 0.9rem;
