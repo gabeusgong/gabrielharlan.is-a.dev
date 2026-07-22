@@ -1666,6 +1666,22 @@
   margin: 0;
   scroll-snap-align: start;
 }
+/* each shot is a button that opens the lightbox — strip button chrome */
+.cs__shot-open {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: inherit;
+  cursor: zoom-in;
+}
+.cs__shot-open:focus-visible {
+  outline: 3px solid var(--coral);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
 .cs__phone {
   border: var(--border-ink);
   border-radius: 22px;
@@ -1693,6 +1709,11 @@
 .cs__shot--wide {
   width: 460px;
   max-width: 82vw;
+}
+/* desktop (browser-framed) shots read bigger in the scroll row */
+.cs__gallery--browser .cs__shot {
+  width: 640px;
+  max-width: 88vw;
 }
 .cs__browser {
   border: var(--border-ink);
@@ -1753,6 +1774,54 @@
 .cs__photo img {
   width: 100%;
   display: block;
+}
+
+/* lightbox — click any screenshot to see it full-size */
+.cs__lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: clamp(1rem, 5vh, 4rem) clamp(1rem, 5vw, 4rem);
+  background: rgba(0, 0, 0, 0.86);
+  cursor: zoom-out;
+}
+.cs__lightbox img {
+  max-width: 100%;
+  max-height: 80vh;
+  object-fit: contain;
+  border-radius: 10px;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.55);
+}
+.cs__lightbox-cap {
+  max-width: 62ch;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+.cs__lightbox-close {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  background: rgba(0, 0, 0, 0.4);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+  font-family: var(--body);
+  cursor: pointer;
+}
+.cs__lightbox-close:hover {
+  background: var(--coral);
+  border-color: var(--coral);
 }
 @media (max-width: 700px) {
   .cs__decisions {

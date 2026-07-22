@@ -738,8 +738,17 @@ const STUDIES: Record<string, Study> = {
 }
 
 // one scrollable row of screenshots in a shared frame (phone, browser chrome,
-// or a plain photo). Reused for each labelled group in a gallery.
-function GalleryRow({ shots, frame }: { shots: Shot[]; frame?: Frame }) {
+// or a plain photo). Reused for each labelled group in a gallery. Each shot is a
+// button that opens the full-size image in a lightbox.
+function GalleryRow({
+  shots,
+  frame,
+  onOpen,
+}: {
+  shots: Shot[]
+  frame?: Frame
+  onOpen: (shot: Shot) => void
+}) {
   const browser = frame === 'browser'
   const photo = frame === 'photo'
   const wide = browser || photo
@@ -751,24 +760,32 @@ function GalleryRow({ shots, frame }: { shots: Shot[]; frame?: Frame }) {
     >
       {shots.map((s) => (
         <figure className={`cs__shot ${wide ? 'cs__shot--wide' : ''}`} key={s.src}>
-          {browser ? (
-            <div className="cs__browser">
-              <span className="cs__browser-bar">
-                <span />
-                <span />
-                <span />
-              </span>
-              <img src={s.src} alt={s.cap} loading="lazy" decoding="async" />
-            </div>
-          ) : photo ? (
-            <div className="cs__photo">
-              <img src={s.src} alt={s.cap} loading="lazy" decoding="async" />
-            </div>
-          ) : (
-            <div className="cs__phone">
-              <img src={s.src} alt={s.cap} loading="lazy" decoding="async" />
-            </div>
-          )}
+          <button
+            type="button"
+            className="cs__shot-open"
+            onClick={() => onOpen(s)}
+            data-cursor
+            aria-label={`Expand image: ${s.cap}`}
+          >
+            {browser ? (
+              <div className="cs__browser">
+                <span className="cs__browser-bar">
+                  <span />
+                  <span />
+                  <span />
+                </span>
+                <img src={s.src} alt={s.cap} loading="lazy" decoding="async" />
+              </div>
+            ) : photo ? (
+              <div className="cs__photo">
+                <img src={s.src} alt={s.cap} loading="lazy" decoding="async" />
+              </div>
+            ) : (
+              <div className="cs__phone">
+                <img src={s.src} alt={s.cap} loading="lazy" decoding="async" />
+              </div>
+            )}
+          </button>
           <figcaption>{s.cap}</figcaption>
         </figure>
       ))}
@@ -790,6 +807,9 @@ export default function CaseStudy({
   // the field note that tells the story behind this project, if any
   const note = data ? notes.find((n) => n.study === data.slug) : null
 
+  // click a screenshot to open it full-size
+  const [lightbox, setLightbox] = useState<Shot | null>(null)
+
   // the image gallery, built once so it can be dropped into one of two spots
   const gallery = data?.gallery
   const galleryAfterProblem = gallery?.place === 'after-problem'
@@ -800,11 +820,11 @@ export default function CaseStudy({
         gallery.groups.map((g) => (
           <div className="cs__gallery-group" key={g.label}>
             <p className="cs__gallery-label label">{g.label}</p>
-            <GalleryRow shots={g.shots} frame={g.frame} />
+            <GalleryRow shots={g.shots} frame={g.frame} onOpen={setLightbox} />
           </div>
         ))
       ) : (
-        <GalleryRow shots={gallery.shots ?? []} frame={gallery.frame} />
+        <GalleryRow shots={gallery.shots ?? []} frame={gallery.frame} onOpen={setLightbox} />
       )}
     </section>
   ) : null
@@ -860,6 +880,25 @@ export default function CaseStudy({
       window.removeEventListener('keydown', onKey)
     }
   }, [open, onClose])
+
+  // when the lightbox is open, Escape closes it first — capture-phase +
+  // stopPropagation keeps the same keypress from also closing the case study
+  useEffect(() => {
+    if (!lightbox) return
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        e.stopPropagation()
+        setLightbox(null)
+      }
+    }
+    window.addEventListener('keydown', onKey, true)
+    return () => window.removeEventListener('keydown', onKey, true)
+  }, [lightbox])
+
+  // drop the lightbox whenever the case study itself closes
+  useEffect(() => {
+    if (!open) setLightbox(null)
+  }, [open])
 
   return (
     <AnimatePresence>
@@ -976,6 +1015,32 @@ export default function CaseStudy({
               </a>
             )}
           </motion.article>
+
+          {lightbox && (
+            <motion.div
+              className="cs__lightbox"
+              onClick={() => setLightbox(null)}
+              role="dialog"
+              aria-modal="true"
+              aria-label="Expanded screenshot"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.15 }}
+            >
+              <button
+                type="button"
+                className="cs__lightbox-close"
+                onClick={() => setLightbox(null)}
+                data-cursor
+                aria-label="Close expanded image"
+              >
+                ✕
+              </button>
+              <img src={lightbox.src} alt={lightbox.cap} />
+              <figcaption className="cs__lightbox-cap">{lightbox.cap}</figcaption>
+            </motion.div>
+          )}
         </motion.div>
       )}
     </AnimatePresence>
