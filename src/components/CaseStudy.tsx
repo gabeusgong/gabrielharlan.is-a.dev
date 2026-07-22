@@ -20,7 +20,14 @@ type Study = {
   problem: ReactNode
   spotlight: { tag: string; h: string; body: ReactNode }
   decisions: Decision[]
-  gallery?: { heading: string; shots: Shot[]; frame?: 'phone' | 'browser' | 'photo' }
+  gallery?: {
+    heading: string
+    shots: Shot[]
+    frame?: 'phone' | 'browser' | 'photo'
+    // where the gallery sits in the flow; defaults to after the diagram/typing
+    // test, near the end. 'after-problem' hoists it up under "The problem".
+    place?: 'after-problem'
+  }
   diagram?: { heading: string; node: ReactNode }
   closing: { h: string; body: ReactNode }
 }
@@ -590,6 +597,7 @@ const STUDIES: Record<string, Study> = {
     gallery: {
       heading: 'The build',
       frame: 'photo',
+      place: 'after-problem',
       shots: [
         {
           src: `${base}corne/build.webp`,
@@ -718,6 +726,52 @@ export default function CaseStudy({
   // the field note that tells the story behind this project, if any
   const note = data ? notes.find((n) => n.study === data.slug) : null
 
+  // the image gallery, built once so it can be dropped into one of two spots
+  const gallery = data?.gallery
+  const galleryAfterProblem = gallery?.place === 'after-problem'
+  const galleryNode = gallery
+    ? (() => {
+        const frame = gallery.frame
+        const browser = frame === 'browser'
+        const photo = frame === 'photo'
+        const wide = browser || photo
+        return (
+          <section className="cs__block">
+            <h3 className="cs__h3">{gallery.heading}</h3>
+            <div
+              className={`cs__gallery ${browser ? 'cs__gallery--browser' : ''} ${
+                photo ? 'cs__gallery--photo' : ''
+              }`}
+            >
+              {gallery.shots.map((s) => (
+                <figure className={`cs__shot ${wide ? 'cs__shot--wide' : ''}`} key={s.src}>
+                  {browser ? (
+                    <div className="cs__browser">
+                      <span className="cs__browser-bar">
+                        <span />
+                        <span />
+                        <span />
+                      </span>
+                      <img src={s.src} alt={s.cap} loading="lazy" decoding="async" />
+                    </div>
+                  ) : photo ? (
+                    <div className="cs__photo">
+                      <img src={s.src} alt={s.cap} loading="lazy" decoding="async" />
+                    </div>
+                  ) : (
+                    <div className="cs__phone">
+                      <img src={s.src} alt={s.cap} loading="lazy" decoding="async" />
+                    </div>
+                  )}
+                  <figcaption>{s.cap}</figcaption>
+                </figure>
+              ))}
+            </div>
+          </section>
+        )
+      })()
+    : null
+
   const [copied, setCopied] = useState(false)
   const copyLink = async () => {
     if (!data) return
@@ -834,6 +888,8 @@ export default function CaseStudy({
               <p className="cs__body">{data.problem}</p>
             </section>
 
+            {galleryAfterProblem && galleryNode}
+
             <section className="cs__block">
               <div className="cs__spotlight">
                 <span className="cs__spotlight-tag label">{data.spotlight.tag}</span>
@@ -868,47 +924,7 @@ export default function CaseStudy({
               </section>
             )}
 
-            {data.gallery &&
-              (() => {
-                const frame = data.gallery.frame
-                const browser = frame === 'browser'
-                const photo = frame === 'photo'
-                const wide = browser || photo
-                return (
-                  <section className="cs__block">
-                    <h3 className="cs__h3">{data.gallery.heading}</h3>
-                    <div
-                      className={`cs__gallery ${browser ? 'cs__gallery--browser' : ''} ${
-                        photo ? 'cs__gallery--photo' : ''
-                      }`}
-                    >
-                      {data.gallery.shots.map((s) => (
-                        <figure className={`cs__shot ${wide ? 'cs__shot--wide' : ''}`} key={s.src}>
-                          {browser ? (
-                            <div className="cs__browser">
-                              <span className="cs__browser-bar">
-                                <span />
-                                <span />
-                                <span />
-                              </span>
-                              <img src={s.src} alt={s.cap} loading="lazy" decoding="async" />
-                            </div>
-                          ) : photo ? (
-                            <div className="cs__photo">
-                              <img src={s.src} alt={s.cap} loading="lazy" decoding="async" />
-                            </div>
-                          ) : (
-                            <div className="cs__phone">
-                              <img src={s.src} alt={s.cap} loading="lazy" decoding="async" />
-                            </div>
-                          )}
-                          <figcaption>{s.cap}</figcaption>
-                        </figure>
-                      ))}
-                    </div>
-                  </section>
-                )
-              })()}
+            {!galleryAfterProblem && galleryNode}
 
             <section className="cs__block">
               <h3 className="cs__h3">{data.closing.h}</h3>
