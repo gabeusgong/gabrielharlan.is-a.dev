@@ -20,7 +20,7 @@ type Study = {
   problem: ReactNode
   spotlight: { tag: string; h: string; body: ReactNode }
   decisions: Decision[]
-  gallery?: { heading: string; shots: Shot[]; frame?: 'phone' | 'browser' }
+  gallery?: { heading: string; shots: Shot[]; frame?: 'phone' | 'browser' | 'photo' }
   diagram?: { heading: string; node: ReactNode }
   closing: { h: string; body: ReactNode }
 }
@@ -587,6 +587,16 @@ const STUDIES: Record<string, Study> = {
       },
     ],
     diagram: { heading: 'The keymap', node: <KeyboardLayers /> },
+    gallery: {
+      heading: 'The build',
+      frame: 'photo',
+      shots: [
+        {
+          src: `${base}corne/build.webp`,
+          cap: 'Both halves: white 3D-printed cases and blank Choc keycaps, a nice!nano with per-half OLED (battery %, Bluetooth, layer), magnetic USB-C, and the hand-wired scroll encoder on the right.',
+        },
+      ],
+    },
     closing: {
       h: 'Where it stands',
       body: (
@@ -860,13 +870,20 @@ export default function CaseStudy({
 
             {data.gallery &&
               (() => {
-                const browser = data.gallery.frame === 'browser'
+                const frame = data.gallery.frame
+                const browser = frame === 'browser'
+                const photo = frame === 'photo'
+                const wide = browser || photo
                 return (
                   <section className="cs__block">
                     <h3 className="cs__h3">{data.gallery.heading}</h3>
-                    <div className={`cs__gallery ${browser ? 'cs__gallery--browser' : ''}`}>
+                    <div
+                      className={`cs__gallery ${browser ? 'cs__gallery--browser' : ''} ${
+                        photo ? 'cs__gallery--photo' : ''
+                      }`}
+                    >
                       {data.gallery.shots.map((s) => (
-                        <figure className={`cs__shot ${browser ? 'cs__shot--wide' : ''}`} key={s.src}>
+                        <figure className={`cs__shot ${wide ? 'cs__shot--wide' : ''}`} key={s.src}>
                           {browser ? (
                             <div className="cs__browser">
                               <span className="cs__browser-bar">
@@ -874,6 +891,10 @@ export default function CaseStudy({
                                 <span />
                                 <span />
                               </span>
+                              <img src={s.src} alt={s.cap} loading="lazy" decoding="async" />
+                            </div>
+                          ) : photo ? (
+                            <div className="cs__photo">
                               <img src={s.src} alt={s.cap} loading="lazy" decoding="async" />
                             </div>
                           ) : (
