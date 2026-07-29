@@ -8,11 +8,10 @@ import {
 import { motion, AnimatePresence } from 'motion/react'
 import { isMuted } from '../lib/prefs'
 import { getAudioContext } from '../lib/audio'
+import { asset } from '../lib/assets'
 import { useFocusTrap } from '../lib/useFocusTrap'
 import { notes } from '../data'
 import TypingTest from './TypingTest'
-
-const base = import.meta.env.BASE_URL
 
 type Shot = { src: string; cap: string }
 type Frame = 'phone' | 'browser' | 'photo'
@@ -440,11 +439,11 @@ const STUDIES: Record<string, Study> = {
           frame: 'browser',
           shots: [
             {
-              src: `${base}karst/desktop-map-dark.webp`,
+              src: asset('karst/desktop-map-dark.webp'),
               cap: 'Privacy-first map — sensitive caves are fuzzed to broad “obscuring zones,” never exact pins; only park/show caves get precise points.',
             },
             {
-              src: `${base}karst/desktop-grid-dark.webp`,
+              src: asset('karst/desktop-grid-dark.webp'),
               cap: 'Field guide — search and filter wild & show caves across the karst country of south-central Indiana.',
             },
           ],
@@ -454,19 +453,19 @@ const STUDIES: Record<string, Study> = {
           frame: 'phone',
           shots: [
             {
-              src: `${base}karst/mobile-explore.webp`,
+              src: asset('karst/mobile-explore.webp'),
               cap: 'Field guide — browse wild & show caves with conditions and difficulty.',
             },
             {
-              src: `${base}karst/mobile-groups.webp`,
+              src: asset('karst/mobile-groups.webp'),
               cap: 'Grotto groups — a private club feed with events, photos, and announcements.',
             },
             {
-              src: `${base}karst/mobile-map.webp`,
+              src: asset('karst/mobile-map.webp'),
               cap: 'The privacy-first map in your pocket — fuzzed zones, exact pins only for public caves.',
             },
             {
-              src: `${base}karst/mobile-trail.webp`,
+              src: asset('karst/mobile-trail.webp'),
               cap: 'A recorded dead-reckoning trail — breadcrumbs, length, and first-descent credit, ready to follow in or back out.',
             },
           ],
@@ -636,7 +635,7 @@ const STUDIES: Record<string, Study> = {
       place: 'after-problem',
       shots: [
         {
-          src: `${base}corne/build.webp`,
+          src: asset('corne/build.webp'),
           cap: 'Both halves: white 3D-printed cases and blank Choc keycaps, a nice!nano with per-half OLED (battery %, Bluetooth, layer), magnetic USB-C, and the hand-wired scroll encoder on the right.',
         },
       ],
@@ -719,15 +718,15 @@ const STUDIES: Record<string, Study> = {
       frame: 'browser',
       shots: [
         {
-          src: `${base}webdesign/home.webp`,
+          src: asset('webdesign/home.webp'),
           cap: 'Homepage — a full-bleed hero slideshow of my Buckner Cave photos under the preserve name.',
         },
         {
-          src: `${base}webdesign/info.webp`,
+          src: asset('webdesign/info.webp'),
           cap: 'News, the management-plan callout, and accordion sections for the cave’s geology, biology, and history.',
         },
         {
-          src: `${base}webdesign/access.webp`,
+          src: asset('webdesign/access.webp'),
           cap: 'Interior page template — a topographic-line header, breadcrumb, and the permit-request flow.',
         },
       ],
@@ -814,35 +813,35 @@ const STUDIES: Record<string, Study> = {
       frame: 'browser',
       shots: [
         {
-          src: `${base}traction/queue-dark.webp?v=3`,
+          src: asset('traction/queue-dark.webp'),
           cap: 'My Queue — the engine’s prioritized daily list: tiers, per-lead scores, why-now triggers, and an AI recommendation on each card.',
         },
         {
-          src: `${base}traction/queue-light.webp?v=3`,
+          src: asset('traction/queue-light.webp'),
           cap: 'The same queue in light mode — TRACTION themes end to end.',
         },
         {
-          src: `${base}traction/engine-dark.webp?v=3`,
+          src: asset('traction/engine-dark.webp'),
           cap: 'Outbound Engine — how the queue is built: triggers → eligibility & priority scoring → outputs → a feedback loop back to the data spine.',
         },
         {
-          src: `${base}traction/engine-light.webp?v=3`,
+          src: asset('traction/engine-light.webp'),
           cap: 'The engine, light mode.',
         },
         {
-          src: `${base}traction/console-dark.webp?v=3`,
+          src: asset('traction/console-dark.webp'),
           cap: 'Working a lead — AI intelligence, the AI-matched cart, an omni-channel engagement log with an AI transcript summary, and one-tap outcome capture.',
         },
         {
-          src: `${base}traction/console-light.webp?v=3`,
+          src: asset('traction/console-light.webp'),
           cap: 'The live console, light mode.',
         },
         {
-          src: `${base}traction/analytics-dark.webp?v=3`,
+          src: asset('traction/analytics-dark.webp'),
           cap: 'Analytics — CLV, churn reasons, revenue attributed by trigger, and best customers by RFM tier.',
         },
         {
-          src: `${base}traction/analytics-light.webp?v=3`,
+          src: asset('traction/analytics-light.webp'),
           cap: 'Analytics, light mode.',
         },
       ],

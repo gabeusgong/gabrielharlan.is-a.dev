@@ -2,37 +2,40 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
 import Reveal from './Reveal'
 import { useFocusTrap } from '../lib/useFocusTrap'
+import { asset } from '../lib/assets'
 
-const base = import.meta.env.BASE_URL
-const sm = (src: string) => src.replace('.webp', '-sm.webp')
-
-// the former "featured" shot now simply leads the gallery as the first tile
+// each entry carries the full-size url (`src`) plus its -sm thumbnail (`sm`),
+// both resolved to content-hashed urls at build time
 const PHOTOS = [
-  { src: `${base}caves/main.webp`, alt: 'A clear turquoise cave stream winding between scalloped limestone walls' },
-  { src: `${base}caves/cave-01.webp`, alt: 'Squeezing through a tight, muddy crawl in a red helmet and headlamp' },
-  { src: `${base}caves/cave-02.webp`, alt: 'A stalagmite column and draped flowstone, with cavers exploring in the distance' },
-  { src: `${base}caves/cave-03.webp`, alt: 'A narrow, deeply scalloped passage carved by flowing water' },
-  { src: `${base}caves/cave-04.webp`, alt: 'A dark, water-filled tunnel narrowing into the distance' },
-  { src: `${base}caves/cave-05.webp`, alt: 'A tall flowstone column and rippled cave draperies' },
-  { src: `${base}caves/cave-06.webp`, alt: 'A caver silhouetted against daylight at a cave entrance, reflected in the water' },
-  { src: `${base}caves/cave-07.webp`, alt: 'Two cavers lighting up a chamber marked with old signatures' },
-  { src: `${base}caves/cave-08.webp`, alt: 'A massive stalagmite-and-column formation rising from the cave floor' },
-  { src: `${base}caves/cave-09.webp`, alt: 'Historic signatures written on the cave ceiling in the 1800s' },
-  { src: `${base}caves/cave-10.webp`, alt: 'A headlamp selfie deep inside the cave' },
-  { src: `${base}caves/cave-11.webp`, alt: 'A bright orange cave salamander clinging to a wet wall' },
-  { src: `${base}caves/cave-12.webp`, alt: 'Rippling tan flowstone draperies coating the cave wall' },
-  { src: `${base}caves/cave-13.webp`, alt: 'A dog sitting on a sandy cave floor beneath a low ceiling' },
-  { src: `${base}caves/cave-14.webp`, alt: 'A cascade of pale flowstone spilling down the rock' },
-  { src: `${base}caves/cave-15.webp`, alt: 'A dense field of thin soda-straw stalactites hanging from the ceiling' },
-  { src: `${base}caves/cave-16.webp`, alt: 'Standing at the base of a frozen waterfall at a cave entrance in winter' },
-  { src: `${base}caves/cave-17.webp`, alt: 'Rimstone terraces on the cave floor scattered with fallen autumn leaves' },
-  { src: `${base}caves/cave-18.webp`, alt: 'A still cave pool beneath dark overhanging rock' },
-  { src: `${base}caves/cave-19.webp`, alt: 'A large domed flowstone formation catching the light' },
-  { src: `${base}caves/cave-20.webp`, alt: 'Layered rock strata in a low, wide crawlway' },
-  { src: `${base}caves/cave-21.webp`, alt: 'A caver silhouetted while climbing up through a tight passage' },
-  { src: `${base}caves/cave-22.webp`, alt: 'A glossy column formation reflected in a shallow pool' },
-  { src: `${base}caves/cave-23.webp`, alt: 'Stalactites hanging above a floor bristling with stalagmites' },
-]
+  { name: 'main.webp', alt: 'A clear turquoise cave stream winding between scalloped limestone walls' },
+  { name: 'cave-01.webp', alt: 'Squeezing through a tight, muddy crawl in a red helmet and headlamp' },
+  { name: 'cave-02.webp', alt: 'A stalagmite column and draped flowstone, with cavers exploring in the distance' },
+  { name: 'cave-03.webp', alt: 'A narrow, deeply scalloped passage carved by flowing water' },
+  { name: 'cave-04.webp', alt: 'A dark, water-filled tunnel narrowing into the distance' },
+  { name: 'cave-05.webp', alt: 'A tall flowstone column and rippled cave draperies' },
+  { name: 'cave-06.webp', alt: 'A caver silhouetted against daylight at a cave entrance, reflected in the water' },
+  { name: 'cave-07.webp', alt: 'Two cavers lighting up a chamber marked with old signatures' },
+  { name: 'cave-08.webp', alt: 'A massive stalagmite-and-column formation rising from the cave floor' },
+  { name: 'cave-09.webp', alt: 'Historic signatures written on the cave ceiling in the 1800s' },
+  { name: 'cave-10.webp', alt: 'A headlamp selfie deep inside the cave' },
+  { name: 'cave-11.webp', alt: 'A bright orange cave salamander clinging to a wet wall' },
+  { name: 'cave-12.webp', alt: 'Rippling tan flowstone draperies coating the cave wall' },
+  { name: 'cave-13.webp', alt: 'A dog sitting on a sandy cave floor beneath a low ceiling' },
+  { name: 'cave-14.webp', alt: 'A cascade of pale flowstone spilling down the rock' },
+  { name: 'cave-15.webp', alt: 'A dense field of thin soda-straw stalactites hanging from the ceiling' },
+  { name: 'cave-16.webp', alt: 'Standing at the base of a frozen waterfall at a cave entrance in winter' },
+  { name: 'cave-17.webp', alt: 'Rimstone terraces on the cave floor scattered with fallen autumn leaves' },
+  { name: 'cave-18.webp', alt: 'A still cave pool beneath dark overhanging rock' },
+  { name: 'cave-19.webp', alt: 'A large domed flowstone formation catching the light' },
+  { name: 'cave-20.webp', alt: 'Layered rock strata in a low, wide crawlway' },
+  { name: 'cave-21.webp', alt: 'A caver silhouetted while climbing up through a tight passage' },
+  { name: 'cave-22.webp', alt: 'A glossy column formation reflected in a shallow pool' },
+  { name: 'cave-23.webp', alt: 'Stalactites hanging above a floor bristling with stalagmites' },
+].map((p) => ({
+  alt: p.alt,
+  src: asset(`caves/${p.name}`),
+  sm: asset(`caves/${p.name.replace('.webp', '-sm.webp')}`),
+}))
 
 export default function CaveGallery() {
   const [idx, setIdx] = useState<number | null>(null)
@@ -133,7 +136,7 @@ export default function CaveGallery() {
             >
               <img
                 src={p.src}
-                srcSet={`${sm(p.src)} 640w, ${p.src} 1280w`}
+                srcSet={`${p.sm} 640w, ${p.src} 1280w`}
                 sizes="(max-width: 640px) 45vw, 240px"
                 alt={p.alt}
                 loading="lazy"
@@ -219,7 +222,7 @@ export default function CaveGallery() {
                   aria-label={`Photo ${i + 1}: ${p.alt}`}
                   aria-current={i === idx}
                 >
-                  <img src={sm(p.src)} alt="" loading="lazy" />
+                  <img src={p.sm} alt="" loading="lazy" />
                 </button>
               ))}
             </div>
