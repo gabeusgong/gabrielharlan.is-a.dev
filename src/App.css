@@ -2764,6 +2764,8 @@
 .shipped__grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+  /* every card the same height, regardless of blurb length */
+  grid-auto-rows: 1fr;
   gap: 1.1rem;
   margin-top: 2.4rem;
 }
@@ -2779,10 +2781,8 @@
   color: var(--ink);
   transition: transform 0.16s ease, box-shadow 0.16s ease;
 }
-.shipcard:hover {
-  transform: translate(-3px, -3px);
-  box-shadow: var(--shadow-hard-lg);
-}
+/* the card itself is no longer a link (the button is the CTA), so it doesn't
+   lift on hover — that would imply the whole card is clickable */
 .shipcard__top {
   display: flex;
   align-items: center;
@@ -2824,9 +2824,33 @@
   margin-top: auto;
   color: var(--coral);
 }
-@media (max-width: 640px) {
+.shipcard__btn {
+  align-self: flex-start;
+  margin-top: 0.7rem;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink);
+  text-decoration: none;
+  border: var(--border-ink);
+  border-radius: 100px;
+  padding: 0.45em 0.9em;
+  box-shadow: var(--shadow-hard);
+  transition: transform 0.14s ease, box-shadow 0.14s ease, background 0.14s ease;
+}
+.shipcard__btn:hover,
+.shipcard__btn:focus-visible {
+  background: var(--sun);
+  transform: translate(-2px, -2px);
+  box-shadow: var(--shadow-hard-lg);
+}
+/* stack the cards into a single column on tablet-and-down */
+@media (max-width: 768px) {
   .shipped__grid {
     grid-template-columns: 1fr;
+    grid-auto-rows: auto;
   }
 }
 

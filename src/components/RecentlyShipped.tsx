@@ -29,6 +29,18 @@ const TAG_OVERRIDES: Record<string, string[]> = {
   'gabrielharlan.is-a.dev': ['TypeScript'],
 }
 
+// fallback descriptions so every card has a blurb even when the repo's GitHub
+// description is empty. A live GitHub description always wins over these.
+const DESC_OVERRIDES: Record<string, string> = {
+  karst:
+    "A caver's field guide to southern Indiana's karst — a privacy-first cave map, record-once / follow-in trails, and grotto tools, built on Next.js + Firebase.",
+  'gabrielharlan.is-a.dev':
+    'This site — a Vite + React + TypeScript portfolio, easter eggs and all.',
+  'zmk-config':
+    'ZMK firmware for my hand-wired wireless split Corne — custom layers, combos, and a scroll encoder.',
+}
+const GENERIC_DESC = 'A recent project — open the repo for the details.'
+
 const ago = (iso: string) => {
   const days = Math.floor((Date.now() - new Date(iso).getTime()) / 86_400_000)
   if (days <= 0) return 'today'
@@ -117,7 +129,7 @@ export default function RecentlyShipped() {
       <div className="shipped__grid">
         {repos.map((r, i) => (
           <Reveal key={r.name} delay={0.12 + i * 0.05}>
-            <a href={r.html_url} target="_blank" rel="noreferrer" className="shipcard" data-cursor>
+            <article className="shipcard">
               <div className="shipcard__top">
                 <span className="shipcard__name">{r.name}</span>
                 {(() => {
@@ -133,9 +145,21 @@ export default function RecentlyShipped() {
                   ) : null
                 })()}
               </div>
-              {r.description && <p className="shipcard__desc">{r.description}</p>}
+              <p className="shipcard__desc">
+                {r.description ?? DESC_OVERRIDES[r.name] ?? GENERIC_DESC}
+              </p>
               <span className="shipcard__meta label">↑ pushed {ago(r.pushed_at)}</span>
-            </a>
+              <a
+                href={r.html_url}
+                target="_blank"
+                rel="noreferrer"
+                className="shipcard__btn"
+                data-cursor
+                aria-label={`View ${r.name} on GitHub`}
+              >
+                View on GitHub ↗
+              </a>
+            </article>
           </Reveal>
         ))}
       </div>
