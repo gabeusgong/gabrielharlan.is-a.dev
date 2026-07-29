@@ -1967,13 +1967,14 @@
 /* ---------- idle surprise: a bat flutters across ---------- */
 .idlebat {
   position: fixed;
-  top: 28vh;
-  left: -64px;
+  top: auto;
+  bottom: -64px;
+  left: 46vw;
   font-size: 2rem;
   z-index: 70;
   pointer-events: none;
   will-change: transform;
-  /* glide across the screen while the wings flap gently (separate `scale`
+  /* flutter up the screen while the wings flap gently (separate `scale`
      property so it composes with the transform-based flight path) */
   animation: bat-fly 11s linear forwards, bat-flap 0.85s ease-in-out infinite;
 }
@@ -1983,19 +1984,19 @@
 }
 @keyframes bat-fly {
   0% {
-    transform: translate(0, 0) rotate(-8deg) scaleX(-1);
+    transform: translate(0, 0) rotate(-8deg);
   }
   25% {
-    transform: translate(28vw, -9vh) rotate(8deg) scaleX(-1);
+    transform: translate(-9vw, -28vh) rotate(8deg);
   }
   50% {
-    transform: translate(55vw, 5vh) rotate(-8deg) scaleX(-1);
+    transform: translate(5vw, -55vh) rotate(-8deg);
   }
   75% {
-    transform: translate(82vw, -7vh) rotate(8deg) scaleX(-1);
+    transform: translate(-7vw, -82vh) rotate(8deg);
   }
   100% {
-    transform: translate(114vw, 3vh) rotate(-8deg) scaleX(-1);
+    transform: translate(3vw, -120vh) rotate(-8deg);
   }
 }
 
