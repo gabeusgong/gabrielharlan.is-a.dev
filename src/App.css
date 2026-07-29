@@ -1667,12 +1667,24 @@
   padding-bottom: 1rem;
   padding-right: 12px; /* room for the last frame's drop shadow */
   scroll-snap-type: x mandatory;
+  /* Firefox: force a persistent styled bar instead of the auto-hiding overlay */
+  scrollbar-color: var(--ink) transparent;
 }
-/* keep the custom circle cursor (not the OS arrow) over the horizontal
-   scrollbar while side-scrolling — webkit honors cursor on these pseudos */
-.cs__gallery::-webkit-scrollbar,
-.cs__gallery::-webkit-scrollbar-track,
+/* An always-visible styled scrollbar — macOS overlay bars auto-hide, so styling
+   the webkit pseudos opts into a persistent bar. cursor:none keeps the custom
+   circle cursor over it rather than the OS arrow. */
+.cs__gallery::-webkit-scrollbar {
+  height: 12px;
+  cursor: none;
+}
+.cs__gallery::-webkit-scrollbar-track {
+  background: transparent;
+  cursor: none;
+}
 .cs__gallery::-webkit-scrollbar-thumb {
+  background: var(--ink);
+  border: 3px solid var(--paper);
+  border-radius: 8px;
   cursor: none;
 }
 /* labelled rows within one gallery (e.g. a desktop row + a mobile row) */
