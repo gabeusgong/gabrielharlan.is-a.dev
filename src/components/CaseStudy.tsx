@@ -480,7 +480,7 @@ const STUDIES: Record<string, Study> = {
         ITIT <span className="cs__cube">📦</span>
       </>
     ),
-    year: '2025',
+    year: '2025–2026',
     lede: (
       <>
         <strong>IT Inventory Tracker</strong> — a semi-automated inventory system for small

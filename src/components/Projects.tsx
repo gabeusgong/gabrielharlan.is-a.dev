@@ -38,9 +38,11 @@ function TiltCard({
     my.set(0.5)
   }
 
-  // the first card is the feature; also make the last card span full-width when
-  // it would otherwise be orphaned alone on a 2-column row
-  const big = index === 0 || (index === total - 1 && (total - 1) % 2 === 1)
+  // the first two cards (TRACTION, TRACI) are full-width features; the rest fill
+  // a 2-column grid, with the last card spanning full-width only if it would
+  // otherwise be orphaned alone on a row
+  const FEATURES = 2
+  const big = index < FEATURES || (index === total - 1 && (total - FEATURES) % 2 === 1)
   const isCase = !!(p.caseStudy && onOpen)
   const cta = isCase ? 'Read the case study' : p.href ? 'Visit' : null
 

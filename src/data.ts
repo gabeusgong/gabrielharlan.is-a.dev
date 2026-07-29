@@ -129,7 +129,7 @@ export const projects: Project[] = [
       'Delivered as a senior capstone with a four-person Scrum team: inventory tracking for small businesses that’s less error-prone than spreadsheets and far cheaper than enterprise systems. Pairs a physical IoT tracker with a web app for deployments, locations, and items — plus CSV export and Google login.',
     tags: ['JavaScript', 'PHP', 'MySQL', 'IoT'],
     tone: 'cobalt',
-    year: '2025',
+    year: '2025–2026',
     emoji: '📦',
     href: 'https://zion.luddy.indiana.edu/info-capstone-2026/itit',
     caseStudy: true,
@@ -300,6 +300,27 @@ export type Note = {
 
 // Newest first — the list renders in this order.
 export const notes: Note[] = [
+  {
+    slug: 'designing-for-a-job-ive-never-had',
+    title: 'Designing for a job I’ve never had',
+    dek: 'I’ve never studied sales or worked a sales floor — then I designed a console for the reps who do.',
+    date: '2026-07-22',
+    tags: ['UX', 'Product', 'Internship'],
+    minutes: 4,
+    study: 'traction',
+    body: [
+      'The brief was a sales-enablement console — a tool that tells a retention rep who to call, why now, and what to say. There was just one gap: I’ve never studied sales, and I’ve never worked a day on a sales floor. Quotas, objection-handling, the rhythm of a call day — none of it was mine. Even the vocabulary read like a foreign language at first: RFM, churn, LTV, cadence, suppression, DNC. My first instinct was that this disqualified me. It turned out to be the most useful constraint of the project.',
+      { h: 'You don’t have to be the user' },
+      'The reframe that unlocked it: UX has never required being the user — it requires understanding one. I wasn’t designing “sales,” some discipline I didn’t belong to. I was designing for a person doing a hard, repetitive job, and my real task was to learn that job well enough to make their day easier. So I learned it — how outbound retention actually works, what a rep’s morning looks like, what makes a call worth dialing and what quietly wastes an hour. The jargon stopped being intimidating the moment I understood the human problem underneath each term.',
+      { h: 'Design humbly in someone else’s domain' },
+      'Not being the expert changed how I designed. I had no standing to tell a veteran rep how to sell, so I didn’t try. Instead of dictating, TRACTION surfaces the why — why this customer, why now — and leaves the judgment to the person on the phone. The AI drafts the script; the rep delivers it in their own voice. The engine ranks the queue; the rep decides who to skip. Even the guardrails — no recent order, no open care case, one touch every two weeks — came from respecting a domain I was a guest in: the fastest way to lose a customer’s trust is to over-contact them, and the reps knew that long before I showed up.',
+      {
+        quote:
+          'You don’t need to be a domain expert to design for a domain. You need to respect it enough to learn it — and design so the real expert stays in control.',
+      },
+      'That’s what I’m taking with me. The unfamiliar domain wasn’t a wall; it was the reason the design came out the way it did — humble, explainable, and built to make a human better at their job instead of replacing their judgment with mine. I still can’t sell you a set of tires. But I think I designed something the person who can would actually want to use.',
+    ],
+  },
   {
     slug: 'the-knob-that-wouldnt-turn',
     title: 'The knob that wouldn’t turn',
