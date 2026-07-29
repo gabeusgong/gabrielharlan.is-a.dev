@@ -1,4 +1,4 @@
-import { useState, useEffect, lazy, Suspense } from 'react'
+import { useState, useEffect, useRef, lazy, Suspense } from 'react'
 import { MotionConfig } from 'motion/react'
 import './App.css'
 import Cursor from './components/Cursor'
@@ -16,6 +16,43 @@ import Testimonials from './components/Testimonials'
 
 // lazy so Firebase ships in its own chunk, not the initial bundle
 const Wall = lazy(() => import('./components/Wall'))
+
+// …and only *load* that chunk (and open its Firestore listener) once the
+// guestbook nears the viewport — otherwise React.lazy fires on first render,
+// pulling ~140 KB of Firebase into the initial page load for a section at the
+// very bottom.
+function DeferredWall() {
+  const ref = useRef<HTMLDivElement>(null)
+  const [show, setShow] = useState(false)
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    if (typeof IntersectionObserver === 'undefined') {
+      setShow(true)
+      return
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          setShow(true)
+          io.disconnect()
+        }
+      },
+      { rootMargin: '600px' },
+    )
+    io.observe(el)
+    return () => io.disconnect()
+  }, [])
+  return (
+    <div ref={ref}>
+      {show && (
+        <Suspense fallback={null}>
+          <Wall />
+        </Suspense>
+      )}
+    </div>
+  )
+}
 // lazy so the cave photos load only when the gallery is reached
 const CaveGallery = lazy(() => import('./components/CaveGallery'))
 const Uses = lazy(() => import('./components/Uses'))
@@ -207,9 +244,7 @@ function App() {
           <Testimonials />
           <NotesTeaser />
           <RecentlyShipped />
-          <Suspense fallback={null}>
-            <Wall />
-          </Suspense>
+          <DeferredWall />
           <Contact />
         </main>
       )}

@@ -1,8 +1,10 @@
-import { useState, useEffect, type MouseEvent } from 'react'
+import { useState, useEffect, lazy, Suspense, type MouseEvent } from 'react'
 import { motion, useMotionValue, useSpring, useTransform } from 'motion/react'
 import { projects, tones, type Project } from '../data'
 import Reveal from './Reveal'
-import CaseStudy from './CaseStudy'
+// the case-study modal (content + gallery + audio synth) only appears after a
+// project click — lazy-load it so it stays out of the initial bundle
+const CaseStudy = lazy(() => import('./CaseStudy'))
 import { unlock } from '../lib/achievements'
 import { track } from '../lib/track'
 
@@ -167,7 +169,9 @@ export default function Projects() {
         ))}
       </div>
 
-      <CaseStudy study={study} onClose={closeStudy} />
+      <Suspense fallback={null}>
+        <CaseStudy study={study} onClose={closeStudy} />
+      </Suspense>
     </section>
   )
 }
