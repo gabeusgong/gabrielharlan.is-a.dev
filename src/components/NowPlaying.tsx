@@ -48,10 +48,18 @@ export default function NowPlaying() {
       }
     }
     fetchTrack()
-    const id = window.setInterval(fetchTrack, 60000)
+    // poll every 60s, but skip while the tab is hidden; refresh on return
+    const id = window.setInterval(() => {
+      if (!document.hidden) fetchTrack()
+    }, 60000)
+    const onVis = () => {
+      if (!document.hidden) fetchTrack()
+    }
+    document.addEventListener('visibilitychange', onVis)
     return () => {
       alive = false
       window.clearInterval(id)
+      document.removeEventListener('visibilitychange', onVis)
     }
   }, [])
 

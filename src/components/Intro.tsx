@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
 
 /* A brief "headlamp on, descending" curtain on the very first visit. Skippable
@@ -15,7 +15,7 @@ export default function Intro({ onDone }: { onDone?: () => void }) {
   const depthRef = useRef<HTMLSpanElement>(null)
 
   const done = useRef(false)
-  const dismiss = () => {
+  const dismiss = useCallback(() => {
     if (done.current) return
     done.current = true
     // kick off the cave→light scheme fade FIRST, then lift the veil a beat
@@ -23,7 +23,7 @@ export default function Intro({ onDone }: { onDone?: () => void }) {
     // the time the curtain clears, revealing a scheme mid-transition
     onDone?.()
     window.setTimeout(() => setShow(false), 220)
-  }
+  }, [onDone])
 
   useEffect(() => {
     if (!show) return
@@ -53,7 +53,7 @@ export default function Intro({ onDone }: { onDone?: () => void }) {
       window.removeEventListener('keydown', dismiss)
       document.body.style.overflow = ''
     }
-  }, [show])
+  }, [show, dismiss])
 
   return (
     <AnimatePresence>

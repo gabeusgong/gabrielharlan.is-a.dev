@@ -28,14 +28,16 @@ const WORDS = [
   'bollocks',
 ]
 
-// match the word even with simple separators/repeats (f-u-c-k, fuuuck)
+// match the word even with simple separators/repeats (f-u-c-k, fuuuck), but
+// anchor with word boundaries + an optional plural so innocent words that merely
+// contain one (e.g. "Dickinson", "class", "assess") aren't flagged or masked
 const patterns = WORDS.map(
   (w) =>
     new RegExp(
-      w
+      `\\b${w
         .split('')
-        .map((c) => `${c}+[\\s._*-]*`)
-        .join(''),
+        .map((c) => `${c}+`)
+        .join('[\\s._*-]*')}s?\\b`,
       'gi',
     ),
 )
