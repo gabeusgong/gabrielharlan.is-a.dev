@@ -78,6 +78,8 @@ function KineticName({ text }: { text: string }) {
 function RotatingWord({ words }: { words: string[] }) {
   const [i, setI] = useState(0)
   useEffect(() => {
+    // honour reduced-motion: don't auto-cycle the tagline (WCAG 2.2.2)
+    if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return
     const t = setInterval(() => setI((p) => (p + 1) % words.length), 2200)
     return () => clearInterval(t)
   }, [words.length])

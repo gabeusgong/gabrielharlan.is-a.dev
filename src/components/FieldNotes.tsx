@@ -257,9 +257,9 @@ function Index() {
         </p>
       </Reveal>
       <Reveal delay={0.05}>
-        <h2 className="notes__heading">
+        <h1 className="notes__heading">
           Field <span className="notes__word">notes.</span>
-        </h2>
+        </h1>
       </Reveal>
       <Reveal delay={0.1}>
         <p className="notes__sub">

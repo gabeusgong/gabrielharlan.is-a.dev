@@ -110,9 +110,9 @@ export default function CaveGallery() {
           </p>
         </Reveal>
         <Reveal delay={0.05}>
-          <h2 className="caves__heading">
+          <h1 className="caves__heading">
             Off the clock, <span className="caves__word">underground.</span>
-          </h2>
+          </h1>
         </Reveal>
         <Reveal delay={0.1}>
           <p className="caves__sub">

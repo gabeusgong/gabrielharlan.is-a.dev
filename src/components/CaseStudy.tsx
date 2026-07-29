@@ -243,32 +243,32 @@ function KeyboardLayers() {
     return () => window.removeEventListener('corne-key', onKey)
   }, [])
 
+  // Keys are decorative spans (not focusable) — the visual keymap is exposed to
+  // assistive tech via the grid's aria-hidden + the prose note below it. They
+  // keep onPointerDown for the click sound and data-key for the typing-test glow.
   const half = (keys: string[], thumb = false) => (
     <div className={`kb__half ${thumb ? 'kb__half--thumbs' : ''}`}>
       {keys.map((k, ci) => (
-        <button
-          type="button"
+        <span
           key={ci}
           data-cursor
           data-key={k === '' ? undefined : k.toLowerCase()}
           onPointerDown={thock}
-          aria-label={k || 'blank key'}
           className={`kb__key ${thumb ? 'kb__key--thumb' : ''} ${k === '' ? 'is-blank' : ''}`}
         >
           {k}
-        </button>
+        </span>
       ))}
     </div>
   )
   return (
     <div className="kb">
-      <div className="kb__tabs" role="tablist" aria-label="Keymap layers">
+      <div className="kb__tabs" role="group" aria-label="Keymap layers">
         {KB_LAYERS.map((l, idx) => (
           <button
             key={l.name}
             type="button"
-            role="tab"
-            aria-selected={idx === i}
+            aria-pressed={idx === i}
             data-cursor
             className={`kb__tab ${idx === i ? 'is-active' : ''}`}
             onClick={() => setI(idx)}
@@ -277,7 +277,7 @@ function KeyboardLayers() {
           </button>
         ))}
       </div>
-      <div className="kb__grid" ref={gridRef} role="group" aria-label={`${L.name} layer keymap`}>
+      <div className="kb__grid" ref={gridRef} aria-hidden>
         <div className="kb__scale" ref={scaleRef}>
           {L.rows.map((row, r) => (
             <div className="kb__row" key={r}>
@@ -962,15 +962,15 @@ function GalleryRow({
                     <span />
                     <span />
                   </span>
-                  <img src={s.src} alt={s.cap} loading="lazy" decoding="async" draggable={false} />
+                  <img src={s.src} alt="" loading="lazy" decoding="async" draggable={false} />
                 </div>
               ) : photo ? (
                 <div className="cs__photo">
-                  <img src={s.src} alt={s.cap} loading="lazy" decoding="async" draggable={false} />
+                  <img src={s.src} alt="" loading="lazy" decoding="async" draggable={false} />
                 </div>
               ) : (
                 <div className="cs__phone">
-                  <img src={s.src} alt={s.cap} loading="lazy" decoding="async" draggable={false} />
+                  <img src={s.src} alt="" loading="lazy" decoding="async" draggable={false} />
                 </div>
               )}
             </button>
@@ -1049,6 +1049,18 @@ export default function CaseStudy({
   }
   const panelRef = useRef<HTMLElement>(null)
   useFocusTrap(open, panelRef)
+
+  // when the lightbox is open, trap focus inside it (its listener sits on the
+  // lightbox, so the panel's trap goes dormant) and hide the panel from
+  // assistive tech so only one modal is exposed at a time
+  const lightboxRef = useRef<HTMLDivElement>(null)
+  useFocusTrap(lightbox !== null, lightboxRef)
+  useEffect(() => {
+    const panel = panelRef.current
+    if (!panel || lightbox === null) return
+    panel.setAttribute('aria-hidden', 'true')
+    return () => panel.removeAttribute('aria-hidden')
+  }, [lightbox])
 
   // The copy button rides on the meta line while it fits; when it no longer
   // does it should drop straight down beside the "live" pill — never strand on
@@ -1232,6 +1244,7 @@ export default function CaseStudy({
 
           {lightbox && (
             <motion.div
+              ref={lightboxRef}
               className="cs__lightbox"
               onClick={(e) => {
                 // close only the lightbox — don't let the click bubble to the
@@ -1286,7 +1299,7 @@ export default function CaseStudy({
               )}
               <img
                 src={lightbox.src}
-                alt={lightbox.cap}
+                alt=""
                 draggable={false}
                 onClick={(e) => e.stopPropagation()}
               />

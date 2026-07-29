@@ -23,9 +23,9 @@ export default function Uses() {
           </p>
         </Reveal>
         <Reveal delay={0.05}>
-          <h2 className="uses__heading">
+          <h1 className="uses__heading">
             The stuff <span className="uses__word">behind the stuff.</span>
-          </h2>
+          </h1>
         </Reveal>
         <Reveal delay={0.1}>
           <p className="uses__sub">
