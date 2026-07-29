@@ -1,11 +1,4 @@
-import {
-  useEffect,
-  useRef,
-  useState,
-  type ReactNode,
-  type PointerEvent as RPointerEvent,
-  type MouseEvent as RMouseEvent,
-} from 'react'
+import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
 import { isMuted } from '../lib/prefs'
 import { useFocusTrap } from '../lib/useFocusTrap'
@@ -869,55 +862,8 @@ function GalleryRow({
   const browser = frame === 'browser'
   const photo = frame === 'photo'
   const wide = browser || photo
-
-  // mouse drag-to-scroll — pan the row by dragging, keeping the custom cursor
-  // (a native overflow drag would swap in the OS pointer). preventDefault on
-  // move stops text/image selection; a moved drag swallows the click so it
-  // doesn't open the lightbox. Touch is left to native scrolling.
-  const rowRef = useRef<HTMLDivElement>(null)
-  const drag = useRef({ down: false, startX: 0, startLeft: 0, moved: false })
-  const onPointerDown = (e: RPointerEvent<HTMLDivElement>) => {
-    const el = rowRef.current
-    if (e.pointerType !== 'mouse' || e.button !== 0 || !el || el.scrollWidth <= el.clientWidth)
-      return
-    drag.current = { down: true, startX: e.clientX, startLeft: el.scrollLeft, moved: false }
-  }
-  const onPointerMove = (e: RPointerEvent<HTMLDivElement>) => {
-    const el = rowRef.current
-    if (!el || !drag.current.down) return
-    const dx = e.clientX - drag.current.startX
-    if (!drag.current.moved && Math.abs(dx) > 4) {
-      drag.current.moved = true
-      try {
-        el.setPointerCapture(e.pointerId)
-      } catch {
-        /* pointer already released — fine */
-      }
-    }
-    if (drag.current.moved) {
-      e.preventDefault()
-      el.scrollLeft = drag.current.startLeft - dx
-    }
-  }
-  const endDrag = () => {
-    drag.current.down = false
-  }
-  const onClickCapture = (e: RMouseEvent<HTMLDivElement>) => {
-    if (drag.current.moved) {
-      e.preventDefault()
-      e.stopPropagation()
-      drag.current.moved = false
-    }
-  }
-
   return (
     <div
-      ref={rowRef}
-      onPointerDown={onPointerDown}
-      onPointerMove={onPointerMove}
-      onPointerUp={endDrag}
-      onPointerCancel={endDrag}
-      onClickCapture={onClickCapture}
       className={`cs__gallery ${browser ? 'cs__gallery--browser' : ''} ${
         photo ? 'cs__gallery--photo' : ''
       }`}
