@@ -884,15 +884,15 @@ function GalleryRow({
                   <span />
                   <span />
                 </span>
-                <img src={s.src} alt={s.cap} loading="lazy" decoding="async" />
+                <img src={s.src} alt={s.cap} loading="lazy" decoding="async" draggable={false} />
               </div>
             ) : photo ? (
               <div className="cs__photo">
-                <img src={s.src} alt={s.cap} loading="lazy" decoding="async" />
+                <img src={s.src} alt={s.cap} loading="lazy" decoding="async" draggable={false} />
               </div>
             ) : (
               <div className="cs__phone">
-                <img src={s.src} alt={s.cap} loading="lazy" decoding="async" />
+                <img src={s.src} alt={s.cap} loading="lazy" decoding="async" draggable={false} />
               </div>
             )}
           </button>
@@ -917,12 +917,20 @@ export default function CaseStudy({
   // the field note that tells the story behind this project, if any
   const note = data ? notes.find((n) => n.study === data.slug) : null
 
-  // click a screenshot to open it full-size
-  const [lightbox, setLightbox] = useState<Shot | null>(null)
-
   // the image gallery, built once so it can be dropped into one of two spots
   const gallery = data?.gallery
   const galleryAfterProblem = gallery?.place === 'after-problem'
+  // flat, ordered list of every shot in the gallery — powers lightbox prev/next
+  const allShots = gallery?.groups ? gallery.groups.flatMap((g) => g.shots) : gallery?.shots ?? []
+
+  // click a screenshot to open it full-size; arrows / ← → keys step between shots
+  const [lightboxIdx, setLightboxIdx] = useState<number | null>(null)
+  const lightbox = lightboxIdx === null ? null : allShots[lightboxIdx] ?? null
+  const openLightbox = (shot: Shot) =>
+    setLightboxIdx(allShots.findIndex((s) => s.src === shot.src))
+  const stepLightbox = (delta: number) =>
+    setLightboxIdx((i) => (i === null ? i : (i + delta + allShots.length) % allShots.length))
+
   const galleryNode = gallery ? (
     <section className="cs__block">
       <h3 className="cs__h3">{gallery.heading}</h3>
@@ -930,11 +938,11 @@ export default function CaseStudy({
         gallery.groups.map((g) => (
           <div className="cs__gallery-group" key={g.label}>
             <p className="cs__gallery-label label">{g.label}</p>
-            <GalleryRow shots={g.shots} frame={g.frame} onOpen={setLightbox} />
+            <GalleryRow shots={g.shots} frame={g.frame} onOpen={openLightbox} />
           </div>
         ))
       ) : (
-        <GalleryRow shots={gallery.shots ?? []} frame={gallery.frame} onOpen={setLightbox} />
+        <GalleryRow shots={gallery.shots ?? []} frame={gallery.frame} onOpen={openLightbox} />
       )}
     </section>
   ) : null
@@ -991,23 +999,30 @@ export default function CaseStudy({
     }
   }, [open, onClose])
 
-  // when the lightbox is open, Escape closes it first — capture-phase +
-  // stopPropagation keeps the same keypress from also closing the case study
+  // lightbox keys: Escape closes, ← / → step between shots. Capture-phase +
+  // stopPropagation keeps Escape from also closing the case study.
   useEffect(() => {
     if (!lightbox) return
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         e.stopPropagation()
-        setLightbox(null)
+        setLightboxIdx(null)
+      } else if (e.key === 'ArrowRight') {
+        e.stopPropagation()
+        stepLightbox(1)
+      } else if (e.key === 'ArrowLeft') {
+        e.stopPropagation()
+        stepLightbox(-1)
       }
     }
     window.addEventListener('keydown', onKey, true)
     return () => window.removeEventListener('keydown', onKey, true)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lightbox])
 
   // drop the lightbox whenever the case study itself closes
   useEffect(() => {
-    if (!open) setLightbox(null)
+    if (!open) setLightboxIdx(null)
   }, [open])
 
   return (
@@ -1133,7 +1148,7 @@ export default function CaseStudy({
                 // close only the lightbox — don't let the click bubble to the
                 // case-study overlay, which would close the whole case study
                 e.stopPropagation()
-                setLightbox(null)
+                setLightboxIdx(null)
               }}
               role="dialog"
               aria-modal="true"
@@ -1146,14 +1161,55 @@ export default function CaseStudy({
               <button
                 type="button"
                 className="cs__lightbox-close"
-                onClick={() => setLightbox(null)}
+                onClick={() => setLightboxIdx(null)}
                 data-cursor
                 aria-label="Close expanded image"
               >
                 ✕
               </button>
-              <img src={lightbox.src} alt={lightbox.cap} />
-              <figcaption className="cs__lightbox-cap">{lightbox.cap}</figcaption>
+              {allShots.length > 1 && (
+                <>
+                  <button
+                    type="button"
+                    className="cs__lightbox-nav cs__lightbox-nav--prev"
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      stepLightbox(-1)
+                    }}
+                    data-cursor
+                    aria-label="Previous image"
+                  >
+                    ‹
+                  </button>
+                  <button
+                    type="button"
+                    className="cs__lightbox-nav cs__lightbox-nav--next"
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      stepLightbox(1)
+                    }}
+                    data-cursor
+                    aria-label="Next image"
+                  >
+                    ›
+                  </button>
+                </>
+              )}
+              <img
+                src={lightbox.src}
+                alt={lightbox.cap}
+                draggable={false}
+                onClick={(e) => e.stopPropagation()}
+              />
+              <figcaption className="cs__lightbox-cap">
+                {lightbox.cap}
+                {allShots.length > 1 && (
+                  <span className="cs__lightbox-count">
+                    {' '}
+                    · {(lightboxIdx ?? 0) + 1} / {allShots.length}
+                  </span>
+                )}
+              </figcaption>
             </motion.div>
           )}
         </motion.div>

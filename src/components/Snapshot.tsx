@@ -3,12 +3,16 @@ import Reveal from './Reveal'
 import { track } from '../lib/track'
 
 // The "30-second version" band: for the recruiter who won't scroll the whole
-// playground. Substance first — role, three shipped projects with one-line
+// playground. Substance first — role, a few headline projects with one-line
 // outcomes, and the résumé — right under the hero. Each row deep-links to the
 // interactive case study (#/work/<slug>), which Projects opens in place.
 type Highlight = { study: NonNullable<Project['study']>; outcome: string }
 
 const highlights: Highlight[] = [
+  {
+    study: 'traction',
+    outcome: 'Designed & prototyped an AI sales-enablement console for Tire Rack reps.',
+  },
   { study: 'tracisms', outcome: 'Shipped solo to production — texting an AI tire agent over SMS.' },
   { study: 'karst', outcome: 'Privacy-first caving field guide, live on web + Android.' },
   { study: 'itit', outcome: 'IoT inventory tracker, delivered with a 4-person capstone team.' },

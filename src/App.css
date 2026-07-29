@@ -25,6 +25,11 @@
   *::after {
     cursor: none !important;
   }
+  /* stop native image-drag from swapping the custom cursor for the OS one */
+  img {
+    -webkit-user-drag: none;
+    user-select: none;
+  }
   /* …but keep the native text caret on typeable fields so people can see where
      they're typing */
   input,
@@ -1831,6 +1836,40 @@
   cursor: pointer;
 }
 .cs__lightbox-close:hover {
+  background: var(--coral);
+  border-color: var(--coral);
+}
+.cs__lightbox-count {
+  color: rgba(255, 255, 255, 0.55);
+  font-variant-numeric: tabular-nums;
+}
+/* prev / next arrows — flip through a case study's shots without closing */
+.cs__lightbox-nav {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  background: rgba(0, 0, 0, 0.4);
+  color: #fff;
+  font-size: 1.9rem;
+  line-height: 1;
+  padding-bottom: 4px;
+  font-family: var(--body);
+  cursor: pointer;
+}
+.cs__lightbox-nav--prev {
+  left: clamp(0.75rem, 3vw, 2rem);
+}
+.cs__lightbox-nav--next {
+  right: clamp(0.75rem, 3vw, 2rem);
+}
+.cs__lightbox-nav:hover {
   background: var(--coral);
   border-color: var(--coral);
 }

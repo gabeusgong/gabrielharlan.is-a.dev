@@ -64,7 +64,7 @@ function TiltCard({
     dragElastic: 0.5,
     dragMomentum: true,
     onDragStart: () => unlock('fling'),
-    whileDrag: { scale: 1.03, zIndex: 20, cursor: 'grabbing' },
+    whileDrag: { scale: 1.03, zIndex: 20 },
   }
 
   const inner = (
