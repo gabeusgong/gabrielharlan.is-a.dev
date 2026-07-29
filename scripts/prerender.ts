@@ -436,18 +436,18 @@ ${items}
 // ---- homepage social card + head wiring ----
 {
   const homeCard = await renderHomeCard({
-    eyebrow: 'Web & UX Designer',
+    eyebrow: 'UX-Minded Front-End Engineer',
     tagline: profile.tagline,
   })
   // versioned filename so LinkedIn/Slack/etc. fetch a URL they've never cached
   // (they cache OG images by URL — reusing home.png would keep serving the old
   // card forever). Bump the version to force a fresh scrape after a redesign.
-  write('og/home-v2.png', homeCard)
+  write('og/home-v3.png', homeCard)
 
   // point the built SPA index.html's social image at the branded home card and
   // advertise the feed. Source index.html stays clean — only the built copy is
   // rewritten, and only if the build ran (which always includes this step).
-  const homeImg = `${SITE}/og/home-v2.png`
+  const homeImg = `${SITE}/og/home-v3.png`
   let idx = readFileSync(resolve(DIST, 'index.html'), 'utf8')
   idx = idx
     .replace(/(<meta property="og:image" content=")[^"]*(")/, `$1${homeImg}$2`)

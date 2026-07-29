@@ -17,12 +17,22 @@ export default function Cursor() {
     if (!window.matchMedia('(pointer: fine)').matches) return
     setEnabled(true)
 
+    // position + visibility update every event (cheap motion-value writes), but
+    // the interactive-target check does a DOM ancestor walk — rAF-throttle that
+    // so it runs at most once per frame instead of on every pointermove
+    let rafId = 0
+    let lastTarget: EventTarget | null = null
     const move = (e: MouseEvent) => {
       x.set(e.clientX)
       y.set(e.clientY)
       setVisible(true)
-      const el = e.target as HTMLElement
-      setActive(!!el.closest?.('a, button, [data-cursor], input, textarea'))
+      lastTarget = e.target
+      if (rafId) return
+      rafId = requestAnimationFrame(() => {
+        rafId = 0
+        const el = lastTarget as HTMLElement | null
+        setActive(!!el?.closest?.('a, button, [data-cursor], input, textarea'))
+      })
     }
     // pointer left the window → relatedTarget is null
     const out = (e: MouseEvent) => {
@@ -36,6 +46,7 @@ export default function Cursor() {
     window.addEventListener('mouseout', out)
     window.addEventListener('blur', hide)
     return () => {
+      if (rafId) cancelAnimationFrame(rafId)
       window.removeEventListener('pointermove', move)
       window.removeEventListener('mouseout', out)
       window.removeEventListener('blur', hide)

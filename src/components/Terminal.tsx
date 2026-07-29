@@ -145,6 +145,12 @@ export default function Terminal({ onToggleCave }: { onToggleCave: () => void })
     setLines((l) => [...l, ...out.map((text) => ({ kind: 'out' as const, text }))])
 
   const go = (id: string) => {
+    // the guestbook mounts lazily — route its jump through the hash so
+    // DeferredWall mounts it and settles the scroll (see App.tsx)
+    if (id === 'wall') {
+      window.location.hash = '#wall'
+      return
+    }
     const scroll = () => {
       if (id === 'top') window.scrollTo({ top: 0, behavior: 'smooth' })
       else document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
@@ -188,7 +194,7 @@ export default function Terminal({ onToggleCave }: { onToggleCave: () => void })
         print([
           'pages:    home  notes  gallery  uses',
           'sections: about  skills  work  wall  contact',
-          'projects: karst  tracisms  itit  corne  blenz',
+          'projects: traction  karst  tracisms  itit  corne  blenz',
         ])
         break
       case 'open':

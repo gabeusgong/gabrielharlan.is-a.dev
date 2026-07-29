@@ -32,10 +32,21 @@ function DeferredWall() {
     const targeted = () => window.location.hash === '#wall'
     const revealAndScroll = () => {
       setShow(true)
-      // wait a couple frames for the lazy chunk/layout, then settle on it
-      requestAnimationFrame(() =>
-        window.setTimeout(() => el.scrollIntoView({ behavior: 'smooth' }), 80),
-      )
+      // Don't scroll on a fixed delay — the lazy Wall chunk may not have
+      // painted yet (cold cache), and the first-visit intro curtain locks
+      // body scroll for ~2s. Poll until the wrapper actually has height AND
+      // scrolling is unlocked, then land on it. ~240 frames (~4s) caps the wait.
+      let tries = 0
+      const settle = () => {
+        const ready =
+          el.getBoundingClientRect().height > 40 && document.body.style.overflow !== 'hidden'
+        if (!ready && tries++ < 240) {
+          requestAnimationFrame(settle)
+          return
+        }
+        el.scrollIntoView({ behavior: 'smooth' })
+      }
+      requestAnimationFrame(settle)
     }
     if (typeof IntersectionObserver === 'undefined') {
       setShow(true)

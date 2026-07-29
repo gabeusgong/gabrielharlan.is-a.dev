@@ -78,6 +78,7 @@ export default function Nav({ cave, onToggleCave, route }: Props) {
       },
       { rootMargin: '-50% 0px -50% 0px' },
     )
+    let mo: MutationObserver | null = null
     const scan = () => {
       ids.forEach((id) => {
         const el = document.getElementById(id)
@@ -86,14 +87,17 @@ export default function Nav({ cave, onToggleCave, route }: Props) {
           io.observe(el)
         }
       })
+      // once every section is observed there's nothing left to watch for —
+      // stop the mutation observer so it isn't re-scanning for the page's life
+      if (observed.size === ids.length) mo?.disconnect()
     }
     scan()
     const main = document.getElementById('main') ?? document.body
-    const mo = new MutationObserver(scan)
+    mo = new MutationObserver(scan)
     mo.observe(main, { childList: true, subtree: true })
     return () => {
       io.disconnect()
-      mo.disconnect()
+      mo?.disconnect()
     }
   }, [])
 
