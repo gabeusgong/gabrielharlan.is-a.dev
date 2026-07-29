@@ -2769,7 +2769,13 @@
   gap: 1.1rem;
   margin-top: 2.4rem;
 }
+/* the cards are wrapped in a Reveal <motion.div>; make that wrapper AND the
+   card fill their grid cell so equal rows produce equal-height cards */
+.shipped__grid > * {
+  height: 100%;
+}
 .shipcard {
+  height: 100%;
   display: flex;
   flex-direction: column;
   gap: 0.55rem;
