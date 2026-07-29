@@ -105,8 +105,10 @@ export default function Wall() {
     }
   }
 
+  // id="wall" lives on the DeferredWall wrapper in App.tsx, so a jump to #wall
+  // resolves even before this lazy section mounts
   return (
-    <section className="section wall" id="wall">
+    <section className="section wall">
       <Reveal>
         <p className="label">
           <span className="tick">✦</span> the wall

@@ -27,10 +27,21 @@ function DeferredWall() {
   useEffect(() => {
     const el = ref.current
     if (!el) return
+    // the wrapper carries id="wall" (the section inside is lazy), so a jump to
+    // #wall lands here — mount immediately and re-scroll once it has content
+    const targeted = () => window.location.hash === '#wall'
+    const revealAndScroll = () => {
+      setShow(true)
+      // wait a couple frames for the lazy chunk/layout, then settle on it
+      requestAnimationFrame(() =>
+        window.setTimeout(() => el.scrollIntoView({ behavior: 'smooth' }), 80),
+      )
+    }
     if (typeof IntersectionObserver === 'undefined') {
       setShow(true)
       return
     }
+    if (targeted()) revealAndScroll()
     const io = new IntersectionObserver(
       (entries) => {
         if (entries.some((e) => e.isIntersecting)) {
@@ -41,10 +52,21 @@ function DeferredWall() {
       { rootMargin: '600px' },
     )
     io.observe(el)
-    return () => io.disconnect()
+    // a later nav/terminal jump to the wall (from higher up the page)
+    const onHash = () => {
+      if (targeted()) {
+        revealAndScroll()
+        io.disconnect()
+      }
+    }
+    window.addEventListener('hashchange', onHash)
+    return () => {
+      io.disconnect()
+      window.removeEventListener('hashchange', onHash)
+    }
   }, [])
   return (
-    <div ref={ref}>
+    <div ref={ref} id="wall">
       {show && (
         <Suspense fallback={null}>
           <Wall />
