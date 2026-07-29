@@ -36,6 +36,7 @@ export default function Wall() {
   const [num, setNum] = useState<number | null>(null)
   const [busy, setBusy] = useState(false)
   const [blocked, setBlocked] = useState(false)
+  const [posted, setPosted] = useState(false)
   const nextColor = useRef(0)
 
   // live wall
@@ -98,6 +99,8 @@ export default function Wall() {
     try {
       await addDoc(collection(db, 'guestbook'), { text: t, color, createdAt: serverTimestamp() })
       setText('')
+      setPosted(true)
+      window.setTimeout(() => setPosted(false), 3000)
     } catch (err) {
       console.warn('leave mark:', (err as Error).message)
     } finally {
@@ -150,6 +153,9 @@ export default function Wall() {
             let&apos;s keep it friendly ✌️
           </p>
         )}
+        <span className="sr-only" role="status" aria-live="polite">
+          {posted ? 'Your sticker was added to the wall' : ''}
+        </span>
       </Reveal>
 
       <div className="wall__board">

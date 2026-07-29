@@ -2796,6 +2796,13 @@
   color: var(--ink);
   word-break: break-word;
 }
+.shipcard__tags {
+  flex: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.4rem;
+}
 .shipcard__lang {
   flex: none;
   font-family: var(--mono);
@@ -3446,6 +3453,10 @@ button.term__dot:hover {
   font-family: var(--mono);
   font-size: 0.85rem;
   caret-color: var(--sun);
+  border-radius: 4px;
+}
+.term__input:focus-visible {
+  box-shadow: 0 0 0 2px var(--sun);
 }
 
 /* ---------- now-playing chip (Last.fm) ---------- */

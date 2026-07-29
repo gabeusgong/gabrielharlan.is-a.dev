@@ -85,9 +85,14 @@ function CopyLink({ path }: { path: string }) {
     }
   }
   return (
-    <button type="button" className="note__copy" onClick={onCopy} data-cursor>
-      {copied ? '✓ Link copied' : '🔗 Copy link'}
-    </button>
+    <>
+      <button type="button" className="note__copy" onClick={onCopy} data-cursor>
+        {copied ? '✓ Link copied' : '🔗 Copy link'}
+      </button>
+      <span className="sr-only" role="status" aria-live="polite">
+        {copied ? 'Link copied to clipboard' : ''}
+      </span>
+    </>
   )
 }
 
@@ -95,9 +100,9 @@ function Block({ block }: { block: NoteBlock }) {
   if (typeof block === 'string') return <p className="note__p">{block}</p>
   if ('h' in block)
     return (
-      <h3 className="note__h" id={slugify(block.h)}>
+      <h2 className="note__h" id={slugify(block.h)}>
         {block.h}
-      </h3>
+      </h2>
     )
   if ('quote' in block)
     return (
@@ -303,6 +308,10 @@ function Index() {
         </div>
       </Reveal>
 
+      <p className="sr-only" role="status" aria-live="polite">
+        {filtered.length} {filtered.length === 1 ? 'note' : 'notes'}
+        {tag || q ? ' match your filter' : ''}
+      </p>
       {filtered.length > 0 ? (
         <div className="notes__list">
           {filtered.map((n, i) => (
@@ -311,7 +320,7 @@ function Index() {
                 <p className="notecard__meta label">
                   {fmtDate(n.date)} · {n.minutes} min
                 </p>
-                <h3 className="notecard__title">{n.title}</h3>
+                <h2 className="notecard__title">{n.title}</h2>
                 <p className="notecard__dek">{n.dek}</p>
                 <ul className="notecard__tags" aria-hidden>
                   {n.tags.map((t) => (
@@ -376,9 +385,9 @@ export default function FieldNotes() {
             <p className="label">
               <span className="tick">404</span> · note not found
             </p>
-            <h2 className="notes__heading">
+            <h1 className="notes__heading">
               That note isn’t <span className="notes__word">here.</span>
-            </h2>
+            </h1>
             <a href="#/notes" className="btn btn--ghost notes__back" data-cursor>
               ← all field notes
             </a>

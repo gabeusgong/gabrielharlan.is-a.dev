@@ -1180,6 +1180,9 @@ export default function CaseStudy({
                 <button type="button" className="note__copy cs__copy" onClick={copyLink} data-cursor>
                   {copied ? '✓ Link copied' : '🔗 Copy link'}
                 </button>
+                <span className="sr-only" role="status" aria-live="polite">
+                  {copied ? 'Link copied to clipboard' : ''}
+                </span>
                 {data.live && (
                   <a
                     className="btn btn--solid cs__live"
