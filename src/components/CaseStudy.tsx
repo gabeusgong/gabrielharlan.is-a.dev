@@ -901,17 +901,24 @@ function GalleryRow({
   const onThumbDown = (e: RPointerEvent<HTMLDivElement>) => {
     const el = rowRef.current
     if (!el) return
-    e.preventDefault()
     const startX = e.clientX
     const startLeft = el.scrollLeft
     const track = el.clientWidth
     const thumbW = (el.clientWidth / el.scrollWidth) * track
     const scrollable = el.scrollWidth - el.clientWidth
     const ratio = track - thumbW > 0 ? scrollable / (track - thumbW) : 0
+    // mandatory scroll-snap yanks a programmatic scrollLeft to snap points →
+    // jumpy; turn it off for the drag. No preventDefault (that suppresses the
+    // mousemove the custom cursor rides on); block selection via user-select.
+    const prevSnap = el.style.scrollSnapType
+    el.style.scrollSnapType = 'none'
+    document.body.style.userSelect = 'none'
     const move = (ev: PointerEvent) => {
       el.scrollLeft = startLeft + (ev.clientX - startX) * ratio
     }
     const up = () => {
+      el.style.scrollSnapType = prevSnap
+      document.body.style.userSelect = ''
       window.removeEventListener('pointermove', move)
       window.removeEventListener('pointerup', up)
     }

@@ -31,10 +31,15 @@ export default function Cursor() {
     const hide = () => setVisible(false)
 
     window.addEventListener('mousemove', move)
+    // also track pointermove: during a drag that preventDefaults or captures the
+    // pointer, compatibility mouse events stop firing — pointermove keeps the
+    // blob following (e.g. dragging the custom gallery scrollbar)
+    window.addEventListener('pointermove', move)
     window.addEventListener('mouseout', out)
     window.addEventListener('blur', hide)
     return () => {
       window.removeEventListener('mousemove', move)
+      window.removeEventListener('pointermove', move)
       window.removeEventListener('mouseout', out)
       window.removeEventListener('blur', hide)
     }
