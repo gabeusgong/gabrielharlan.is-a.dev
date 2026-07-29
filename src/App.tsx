@@ -66,6 +66,7 @@ import NowPlaying from './components/NowPlaying'
 import ScrollTop from './components/ScrollTop'
 import Intro from './components/Intro'
 import { unlock } from './lib/achievements'
+import { isFirstVisit } from './lib/prefs'
 
 const getRoute = () => {
   const h = typeof window !== 'undefined' ? window.location.hash : ''
@@ -89,13 +90,7 @@ function App() {
   // the actual scheme transitions live into the light scheme. Same check the
   // Intro uses; computed during render (before any effect sets the flag) so the
   // two agree.
-  const [firstVisit] = useState(() => {
-    try {
-      return !localStorage.getItem('gh-intro-seen') && !navigator.webdriver
-    } catch {
-      return false
-    }
-  })
+  const [firstVisit] = useState(isFirstVisit)
 
   // put the site in cave colours immediately on a first visit, before the
   // curtain lifts, so there's a real scheme to fade *from*

@@ -1,17 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
+import { isFirstVisit, markIntroSeen } from '../lib/prefs'
 
 /* A brief "headlamp on, descending" curtain on the very first visit. Skippable
    (tap / any key), auto-lifts after ~2s, and never shows again (localStorage).
    Skipped for automation/bots so it doesn't affect audits. */
 export default function Intro({ onDone }: { onDone?: () => void }) {
-  const [show, setShow] = useState(() => {
-    try {
-      return !localStorage.getItem('gh-intro-seen') && !navigator.webdriver
-    } catch {
-      return false
-    }
-  })
+  const [show, setShow] = useState(isFirstVisit)
   const depthRef = useRef<HTMLSpanElement>(null)
 
   const done = useRef(false)
@@ -27,11 +22,7 @@ export default function Intro({ onDone }: { onDone?: () => void }) {
 
   useEffect(() => {
     if (!show) return
-    try {
-      localStorage.setItem('gh-intro-seen', '1')
-    } catch {
-      /* ignore */
-    }
+    markIntroSeen()
     document.body.style.overflow = 'hidden'
     const t = window.setTimeout(dismiss, 2100)
     window.addEventListener('keydown', dismiss)

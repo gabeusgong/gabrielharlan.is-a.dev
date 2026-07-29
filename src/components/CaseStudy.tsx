@@ -7,6 +7,7 @@ import {
 } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
 import { isMuted } from '../lib/prefs'
+import { getAudioContext } from '../lib/audio'
 import { useFocusTrap } from '../lib/useFocusTrap'
 import { notes } from '../data'
 import TypingTest from './TypingTest'
@@ -142,15 +143,11 @@ const KB_LAYERS = [
 // A synthesized mechanical-keyboard "thock" — a low sine body plus a short
 // filtered-noise click. No audio files; the AudioContext is created lazily on
 // the first click (a user gesture, so autoplay policies are satisfied).
-let audioCtx: AudioContext | null = null
 function thock() {
   if (isMuted()) return
   try {
-    const AC = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext
-    if (!AC) return
-    audioCtx = audioCtx || new AC()
-    const ctx = audioCtx
-    if (ctx.state === 'suspended') ctx.resume()
+    const ctx = getAudioContext()
+    if (!ctx) return
     const now = ctx.currentTime
     const detune = 0.9 + Math.random() * 0.2 // slight per-press variation
 
@@ -938,6 +935,17 @@ function GalleryRow({
     window.addEventListener('pointerup', up)
   }
 
+  // click the track (but not the thumb) to page the row toward the click
+  const onTrackDown = (e: RPointerEvent<HTMLDivElement>) => {
+    if (e.target !== e.currentTarget) return // let the thumb handle its own drag
+    const el = rowRef.current
+    if (!el) return
+    const rect = e.currentTarget.getBoundingClientRect()
+    const clickRatio = rect.width > 0 ? (e.clientX - rect.left) / rect.width : 0
+    const dir = clickRatio < bar.x ? -1 : 1
+    el.scrollBy({ left: dir * el.clientWidth * 0.9, behavior: 'smooth' })
+  }
+
   return (
     <div className="cs__gallery-wrap">
       <div
@@ -979,7 +987,7 @@ function GalleryRow({
         ))}
       </div>
       {bar.show && (
-        <div className="cs__scrollbar" aria-hidden>
+        <div className="cs__scrollbar" aria-hidden onPointerDown={onTrackDown}>
           <div
             className="cs__scrollbar-thumb"
             data-cursor
@@ -1055,6 +1063,8 @@ export default function CaseStudy({
   // assistive tech so only one modal is exposed at a time
   const lightboxRef = useRef<HTMLDivElement>(null)
   useFocusTrap(lightbox !== null, lightboxRef)
+  // horizontal swipe on the expanded image steps between shots on touch
+  const swipeX = useRef<number | null>(null)
   useEffect(() => {
     const panel = panelRef.current
     if (!panel || lightbox === null) return
@@ -1302,6 +1312,16 @@ export default function CaseStudy({
                 alt=""
                 draggable={false}
                 onClick={(e) => e.stopPropagation()}
+                onTouchStart={(e) => {
+                  swipeX.current = e.touches[0]?.clientX ?? null
+                }}
+                onTouchEnd={(e) => {
+                  const start = swipeX.current
+                  swipeX.current = null
+                  if (start === null || allShots.length < 2) return
+                  const dx = (e.changedTouches[0]?.clientX ?? start) - start
+                  if (Math.abs(dx) > 40) stepLightbox(dx < 0 ? 1 : -1)
+                }}
               />
               <figcaption className="cs__lightbox-cap">
                 {lightbox.cap}

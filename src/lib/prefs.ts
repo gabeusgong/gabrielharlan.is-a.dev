@@ -5,6 +5,7 @@
 
 const MUTED_KEY = 'gh-muted'
 const FLASH_KEY = 'gh-flashlight'
+const INTRO_KEY = 'gh-intro-seen'
 
 const get = (k: string) => {
   try {
@@ -35,5 +36,17 @@ export const setFlashlight = (b: boolean) => {
   set(FLASH_KEY, b ? '1' : '0')
   emit()
 }
+
+// First visit = the intro curtain hasn't been shown yet, and we're not an
+// automation/bot (so audits/screenshots skip the flourish). App and Intro both
+// read this at render time and must agree, so keep it a pure read.
+export const isFirstVisit = () => {
+  try {
+    return !get(INTRO_KEY) && !navigator.webdriver
+  } catch {
+    return false
+  }
+}
+export const markIntroSeen = () => set(INTRO_KEY, '1')
 
 const emit = () => window.dispatchEvent(new CustomEvent('pref-change'))

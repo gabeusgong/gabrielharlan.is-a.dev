@@ -1,21 +1,15 @@
 import { useEffect, useRef, useState } from 'react'
 import { isMuted, flashlightOn } from '../lib/prefs'
+import { getAudioContext } from '../lib/audio'
 
 /* Synthesized cave "water drip" ambience — faint, randomly-timed drops fed
    through a feedback delay for an underground echo. No audio files; the
    AudioContext starts on the cave-mode toggle (a user gesture). Returns a
    stopper that fades the ambience out. */
-let caveCtx: AudioContext | null = null
 function startCaveAmbience(): () => void {
-  const AC =
-    window.AudioContext ||
-    (window as unknown as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext
-  if (!AC) return () => {}
+  const ctx = getAudioContext()
+  if (!ctx) return () => {}
   try {
-    caveCtx = caveCtx || new AC()
-    const ctx = caveCtx
-    if (ctx.state === 'suspended') ctx.resume()
-
     const master = ctx.createGain()
     master.gain.value = 0.0001
     master.connect(ctx.destination)
