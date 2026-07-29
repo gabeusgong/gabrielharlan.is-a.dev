@@ -391,7 +391,7 @@ export const notes: Note[] = [
       'The website resolves your car with a year/make/model picker widget. You can’t render a dropdown in a text message, and the agent can’t reliably parse a vehicle out of free-form typing. So the gateway resolves the car itself — a numbered-reply drill-down (“1. Honda  2. Toyota …”) that walks Year → Make → Model → trim and then auto-supplies the factory tire size. A texter never has to know their own tire size. That one flow was more design work than the entire model integration.',
       { h: 'Answer fast, even when the model is slow' },
       'Agent replies can take many seconds; carriers expect a webhook response in far less. So the gateway acknowledges Twilio immediately and hands the real work to a background worker that calls the agent and sends the reply when it’s ready. Inbound texts never time out waiting on inference.',
-      { h: 'Render a stream of events into a plain text' },
+      { h: 'Render a stream of events into plain text' },
       'The agent answers with an ordered stream of “events” — text, cards, UI fragments. The gateway classifies each one: keep the text, drop the noise, reformat the cards for SMS. I used a denylist, not an allowlist, so a brand-new kind of agent card is never silently swallowed — worst case it’s reformatted, never lost.',
       {
         quote:

@@ -45,9 +45,15 @@ type Study = {
 
 /* ---- ITIT data-model flow (stands in for screenshots we don't have) ---- */
 function ITITDiagram() {
-  const steps = ['Deployments', 'Locations', 'Items', 'Linked Items']
+  const steps = ['Deployments', 'Locations', 'Trackers', 'Items', 'Linked Items']
   return (
-    <div className="cs__flow" aria-hidden>
+    <div
+      className="cs__flow"
+      role="img"
+      aria-label={`Data-model diagram: an IoT tracker and web app stay in real-time sync; the hierarchy nests ${steps.join(
+        ' → ',
+      )}, with CSV export to Excel.`}
+    >
       <div className="cs__sync">
         <span className="cs__sync-node cs__sync-node--hw">📟 IoT tracker</span>
         <span className="cs__sync-link">⇄ real-time sync ⇄</span>
@@ -72,7 +78,13 @@ function ITITDiagram() {
 function SMSGatewayDiagram() {
   const steps = ['Webhook ACKs', 'Worker calls agent', 'Classify events', 'Render → SMS']
   return (
-    <div className="cs__flow" aria-hidden>
+    <div
+      className="cs__flow"
+      role="img"
+      aria-label={`Request-flow diagram: a texter and the TRACI agent exchange SMS over Twilio; the flow is ${steps.join(
+        ' → ',
+      )}. The gateway owns the conversation while the AI agent stays untouched.`}
+    >
       <div className="cs__sync">
         <span className="cs__sync-node cs__sync-node--hw">📱 Texter</span>
         <span className="cs__sync-link">⇄ SMS · Twilio ⇄</span>

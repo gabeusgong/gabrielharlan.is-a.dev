@@ -387,6 +387,7 @@ for (const p of projects) {
   const today = new Date().toISOString().slice(0, 10)
   const urls: { loc: string; lastmod: string }[] = [
     { loc: `${SITE}/`, lastmod: today },
+    { loc: `${SITE}/resume/`, lastmod: today },
     { loc: `${SITE}/notes/`, lastmod: today },
     ...notes.map((n) => ({ loc: `${SITE}/notes/${n.slug}/`, lastmod: n.date })),
     ...projects

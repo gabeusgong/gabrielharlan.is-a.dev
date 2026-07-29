@@ -263,7 +263,7 @@ export default function Terminal({ onToggleCave }: { onToggleCave: () => void })
         print(['opening résumé…'])
         break
       case 'whoami':
-        print(['gabriel harlan — web & ux designer, informatics @ iu.', 'above ground and below it. 🦇'])
+        print(['gabriel harlan — ux-minded front-end engineer, informatics @ iu. 🦇'])
         break
       case '/secret':
       case '/secrets':
