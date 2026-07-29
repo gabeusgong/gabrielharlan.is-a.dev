@@ -798,20 +798,36 @@ const STUDIES: Record<string, Study> = {
       frame: 'browser',
       shots: [
         {
-          src: `${base}traction/queue.webp`,
-          cap: 'My Queue — the engine’s prioritized daily list: tiers, per-lead scores, why-now triggers, and an AI script snippet on each card.',
+          src: `${base}traction/queue-dark.webp`,
+          cap: 'My Queue — the engine’s prioritized daily list: tiers, per-lead scores, why-now triggers, and an AI script on each card.',
         },
         {
-          src: `${base}traction/engine.webp`,
+          src: `${base}traction/queue-light.webp`,
+          cap: 'The same queue in light mode — TRACTION themes end to end.',
+        },
+        {
+          src: `${base}traction/engine-dark.webp`,
           cap: 'Outbound Engine — how the queue is built: triggers → eligibility & priority scoring → outputs → a feedback loop back to the data spine.',
         },
         {
-          src: `${base}traction/console.webp`,
+          src: `${base}traction/engine-light.webp`,
+          cap: 'The engine, light mode.',
+        },
+        {
+          src: `${base}traction/console-dark.webp`,
           cap: 'Working a lead — AI intelligence, the AI-matched cart, an omni-channel engagement log with an AI transcript summary, and one-tap outcome capture.',
         },
         {
-          src: `${base}traction/analytics.webp`,
+          src: `${base}traction/console-light.webp`,
+          cap: 'The live console, light mode.',
+        },
+        {
+          src: `${base}traction/analytics-dark.webp`,
           cap: 'Analytics — CLV, churn reasons, revenue attributed by trigger, and best customers by RFM tier.',
+        },
+        {
+          src: `${base}traction/analytics-light.webp`,
+          cap: 'Analytics, light mode.',
         },
       ],
     },
