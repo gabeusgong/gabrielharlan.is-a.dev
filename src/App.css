@@ -238,9 +238,9 @@
     margin-left: auto;
   }
 }
-/* when it gets tight, drop the status pill so the tabs + controls still fit
-   without the cluster clipping off the right edge */
-@media (min-width: 721px) and (max-width: 1100px) {
+/* when it gets tight, drop the status pill so the centered tabs don't overlap
+   it — the 8-link cluster only clears the pill on the left past ~1400px */
+@media (min-width: 721px) and (max-width: 1400px) {
   .nav__status {
     display: none;
   }

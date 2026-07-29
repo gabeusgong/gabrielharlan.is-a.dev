@@ -90,6 +90,17 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    title: 'TRACTION Rep Console',
+    blurb:
+      "Designed and prototyped a sales-enablement console for Tire Rack retention reps. An outbound engine scores every customer on LTV × churn × signal recency and builds a suppression-filtered, frequency-capped daily queue — handing each rep a ranked lead with a why-now reason, an AI-drafted (rep-delivered) script, and an AI-matched cart ready to place. Unifies AI-chat, SMS, and call history with AI transcript summaries, and closes every outcome back to the data spine.",
+    tags: ['UX', 'Prototype', 'AI', 'CRM'],
+    tone: 'coral',
+    year: '2026',
+    emoji: '🎯',
+    caseStudy: true,
+    study: 'traction',
+  },
+  {
     title: 'TRACI SMS Gateway',
     blurb:
       "Shipped solo to production as an Innovation & AI intern: a service that lets any customer text Tire Rack's TRACI AI tire agent — live on Google Cloud Run over Twilio. A Python/FastAPI backend with a text-driven vehicle picker (year/make/model → factory tire size), async workers so slow AI replies never time out, Redis-backed sessions, TCPA-compliant opt-out and per-phone rate limiting, keyless CI/CD, and 90 tests.",
@@ -145,17 +156,6 @@ export const projects: Project[] = [
     emoji: '🏞️',
     caseStudy: true,
     study: 'blenz',
-  },
-  {
-    title: 'TRACTION Rep Console',
-    blurb:
-      "Designed and prototyped a sales-enablement console for Tire Rack retention reps. An outbound engine scores every customer on LTV × churn × signal recency and builds a suppression-filtered, frequency-capped daily queue — handing each rep a ranked lead with a why-now reason, an AI-drafted (rep-delivered) script, and an AI-matched cart ready to place. Unifies AI-chat, SMS, and call history with AI transcript summaries, and closes every outcome back to the data spine.",
-    tags: ['UX', 'Prototype', 'AI', 'CRM'],
-    tone: 'coral',
-    year: '2026',
-    emoji: '🎯',
-    caseStudy: true,
-    study: 'traction',
   },
 ]
 
@@ -360,7 +360,7 @@ export const notes: Note[] = [
     title: 'The plumbing is the product',
     dek: 'What building an SMS gateway for an AI tire agent taught me about where the real work lives.',
     date: '2026-06-30',
-    tags: ['Engineering', 'AI'],
+    tags: ['Engineering', 'AI', 'Internship'],
     minutes: 6,
     study: 'tracisms',
     body: [
