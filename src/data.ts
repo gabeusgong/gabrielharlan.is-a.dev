@@ -92,7 +92,7 @@ export const projects: Project[] = [
   {
     title: 'TRACTION Rep Console',
     blurb:
-      "Designed and prototyped a sales-enablement console for Tire Rack retention reps. An outbound engine scores every customer on LTV × churn × signal recency and builds a suppression-filtered, frequency-capped daily queue — handing each rep a ranked lead with a why-now reason, an AI-drafted (rep-delivered) script, and an AI-matched cart ready to place. Unifies AI-chat, SMS, and call history with AI transcript summaries, and closes every outcome back to the data spine.",
+      "Designed and prototyped a sales-enablement console for Tire Rack retention reps. An outbound engine scores every customer on LTV × churn × signal recency and builds a suppression-filtered, frequency-capped daily queue — handing each rep a ranked lead with a why-now reason, the customer’s cross-channel history, and an AI-matched cart ready to place. Unifies AI-chat, SMS, and call history with AI transcript summaries, and closes every outcome back to the data spine.",
     tags: ['UX', 'Prototype', 'AI', 'CRM'],
     tone: 'pink',
     year: '2026',
@@ -309,11 +309,11 @@ export const notes: Note[] = [
     minutes: 4,
     study: 'traction',
     body: [
-      'The brief was a sales-enablement console — a tool that tells a retention rep who to call, why now, and what to say. There was just one gap: I’ve never studied sales, and I’ve never worked a day on a sales floor. Quotas, objection-handling, the rhythm of a call day — none of it was mine. Even the vocabulary read like a foreign language at first: RFM, churn, LTV, cadence, suppression, DNC. My first instinct was that this disqualified me. It turned out to be the most useful constraint of the project.',
+      'The brief was a sales-enablement console — a tool that tells a retention rep who to call, why now, and what to offer. There was just one gap: I’ve never studied sales, and I’ve never worked a day on a sales floor. Quotas, objection-handling, the rhythm of a call day — none of it was mine. Even the vocabulary read like a foreign language at first: RFM, churn, LTV, cadence, suppression, DNC. My first instinct was that this disqualified me. It turned out to be the most useful constraint of the project.',
       { h: 'You don’t have to be the user' },
       'The reframe that unlocked it: UX has never required being the user — it requires understanding one. I wasn’t designing “sales,” some discipline I didn’t belong to. I was designing for a person doing a hard, repetitive job, and my real task was to learn that job well enough to make their day easier. So I learned it — how outbound retention actually works, what a rep’s morning looks like, what makes a call worth dialing and what quietly wastes an hour. The jargon stopped being intimidating the moment I understood the human problem underneath each term.',
       { h: 'Design humbly in someone else’s domain' },
-      'Not being the expert changed how I designed. I had no standing to tell a veteran rep how to sell, so I didn’t try. Instead of dictating, TRACTION surfaces the why — why this customer, why now — and leaves the judgment to the person on the phone. The AI drafts the script; the rep delivers it in their own voice. The engine ranks the queue; the rep decides who to skip. Even the guardrails — no recent order, no open care case, one touch every two weeks — came from respecting a domain I was a guest in: the fastest way to lose a customer’s trust is to over-contact them, and the reps knew that long before I showed up.',
+      'Not being the expert changed how I designed. I had no standing to tell a veteran rep how to sell, so I didn’t try. Instead of dictating, TRACTION surfaces the why — why this customer, why now — and leaves the judgment to the person on the phone. The AI does the homework; the rep owns the conversation. The engine ranks the queue; the rep decides who to skip. Even the guardrails — no recent order, no open care case, one touch every two weeks — came from respecting a domain I was a guest in: the fastest way to lose a customer’s trust is to over-contact them, and the reps knew that long before I showed up.',
       {
         quote:
           'You don’t need to be a domain expert to design for a domain. You need to respect it enough to learn it — and design so the real expert stays in control.',

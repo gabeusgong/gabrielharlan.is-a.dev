@@ -744,7 +744,7 @@ const STUDIES: Record<string, Study> = {
       <>
         A <strong>sales-enablement console</strong> for Tire Rack retention reps — an AI outbound
         engine turns customer signals into a prioritized daily call queue, each lead pre-loaded with
-        a why-now reason, a rep-delivered AI script, and a ready-to-place cart.
+        a why-now reason, the customer&apos;s full history, and a ready-to-place cart.
       </>
     ),
     meta: [
@@ -755,30 +755,31 @@ const STUDIES: Record<string, Study> = {
     problem: (
       <>
         Retention reps were calling <strong>blind</strong> — a flat list with no prioritization,
-        generic scripts, and no single view of a customer&apos;s history across chat, text, and
-        past calls. Touches got spent on the wrong people at the wrong time, and real in-market
-        windows slipped by. TRACTION turns the CRM&apos;s signals into a focused daily queue that
-        tells a rep exactly <strong>who to call, why now, and what to say</strong>.
+        one-size-fits-all pitches, and no single view of a customer&apos;s history across chat,
+        text, and past calls. Touches got spent on the wrong people at the wrong time, and real
+        in-market windows slipped by. TRACTION turns the CRM&apos;s signals into a focused daily
+        queue that tells a rep exactly <strong>who to call, why now, and what to offer</strong>.
       </>
     ),
     spotlight: {
       tag: '★ Signature feature',
-      h: 'A queue that tells you who to call, why now, and what to say',
+      h: 'A queue that tells you who to call, why now, and what to offer',
       body: (
         <>
           Every morning an outbound engine scores each customer on{' '}
           <strong>LTV × churn risk × signal recency</strong>, filters by eligibility and suppression
           rules, and ranks the survivors into tiers — Urgent (cart abandon), In-market window,
           Behavioral. Each card leads with a why-now reason (<em>&ldquo;2× Pilot Sport 4S in cart,
-          idle 3h — call before the 4-hour window closes&rdquo;</em>) and an AI-drafted script the
-          rep delivers in their own voice. The AI does the reading; the human does the talking.
+          idle 3h — call before the 4-hour window closes&rdquo;</em>), the customer&apos;s
+          cross-channel history, and an AI-matched cart. The AI does the homework; the rep makes the
+          call.
         </>
       ),
     },
     decisions: [
       {
-        h: 'AI drafts, the rep delivers',
-        p: 'The AI writes the why-now script and matches the cart, but it never speaks to the customer and its scripts are never recorded — a rep reads and adapts them. It keeps the call human and compliant while still giving reps the leverage of the model.',
+        h: 'The AI preps; the rep talks',
+        p: 'The AI does the reading — scoring leads, surfacing the why-now reason, matching a cart, and summarizing past chats and texts — but it never speaks to the customer. Every call belongs to the rep, in their own words; the console just makes sure they pick up already knowing the story.',
       },
       {
         h: 'Earn the call, don’t burn the customer',
@@ -786,11 +787,11 @@ const STUDIES: Record<string, Study> = {
       },
       {
         h: 'Every outcome teaches the system',
-        p: 'Whatever the rep marks — converted, callback, voicemail, no answer — writes back to the data “spine”: it recalculates churn, appends a timestamped, channel-tagged interaction, and adjusts brand-promo confidence, so tomorrow’s queue is sharper than today’s.',
+        p: 'Whatever the rep marks — converted, callback, voicemail, no answer, pre-filled from the call transcript for a quick review — writes back to the data “spine”: it recalculates churn, appends a timestamped, channel-tagged interaction, and adjusts brand-promo confidence, so tomorrow’s queue is sharper than today’s.',
       },
       {
         h: 'AI chat, SMS, and calls in one view',
-        p: 'The console stitches a customer’s history across channels — including the AI tire agent and the TRACI SMS gateway — into one engagement log with AI transcript summaries, so a rep opens a call already knowing the customer compared PS4S vs. All-Season 4 over chat the night before.',
+        p: 'The console stitches a customer’s history across channels — including the AI tire agent and the TRACI SMS gateway — into one engagement log with AI transcript summaries, so a rep opens a call already knowing the customer compared PS4S vs. All-Season 4 over chat the night before. When an unknown number calls, the file even fills itself from the live transcript as they talk.',
       },
     ],
     gallery: {
@@ -799,7 +800,7 @@ const STUDIES: Record<string, Study> = {
       shots: [
         {
           src: `${base}traction/queue-dark.webp`,
-          cap: 'My Queue — the engine’s prioritized daily list: tiers, per-lead scores, why-now triggers, and an AI script on each card.',
+          cap: 'My Queue — the engine’s prioritized daily list: tiers, per-lead scores, why-now triggers, and an AI recommendation on each card.',
         },
         {
           src: `${base}traction/queue-light.webp`,
