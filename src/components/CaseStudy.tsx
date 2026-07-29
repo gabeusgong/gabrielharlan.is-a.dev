@@ -1,4 +1,10 @@
-import { useEffect, useRef, useState, type ReactNode } from 'react'
+import {
+  useEffect,
+  useRef,
+  useState,
+  type ReactNode,
+  type PointerEvent as RPointerEvent,
+} from 'react'
 import { motion, AnimatePresence } from 'motion/react'
 import { isMuted } from '../lib/prefs'
 import { useFocusTrap } from '../lib/useFocusTrap'
@@ -862,43 +868,107 @@ function GalleryRow({
   const browser = frame === 'browser'
   const photo = frame === 'photo'
   const wide = browser || photo
+
+  // A custom scrollbar synced to the row. Native scrollbars hand cursor
+  // control to the browser during a drag (the OS arrow shows instead of the
+  // custom circle), so the native bar is hidden and this one — my own DOM —
+  // keeps the custom cursor. `bar.w` is the thumb width %, `bar.x` its 0–1
+  // position along the free track.
+  const rowRef = useRef<HTMLDivElement>(null)
+  const [bar, setBar] = useState({ w: 0, x: 0, show: false })
+
+  useEffect(() => {
+    const el = rowRef.current
+    if (!el) return
+    const sync = () => {
+      const scrollable = el.scrollWidth - el.clientWidth
+      setBar({
+        w: scrollable > 0 ? (el.clientWidth / el.scrollWidth) * 100 : 0,
+        x: scrollable > 0 ? el.scrollLeft / scrollable : 0,
+        show: scrollable > 1,
+      })
+    }
+    sync()
+    el.addEventListener('scroll', sync, { passive: true })
+    const ro = new ResizeObserver(sync)
+    ro.observe(el)
+    return () => {
+      el.removeEventListener('scroll', sync)
+      ro.disconnect()
+    }
+  }, [shots])
+
+  const onThumbDown = (e: RPointerEvent<HTMLDivElement>) => {
+    const el = rowRef.current
+    if (!el) return
+    e.preventDefault()
+    const startX = e.clientX
+    const startLeft = el.scrollLeft
+    const track = el.clientWidth
+    const thumbW = (el.clientWidth / el.scrollWidth) * track
+    const scrollable = el.scrollWidth - el.clientWidth
+    const ratio = track - thumbW > 0 ? scrollable / (track - thumbW) : 0
+    const move = (ev: PointerEvent) => {
+      el.scrollLeft = startLeft + (ev.clientX - startX) * ratio
+    }
+    const up = () => {
+      window.removeEventListener('pointermove', move)
+      window.removeEventListener('pointerup', up)
+    }
+    window.addEventListener('pointermove', move)
+    window.addEventListener('pointerup', up)
+  }
+
   return (
-    <div
-      className={`cs__gallery ${browser ? 'cs__gallery--browser' : ''} ${
-        photo ? 'cs__gallery--photo' : ''
-      }`}
-    >
-      {shots.map((s) => (
-        <figure className={`cs__shot ${wide ? 'cs__shot--wide' : ''}`} key={s.src}>
-          <button
-            type="button"
-            className="cs__shot-open"
-            onClick={() => onOpen(s)}
+    <div className="cs__gallery-wrap">
+      <div
+        ref={rowRef}
+        className={`cs__gallery ${browser ? 'cs__gallery--browser' : ''} ${
+          photo ? 'cs__gallery--photo' : ''
+        }`}
+      >
+        {shots.map((s) => (
+          <figure className={`cs__shot ${wide ? 'cs__shot--wide' : ''}`} key={s.src}>
+            <button
+              type="button"
+              className="cs__shot-open"
+              onClick={() => onOpen(s)}
+              data-cursor
+              aria-label={`Expand image: ${s.cap}`}
+            >
+              {browser ? (
+                <div className="cs__browser">
+                  <span className="cs__browser-bar">
+                    <span />
+                    <span />
+                    <span />
+                  </span>
+                  <img src={s.src} alt={s.cap} loading="lazy" decoding="async" draggable={false} />
+                </div>
+              ) : photo ? (
+                <div className="cs__photo">
+                  <img src={s.src} alt={s.cap} loading="lazy" decoding="async" draggable={false} />
+                </div>
+              ) : (
+                <div className="cs__phone">
+                  <img src={s.src} alt={s.cap} loading="lazy" decoding="async" draggable={false} />
+                </div>
+              )}
+            </button>
+            <figcaption>{s.cap}</figcaption>
+          </figure>
+        ))}
+      </div>
+      {bar.show && (
+        <div className="cs__scrollbar" aria-hidden>
+          <div
+            className="cs__scrollbar-thumb"
             data-cursor
-            aria-label={`Expand image: ${s.cap}`}
-          >
-            {browser ? (
-              <div className="cs__browser">
-                <span className="cs__browser-bar">
-                  <span />
-                  <span />
-                  <span />
-                </span>
-                <img src={s.src} alt={s.cap} loading="lazy" decoding="async" draggable={false} />
-              </div>
-            ) : photo ? (
-              <div className="cs__photo">
-                <img src={s.src} alt={s.cap} loading="lazy" decoding="async" draggable={false} />
-              </div>
-            ) : (
-              <div className="cs__phone">
-                <img src={s.src} alt={s.cap} loading="lazy" decoding="async" draggable={false} />
-              </div>
-            )}
-          </button>
-          <figcaption>{s.cap}</figcaption>
-        </figure>
-      ))}
+            style={{ width: `${bar.w}%`, left: `calc((100% - ${bar.w}%) * ${bar.x})` }}
+            onPointerDown={onThumbDown}
+          />
+        </div>
+      )}
     </div>
   )
 }
