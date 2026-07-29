@@ -94,7 +94,7 @@ export const projects: Project[] = [
     blurb:
       "Designed and prototyped a sales-enablement console for Tire Rack retention reps. An outbound engine scores every customer on LTV × churn × signal recency and builds a suppression-filtered, frequency-capped daily queue — handing each rep a ranked lead with a why-now reason, an AI-drafted (rep-delivered) script, and an AI-matched cart ready to place. Unifies AI-chat, SMS, and call history with AI transcript summaries, and closes every outcome back to the data spine.",
     tags: ['UX', 'Prototype', 'AI', 'CRM'],
-    tone: 'coral',
+    tone: 'pink',
     year: '2026',
     emoji: '🎯',
     caseStudy: true,
