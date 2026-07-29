@@ -1667,6 +1667,12 @@
   padding-bottom: 1rem;
   padding-right: 12px; /* room for the last frame's drop shadow */
   scroll-snap-type: x mandatory;
+  /* hidden scrollbar: drag-to-scroll (JS) is the affordance, and the native
+     scrollbar would show the OS cursor instead of the custom one */
+  scrollbar-width: none;
+}
+.cs__gallery::-webkit-scrollbar {
+  display: none;
 }
 /* labelled rows within one gallery (e.g. a desktop row + a mobile row) */
 .cs__gallery-group + .cs__gallery-group {
