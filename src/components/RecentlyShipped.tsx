@@ -26,7 +26,7 @@ type Repo = {
 const TAG_OVERRIDES: Record<string, string[]> = {
   'zmk-config': ['Firmware'],
   karst: ['Next.js', 'Firebase'],
-  'gabrielharlan.is-a.dev': ['TypeScript'],
+  'gabrielharlan.is-a.dev': ['TypeScript', 'HTML'],
 }
 
 // fallback descriptions so every card has a blurb even when the repo's GitHub
