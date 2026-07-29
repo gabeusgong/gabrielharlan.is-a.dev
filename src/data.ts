@@ -85,7 +85,7 @@ export type Project = {
   year?: string
   emoji: string
   caseStudy?: boolean
-  study?: 'karst' | 'itit' | 'corne' | 'blenz' | 'tracisms'
+  study?: 'karst' | 'itit' | 'corne' | 'blenz' | 'tracisms' | 'traction'
 }
 
 export const projects: Project[] = [
@@ -145,6 +145,17 @@ export const projects: Project[] = [
     emoji: '🏞️',
     caseStudy: true,
     study: 'blenz',
+  },
+  {
+    title: 'TRACTION Rep Console',
+    blurb:
+      "Designed and prototyped a sales-enablement console for Tire Rack retention reps. An outbound engine scores every customer on LTV × churn × signal recency and builds a suppression-filtered, frequency-capped daily queue — handing each rep a ranked lead with a why-now reason, an AI-drafted (rep-delivered) script, and an AI-matched cart ready to place. Unifies AI-chat, SMS, and call history with AI transcript summaries, and closes every outcome back to the data spine.",
+    tags: ['UX', 'Prototype', 'AI', 'CRM'],
+    tone: 'coral',
+    year: '2026',
+    emoji: '🎯',
+    caseStudy: true,
+    study: 'traction',
   },
 ]
 

@@ -731,6 +731,103 @@ const STUDIES: Record<string, Study> = {
       ),
     },
   },
+
+  traction: {
+    slug: 'traction',
+    title: (
+      <>
+        TRACTION Rep Console <span className="cs__cube">🎯</span>
+      </>
+    ),
+    year: '2026',
+    lede: (
+      <>
+        A <strong>sales-enablement console</strong> for Tire Rack retention reps — an AI outbound
+        engine turns customer signals into a prioritized daily call queue, each lead pre-loaded with
+        a why-now reason, a rep-delivered AI script, and a ready-to-place cart.
+      </>
+    ),
+    meta: [
+      { label: 'Role', value: 'Design & prototype' },
+      { label: 'For', value: 'Tire Rack · retention CX' },
+      { label: 'Built as', value: 'Interactive React prototype' },
+    ],
+    problem: (
+      <>
+        Retention reps were calling <strong>blind</strong> — a flat list with no prioritization,
+        generic scripts, and no single view of a customer&apos;s history across chat, text, and
+        past calls. Touches got spent on the wrong people at the wrong time, and real in-market
+        windows slipped by. TRACTION turns the CRM&apos;s signals into a focused daily queue that
+        tells a rep exactly <strong>who to call, why now, and what to say</strong>.
+      </>
+    ),
+    spotlight: {
+      tag: '★ Signature feature',
+      h: 'A queue that tells you who to call, why now, and what to say',
+      body: (
+        <>
+          Every morning an outbound engine scores each customer on{' '}
+          <strong>LTV × churn risk × signal recency</strong>, filters by eligibility and suppression
+          rules, and ranks the survivors into tiers — Urgent (cart abandon), In-market window,
+          Behavioral. Each card leads with a why-now reason (<em>&ldquo;2× Pilot Sport 4S in cart,
+          idle 3h — call before the 4-hour window closes&rdquo;</em>) and an AI-drafted script the
+          rep delivers in their own voice. The AI does the reading; the human does the talking.
+        </>
+      ),
+    },
+    decisions: [
+      {
+        h: 'AI drafts, the rep delivers',
+        p: 'The AI writes the why-now script and matches the cart, but it never speaks to the customer and its scripts are never recorded — a rep reads and adapts them. It keeps the call human and compliant while still giving reps the leverage of the model.',
+      },
+      {
+        h: 'Earn the call, don’t burn the customer',
+        p: 'The engine suppresses anyone with a recent order, an active care case, or on the DNC list, and caps outreach to one touch per 14 days. Priority is “street-smarts”: a cart abandoned three hours ago outranks a routine cadence check — so reps spend the day on the people actually worth a call.',
+      },
+      {
+        h: 'Every outcome teaches the system',
+        p: 'Whatever the rep marks — converted, callback, voicemail, no answer — writes back to the data “spine”: it recalculates churn, appends a timestamped, channel-tagged interaction, and adjusts brand-promo confidence, so tomorrow’s queue is sharper than today’s.',
+      },
+      {
+        h: 'AI chat, SMS, and calls in one view',
+        p: 'The console stitches a customer’s history across channels — including the AI tire agent and the TRACI SMS gateway — into one engagement log with AI transcript summaries, so a rep opens a call already knowing the customer compared PS4S vs. All-Season 4 over chat the night before.',
+      },
+    ],
+    gallery: {
+      heading: 'A look inside',
+      frame: 'browser',
+      shots: [
+        {
+          src: `${base}traction/queue.webp`,
+          cap: 'My Queue — the engine’s prioritized daily list: tiers, per-lead scores, why-now triggers, and an AI script snippet on each card.',
+        },
+        {
+          src: `${base}traction/engine.webp`,
+          cap: 'Outbound Engine — how the queue is built: triggers → eligibility & priority scoring → outputs → a feedback loop back to the data spine.',
+        },
+        {
+          src: `${base}traction/console.webp`,
+          cap: 'Working a lead — AI intelligence, the AI-matched cart, an omni-channel engagement log with an AI transcript summary, and one-tap outcome capture.',
+        },
+        {
+          src: `${base}traction/analytics.webp`,
+          cap: 'Analytics — CLV, churn reasons, revenue attributed by trigger, and best customers by RFM tier.',
+        },
+      ],
+    },
+    closing: {
+      h: 'Where it stands',
+      body: (
+        <>
+          A working interactive prototype, designed and built to pitch the concept internally — the
+          customers, data, and metrics shown are illustrative. It extends the same Tire Rack AI-CX
+          thread as the <strong>TRACI SMS gateway</strong>: where that project let customers reach
+          the AI, TRACTION points the AI back at reps — turning the CRM&apos;s signals into a call
+          list a human can actually act on.
+        </>
+      ),
+    },
+  },
 }
 
 // one scrollable row of screenshots in a shared frame (phone, browser chrome,
