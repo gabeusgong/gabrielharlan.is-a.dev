@@ -21,6 +21,12 @@ type Repo = {
   language: string | null
 }
 
+// per-repo tag overrides — GitHub's auto-detected language is blank or wrong
+// for some repos (e.g. zmk-config, which is devicetree/Kconfig it can't label)
+const TAG_OVERRIDES: Record<string, string> = {
+  'zmk-config': 'Firmware',
+}
+
 const ago = (iso: string) => {
   const days = Math.floor((Date.now() - new Date(iso).getTime()) / 86_400_000)
   if (days <= 0) return 'today'
@@ -112,7 +118,9 @@ export default function RecentlyShipped() {
             <a href={r.html_url} target="_blank" rel="noreferrer" className="shipcard" data-cursor>
               <div className="shipcard__top">
                 <span className="shipcard__name">{r.name}</span>
-                {r.language && <span className="shipcard__lang">{r.language}</span>}
+                {(TAG_OVERRIDES[r.name] ?? r.language) && (
+                  <span className="shipcard__lang">{TAG_OVERRIDES[r.name] ?? r.language}</span>
+                )}
               </div>
               {r.description && <p className="shipcard__desc">{r.description}</p>}
               <span className="shipcard__meta label">↑ pushed {ago(r.pushed_at)}</span>
