@@ -80,65 +80,6 @@ In the `projects` array:
 If you set `caseStudy: true`, you **must** also add matching prose in
 `CaseStudy.tsx` (§4) or the card's "read more" will open an empty modal.
 
-### Add a field note / blog post
-In the `notes` array (newest first). A note's `body` is an array of blocks:
-```ts
-{
-  slug: 'kebab-case-url',          // becomes #/notes/kebab-case-url — must be unique
-  title: 'Post Title',
-  dek: 'One-line summary under the title.',
-  date: '2026-08-05',              // YYYY-MM-DD
-  tags: ['UX', 'Whatever'],
-  minutes: 4,                      // rough read time
-  // study: 'traction',            // optional: links this note to a project case study
-  body: [
-    'A normal paragraph is just a string.',
-    { h: 'A subheading' },
-    'Another paragraph.',
-    { quote: 'A pull-quote.', by: 'Optional attribution' },
-    { list: ['A bulleted', 'list of', 'items'] },
-  ],
-},
-```
-
-> **Safety net:** before every deploy, CI runs a data check (`npm run check`) that
-> catches duplicate/mis-formatted slugs, bad dates, and notes pointing at a project
-> that doesn't exist. If you typo one of these, the deploy **fails instead of shipping
-> broken links** — you'll see a red ✗ in the repo's Actions tab. Fix and push again.
-
----
-
-## 3. Changing the look (colors & fonts)
-
-- **Colors, fonts, spacing:** `src/index.css`, in the `:root { … }` block at the top.
-  The palette variables are `--paper, --ink, --coral, --cobalt, --lime, --pink, --sun`.
-  Change a value there and it updates everywhere that uses that token.
-- **Component styling** (layout of a card, the nav, the gallery, etc.): `src/App.css`.
-  Styles are keyed to the class names in each component (`.hero__…`, `.card…`, `.cs__…`,
-  `.note__…`). Search `App.css` for the class you see in the browser's dev tools.
-- **Fonts** are loaded from Google Fonts in `index.html` (Fraunces, Schibsted Grotesk,
-  Space Mono). Swap them there **and** update the font variables in `index.css`.
-
----
-
-## 4. Content that is NOT in data.ts (the exceptions)
-
-Most content is in `data.ts`, but a few things live inside their component file. Edit
-the text directly in these:
-
-| To change… | Edit this file | Look for |
-|---|---|---|
-| Full **case-study** write-ups (the long prose, galleries, diagrams behind each project) | `src/components/CaseStudy.tsx` | the `STUDIES` object, keyed by slug (`traction`, `tracisms`, `karst`, `itit`, `corne`, `blenz`) |
-| The **"How I work" 4 steps** | `src/components/Process.tsx` | the `STEPS` array |
-| The **Snapshot / TL;DR** outcome one-liners | `src/components/Snapshot.tsx` | the `highlights` array |
-| The **cave gallery** photo list + alt text | `src/components/CaveGallery.tsx` | the `PHOTOS` array |
-| The **résumé** page itself | `public/resume/index.html` | it's a self-contained HTML page |
-| SEO / social-share meta, page `<title>`, analytics | `index.html` (repo root) | the `<head>` |
-| Nav links / section names | `src/components/Nav.tsx` | the hard-coded section list |
-
-> **data.ts holds the short project `blurb`; `CaseStudy.tsx` holds the long story.**
-> They're two different places for the same project — update both if the facts change.
-
 ### Adding a whole new case study
 
 A case study is wired to a project, so it touches **three spots in two files**:
@@ -205,7 +146,64 @@ gallery: {
 **Test it:** visit `#/work/newthing` (or click the project card). An empty modal means the
 slug doesn't match across the three spots.
 
+### Add a field note / blog post
+In the `notes` array (newest first). A note's `body` is an array of blocks:
+```ts
+{
+  slug: 'kebab-case-url',          // becomes #/notes/kebab-case-url — must be unique
+  title: 'Post Title',
+  dek: 'One-line summary under the title.',
+  date: '2026-08-05',              // YYYY-MM-DD
+  tags: ['UX', 'Whatever'],
+  minutes: 4,                      // rough read time
+  // study: 'traction',            // optional: links this note to a project case study
+  body: [
+    'A normal paragraph is just a string.',
+    { h: 'A subheading' },
+    'Another paragraph.',
+    { quote: 'A pull-quote.', by: 'Optional attribution' },
+    { list: ['A bulleted', 'list of', 'items'] },
+  ],
+},
+```
+
+> **Safety net:** before every deploy, CI runs a data check (`npm run check`) that
+> catches duplicate/mis-formatted slugs, bad dates, and notes pointing at a project
+> that doesn't exist. If you typo one of these, the deploy **fails instead of shipping
+> broken links** — you'll see a red ✗ in the repo's Actions tab. Fix and push again.
+
 ---
+
+## 3. Changing the look (colors & fonts)
+
+- **Colors, fonts, spacing:** `src/index.css`, in the `:root { … }` block at the top.
+  The palette variables are `--paper, --ink, --coral, --cobalt, --lime, --pink, --sun`.
+  Change a value there and it updates everywhere that uses that token.
+- **Component styling** (layout of a card, the nav, the gallery, etc.): `src/App.css`.
+  Styles are keyed to the class names in each component (`.hero__…`, `.card…`, `.cs__…`,
+  `.note__…`). Search `App.css` for the class you see in the browser's dev tools.
+- **Fonts** are loaded from Google Fonts in `index.html` (Fraunces, Schibsted Grotesk,
+  Space Mono). Swap them there **and** update the font variables in `index.css`.
+
+---
+
+## 4. Content that is NOT in data.ts (the exceptions)
+
+Most content is in `data.ts`, but a few things live inside their component file. Edit
+the text directly in these:
+
+| To change… | Edit this file | Look for |
+|---|---|---|
+| Full **case-study** write-ups (the long prose, galleries, diagrams behind each project) | `src/components/CaseStudy.tsx` | the `STUDIES` object, keyed by slug (`traction`, `tracisms`, `karst`, `itit`, `corne`, `blenz`) |
+| The **"How I work" 4 steps** | `src/components/Process.tsx` | the `STEPS` array |
+| The **Snapshot / TL;DR** outcome one-liners | `src/components/Snapshot.tsx` | the `highlights` array |
+| The **cave gallery** photo list + alt text | `src/components/CaveGallery.tsx` | the `PHOTOS` array |
+| The **résumé** page itself | `public/resume/index.html` | it's a self-contained HTML page |
+| SEO / social-share meta, page `<title>`, analytics | `index.html` (repo root) | the `<head>` |
+| Nav links / section names | `src/components/Nav.tsx` | the hard-coded section list |
+
+> **data.ts holds the short project `blurb`; `CaseStudy.tsx` holds the long story.**
+> They're two different places for the same project — update both if the facts change.
 
 ## 5. Images
 
@@ -305,14 +303,85 @@ that triggers the same deploy, no laptop or git needed. Great for a quick typo f
 
 ---
 
-## 10. Quick recipes
+## 10. The guestbook wall — safety & moderation
+
+The "Leave your mark" wall accepts anonymous posts, so it's worth knowing how it's
+protected and how to clean it up.
+
+**What protects it** — the real gate is `firestore.rules` (enforced on Google's servers,
+so it holds even if someone bypasses your website and hits the database directly):
+- Strict validation on new posts: only the 3 expected fields, `text` 1–50 chars, and a
+  **server-set timestamp that can't be spoofed**.
+- **No edits or deletes, ever** — existing stickers and the visitor counter can't be
+  altered or wiped. The rest of the database is fully locked.
+- Profanity is **blocked on submit** and **masked as `•••` on display** (`src/lib/profanity.ts`),
+  so even something that slips into the database never shows to visitors.
+- Text is capped at 24 characters; only the newest 80 stickers render.
+
+**The gaps** (be aware):
+- **No rate limiting** — the realistic abuse vector. Someone scripting against the database
+  could flood the wall and burn your Firebase free-tier quota. The form's anti-double-click
+  is not real protection.
+- The profanity filter is **client-side and bypassable** (the server rules only check length,
+  not content). The display masking is the real backstop for what visitors see.
+- No spam/URL filtering.
+
+**How to remove an offensive sticker** — the rules forbid deletes from the site, so there's
+no button for it. Go to the **[Firebase Console](https://console.firebase.google.com)** →
+project **`gabrielharlan-site`** → Firestore Database → the `guestbook` collection → delete
+the offending document by hand.
+
+**Emergency: lock the wall** — if it's being flooded, edit `firestore.rules` and change the
+guestbook line to `allow create: if false;`. **Important:** `firestore.rules` is *not* shipped
+by the GitHub Pages deploy — it's a Firebase artifact. Apply rule changes either in the
+Firebase Console (Firestore → Rules, paste + Publish) or with the Firebase CLI
+(`firebase deploy --only firestore:rules`). Editing the file in the repo alone does nothing
+until you publish it to Firebase.
+
+---
+
+## 11. Keeping it alive & troubleshooting
+
+**Live features that can break silently** (each just hides itself — the site stays fine):
+
+| If this stops working… | Look at | Likely cause |
+|---|---|---|
+| Contact form emails | `ContactForm.tsx` (Formspree id `xeebrvgd`) | free monthly submission cap, or account lapsed |
+| "Now playing" widget | `NowPlaying.tsx` (Last.fm) | API key revoked / account changed |
+| Guestbook wall | `lib/firebase.ts` (Firebase Spark tier) | quota hit or project deleted |
+| "Recently shipped" | `RecentlyShipped.tsx` (GitHub API) | nothing to maintain — self-heals |
+
+**Dependencies the site's life rides on:**
+- **Your `gabeusgong` GitHub account** — keep access to it, and **keep the repo public**
+  (free GitHub Pages needs public, or a paid plan).
+- **The domain is a free is-a.dev subdomain**, pinned by `public/CNAME`. If the custom domain
+  ever drops, re-enter `gabrielharlan.is-a.dev` under **Settings → Pages → Custom domain**.
+  Keep the repo active (is-a.dev can reclaim abandoned domains). Full re-setup is in `README.md`.
+
+**Two things NOT to do:**
+- **Don't rename an existing note or project `slug`.** Those are the public URLs
+  (`#/notes/…`, `#/work/…`) and get baked into the sitemap + RSS feed — renaming breaks any
+  shared or Google-indexed link. Adding new slugs is fine; changing old ones isn't.
+- **Don't casually hand-edit component `.tsx` files.** Editing *text in `data.ts`* is safe;
+  breaking TypeScript or lint in a component **fails the deploy** (nothing ships — safe — but
+  you'll need to read the red ✗ in the Actions tab to fix it).
+
+**Good to know:**
+- **Analytics dashboard:** `gabrielharlan.goatcounter.com` (privacy-friendly traffic stats).
+- **Service-worker caching:** the site is a PWA, so after a deploy you may need a hard refresh
+  to see changes — that's expected, not a bug.
+
+---
+
+## 12. Quick recipes
 
 - **Change a testimonial / project / bio** → `src/data.ts`, push.
 - **Add a blog post** → add to `notes` in `src/data.ts`, push (§2).
+- **Add a case study** → three spots across `data.ts` + `CaseStudy.tsx`, push (§4).
 - **Update the résumé** → edit `public/resume/index.html`, replace the PDF, push (§6).
 - **Change a color** → `src/index.css` `:root`, push (§3).
 - **Replace your portrait** → overwrite `public/portrait.webp`, push.
-- **Fix a case-study detail** → `src/components/CaseStudy.tsx` `STUDIES`, push (§4).
+- **Remove an offensive guestbook sticker** → Firebase Console, delete the doc (§10).
 - **Quick typo fix with no laptop** → edit the file on GitHub.com, commit (§9).
 
 When in doubt: search `src/data.ts` first. If the text isn't there, check §4.
