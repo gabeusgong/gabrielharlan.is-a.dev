@@ -139,6 +139,72 @@ the text directly in these:
 > **data.ts holds the short project `blurb`; `CaseStudy.tsx` holds the long story.**
 > They're two different places for the same project — update both if the facts change.
 
+### Adding a whole new case study
+
+A case study is wired to a project, so it touches **three spots in two files**:
+
+**1. Register the slug** — in `src/data.ts`, find the `Project` type and add your new
+slug to the `study` union (this is just so typos get caught):
+```ts
+study?: 'karst' | 'itit' | 'corne' | 'blenz' | 'tracisms' | 'traction' | 'newthing'
+```
+
+**2. Point a project at it** — on the project's entry in the `projects` array, add:
+```ts
+caseStudy: true,
+study: 'newthing',   // must match the STUDIES key in step 3
+```
+
+**3. Write it** — in `src/components/CaseStudy.tsx`, add an entry to the `STUDIES` object
+(keyed by that same slug). A complete minimal template:
+```tsx
+newthing: {
+  slug: 'newthing',
+  title: <>New Thing <span className="cs__cube">🚀</span></>,
+  year: '2026',
+  lede: <>One or two intro sentences. <strong>Bold</strong> key phrases.</>,
+  meta: [
+    { label: 'Role', value: 'Design & build (solo)' },
+    { label: 'Stack', value: 'React · Node' },
+  ],
+  // live: { href: 'https://example.com', label: 'Visit the live app →' },  // optional
+  problem: <>What problem were you solving?</>,
+  spotlight: {
+    tag: '★ The hard part',
+    h: 'The single most interesting challenge',
+    body: <>Explain the crux here.</>,
+  },
+  decisions: [
+    { h: 'First key decision', p: 'Why you made it (plain string, not JSX).' },
+    { h: 'Second key decision', p: 'Another paragraph.' },
+  ],
+  closing: { h: 'Where it stands', body: <>How it turned out.</> },
+},
+```
+
+**Which fields are JSX vs plain text:** `title`, `lede`, `problem`, `spotlight.body`, and
+`closing.body` are JSX — wrap them in `<>…</>`. The `decisions[].p` and all `meta` values
+are plain strings. **Optional** fields you can add: `live` (a link button), `gallery`
+(screenshots), `diagram` (a custom illustration component).
+
+**Adding screenshots (`gallery`):** put `.webp` files in `src/assets/img/newthing/`, then:
+```tsx
+gallery: {
+  heading: 'Screens',
+  frame: 'phone',   // 'phone' | 'browser' | 'photo'
+  shots: [
+    { src: asset('newthing/home.webp'), cap: 'The home screen' },
+  ],
+},
+```
+(`asset()` is already imported; a mistyped filename fails the build — a helpful guard.)
+
+**JSX gotchas:** inside `<>…</>`, write `&apos;` for an apostrophe and `&amp;` for `&`
+(the linter flags raw ones). Every `<>` needs a matching `</>`.
+
+**Test it:** visit `#/work/newthing` (or click the project card). An empty modal means the
+slug doesn't match across the three spots.
+
 ---
 
 ## 5. Images
