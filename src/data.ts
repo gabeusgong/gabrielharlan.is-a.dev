@@ -172,15 +172,15 @@ export type Testimonial = { quote: string; name: string; role: string }
 export const testimonials: Testimonial[] = [
   {
     quote:
-      'Gabriel quickly climbed the ranks of our team and was promoted to a supervisor… a reliable and dependable asset, consistently delivering outstanding results. His leadership skills not only drive results but also cultivate a positive and high-performing team culture.',
-    name: 'Wesley Clifford',
-    role: 'IT Coordinator · IU Support Center (SCIPS)',
-  },
-  {
-    quote:
       'Gabe is doing fantastic in class. He is perpetually ahead of the rest of the class — I have had to find him extra projects to work on… He is truly a self-starter and a very driven person that all the other students look to for advice and help.',
     name: 'Anthony Lincoln',
     role: 'Computer Information Systems Instructor · ACATEC',
+  },
+  {
+    quote:
+      'Gabriel quickly climbed the ranks of our team and was promoted to a supervisor… a reliable and dependable asset, consistently delivering outstanding results. His leadership skills not only drive results but also cultivate a positive and high-performing team culture.',
+    name: 'Wesley Clifford',
+    role: 'IT Coordinator · IU Support Center (SCIPS)',
   },
   {
     quote:
