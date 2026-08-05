@@ -307,6 +307,39 @@ export type Note = {
 // Newest first — the list renders in this order.
 export const notes: Note[] = [
   {
+    slug: 'working-without-a-net',
+    title: 'Working without a net',
+    dek: 'Ten weeks took me from group class projects to shipping a service strangers can text and handing leadership a design a team will build from — both on my own. It rewired what I think “finished” means.',
+    date: '2026-08-05',
+    tags: ['Internship', 'Reflection'],
+    minutes: 7,
+    body: [
+      'Ten weeks ago I showed up with a folder full of class projects and a fairly confident idea of what I could build. I’m leaving having shipped a service strangers can text this minute — and having handed senior leadership a design they’re building a real product from. Both of them mine, start to finish. Somewhere in between, the ground shifted under what I thought the word “done” meant — and under how much one person could put into the world by themselves.',
+      { h: 'The safety net you stop noticing' },
+      'Everything I’d built before had a safety net I never really registered. A capstone has a demo day and a rubric. A class project has a grade — and, usually, a team. My senior capstone was four people and a Scrum board; the risk was shared, the roles were split, and if one corner wobbled there were other hands on it. “Done” was a moment you reached together: the submission, the presentation, the slide that says thanks for watching.',
+      'The closest I’d come to working without that net was Karst — a caver’s field guide to southern Indiana’s karst country I built solo on Next.js and Firebase, out of weekends with the Bloomington Indiana Grotto. It shipped for real, as a web and Android app, with location fuzzing to keep fragile caves safe: no team, no grade, just cavers who might rely on it underground. Karst was the first time “done” meant something outside a classroom. This summer took that hint and made it the whole job — and two projects pulled the net away in opposite directions.',
+      { h: 'A service that has to answer' },
+      'The TRACI SMS gateway lets a customer text Tire Rack’s AI tire agent and get a real answer back — and I designed, built, and deployed it solo, live on Google Cloud Run over Twilio, answering people who have no idea an intern wired it together and shouldn’t have to care. There’s no demo day. There’s a phone number that either answers or it doesn’t.',
+      'A class project is judged on the happy path — does it do the thing when you drive it the way you meant to. A live service is judged on everything else: the text that arrives malformed, the model that takes nine seconds to think, the person who replies STOP and must never hear from you again. Most of the work wasn’t the clever part; it was the plumbing — idempotent inbound so nobody gets double-texted, async workers so a slow reply never times out, per-phone rate limits, opt-out compliance, ninety tests standing guard. A good AI product, it turns out, is mostly the unglamorous scaffolding that keeps the model from embarrassing you — and solo, there’s no one else to build it.',
+      { quote: 'A class project is done when it’s graded. A service is done when it survives a stranger who will never read your README.' },
+      { h: 'A design that has to convince' },
+      'TRACTION took the net away from the other end. It’s a sales-enablement console for Tire Rack’s retention reps, and it started as a pile of unorganized ideas — no spec, no rubric, just a question: make this make sense. I had to turn that shapelessness into a mockup sharp enough to put in front of senior leadership, for a domain I’d never worked a day in. This was designing as a guest: I had no standing to tell a veteran rep how to sell, so the design surfaces the why — why this customer, why now — and leaves the judgment to the person on the phone.',
+      'And a mockup, it turns out, can be every bit as real as a running service — because people act on it. What I handed off wasn’t a slide that earns a grade and disappears; it’s the thing leadership made decisions from and the blueprint future developers will build the actual product against. A prototype that changes what a company builds has stopped being a school exercise. Getting a design to that bar — real enough to drive real decisions — was as demanding as getting a service to survive real traffic, just measured in conviction instead of uptime.',
+      { h: 'A tool that kept up with the ideas' },
+      'Working alone on both never felt like working small — largely because of the tool I spent the first half of the summer learning: Claude Code. Design has always bottlenecked for me right where an idea gets interesting: the gap between the interface in my head and one that actually runs. On a team you cross that gap with more hands; alone, I used to cross it slowly, or trim the vision down to whatever I had time to hand-build. Claude Code narrowed that gap to almost nothing — I could chase an idea, service or design, all the way to a working thing at nearly the speed I could imagine it. It didn’t design for me; the taste, the structure, the accessibility calls, the thousand small decisions that make an interface feel considered were still mine to make and defend. What changed is that being one person stopped capping how much of an idea could survive into something real. This site is the clearest proof I have: every bit of the detail and creativity in it is mine, and the reason all of it exists, built by one person, is that the tool could keep up with the ideas.',
+      { h: 'What I’m taking with me' },
+      {
+        list: [
+          'Real beats polished. Whether it’s a service users text or a design leadership builds from, one thing that actually lands teaches more than another flawless prototype.',
+          'The plumbing is the product. The guardrails, the tests, the edge cases aren’t overhead around the interesting part — increasingly, they are it.',
+          'One person with the right tool is not a small team. Claude Code let me ship at a scale of ambition that used to require a group, without watering the design down to get there.',
+          'Be a humble guest. In a domain you don’t know, your job isn’t to be the expert — it’s to respect it enough to learn it, and build so the real expert stays in control.',
+        ],
+      },
+      'Ten weeks isn’t long. But it was long enough to ship a service on my own and hand off a design a team will build from, break a few of my own assumptions, and learn that “finished” was never the finish line I thought it was. Grateful for the people who handed me a real phone number and a blank canvas and trusted that I’d make something of both. On to the next thing that has to survive contact with reality.',
+    ],
+  },
+  {
     slug: 'designing-for-a-job-ive-never-had',
     title: 'Designing for a job I’ve never had',
     dek: 'I’ve never studied sales or worked a sales floor — then I designed a console for the reps who do.',
