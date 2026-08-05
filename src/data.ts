@@ -184,7 +184,7 @@ export const testimonials: Testimonial[] = [
   },
   {
     quote:
-      'He has taken on a lot and done so with finesse… The detail and creativity in his personal site is truly impressive — Gabriel knows what he is doing with design… He turned another department’s unorganized ideas into a sophisticated mockup shown to senior leadership… and showed no fear when facing an unknown task… Whoever hires him next is a lucky group.',
+      'He has taken on a lot and done so with finesse — Gabriel knows what he is doing with design… He turned another department’s unorganized ideas into a sophisticated mockup shown to senior leadership… and showed no fear when facing an unknown task… Whoever hires him next is a lucky group.',
     name: 'Joshua Mullet',
     role: 'Software Manager · Tire Rack',
   },
