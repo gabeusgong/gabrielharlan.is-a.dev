@@ -770,9 +770,12 @@ const STUDIES: Record<string, Study> = {
       <>
         Retention reps were calling <strong>blind</strong> — a flat list with no prioritization,
         one-size-fits-all pitches, and no single view of a customer&apos;s history across chat,
-        text, and past calls. Touches got spent on the wrong people at the wrong time, and real
-        in-market windows slipped by. TRACTION turns the CRM&apos;s signals into a focused daily
-        queue that tells a rep exactly <strong>who to call, why now, and what to offer</strong>.
+        text, and past calls — while still entering every order on a decades-old{' '}
+        <strong>AS/400 green screen</strong>. Touches got spent on the wrong people at the wrong
+        time, and real in-market windows slipped by. TRACTION turns the CRM&apos;s signals into a
+        focused daily queue that tells a rep exactly{' '}
+        <strong>who to call, why now, and what to offer</strong> — and lets them close the sale
+        without leaving the screen.
       </>
     ),
     spotlight: {
@@ -806,6 +809,10 @@ const STUDIES: Record<string, Study> = {
       {
         h: 'AI chat, SMS, and calls in one view',
         p: 'The console stitches a customer’s history across channels — including the AI tire agent and the TRACI SMS gateway — into one engagement log with AI transcript summaries, so a rep opens a call already knowing the customer compared PS4S vs. All-Season 4 over chat the night before. When an unknown number calls, the file even fills itself from the live transcript as they talk.',
+      },
+      {
+        h: 'Respect the reps’ muscle memory',
+        p: 'These reps have decades of AS/400 keyboard reflexes, so TRACTION replaces the green screen without throwing away what they’re fast at: a persistent function-key bar (F2 places the order), keyboard-driven outcome capture, and a pre-assembled “Ready to sell” cart mean a known customer can be closed in under a minute — the whole sale reachable without a mouse.',
       },
     ],
     gallery: {
