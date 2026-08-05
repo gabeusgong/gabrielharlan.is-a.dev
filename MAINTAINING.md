@@ -10,6 +10,23 @@ one file (`src/data.ts`), and deploying is just `git push`.
 
 ---
 
+## Contents
+
+1. [The 3-minute mental model](#1-the-3-minute-mental-model)
+2. [Editing content — `data.ts`](#2-editing-content--srcdatats-start-here)
+3. [Changing the look (colors & fonts)](#3-changing-the-look-colors--fonts)
+4. [Content that is NOT in `data.ts`](#4-content-that-is-not-in-datats-the-exceptions)
+5. [Images](#5-images)
+6. [The résumé](#6-the-résumé)
+7. [External services](#7-external-services-all-keys-are-client-side--already-set-up)
+8. [Running the site locally](#8-running-the-site-on-your-computer-optional)
+9. [Publishing changes (deploy)](#9-publishing-changes-the-deploy)
+10. [Guestbook — safety & moderation](#10-the-guestbook-wall--safety--moderation)
+11. [Keeping it alive & troubleshooting](#11-keeping-it-alive--troubleshooting)
+12. [Quick recipes](#12-quick-recipes)
+
+---
+
 ## 1. The 3-minute mental model
 
 ```
