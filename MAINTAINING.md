@@ -74,11 +74,11 @@ In the `projects` array:
   year: '2026',
   emoji: '🚀',
   href: 'https://live-demo-if-any.com',   // optional
-  // caseStudy: true, study: 'slug'  ← ONLY if you also add a case study (see §4)
+  // caseStudy: true, study: 'slug'  ← ONLY if you also add a case study (see below)
 },
 ```
-If you set `caseStudy: true`, you **must** also add matching prose in
-`CaseStudy.tsx` (§4) or the card's "read more" will open an empty modal.
+If you set `caseStudy: true`, you **must** also add the case study itself (see
+"Adding a whole new case study" just below) or the card's "read more" opens an empty modal.
 
 ### Adding a whole new case study
 
@@ -204,6 +204,8 @@ the text directly in these:
 
 > **data.ts holds the short project `blurb`; `CaseStudy.tsx` holds the long story.**
 > They're two different places for the same project — update both if the facts change.
+
+---
 
 ## 5. Images
 
@@ -418,7 +420,7 @@ until you publish it to Firebase.
 
 - **Change a testimonial / project / bio** → `src/data.ts`, push.
 - **Add a blog post** → add to `notes` in `src/data.ts`, push (§2).
-- **Add a case study** → three spots across `data.ts` + `CaseStudy.tsx`, push (§4).
+- **Add a case study** → three spots across `data.ts` + `CaseStudy.tsx`, push (§2).
 - **Update the résumé** → edit `public/resume/index.html`, replace the PDF, push (§6).
 - **Change a color** → `src/index.css` `:root`, push (§3).
 - **Replace your portrait** → overwrite `public/portrait.webp`, push.
