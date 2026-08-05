@@ -796,7 +796,7 @@ const STUDIES: Record<string, Study> = {
     decisions: [
       {
         h: 'The AI preps; the rep talks',
-        p: 'The AI does the reading — scoring leads, surfacing the why-now reason, matching a cart, and summarizing past chats and texts — but it never speaks to the customer. Every call belongs to the rep, in their own words; the console just makes sure they pick up already knowing the story.',
+        p: 'The AI does the reading — scoring leads, surfacing the why-now reason, matching a cart, and stitching a customer’s history across every channel (the AI tire agent, the TRACI SMS gateway, past calls) into one engagement log with transcript summaries — so a rep picks up already knowing the customer compared PS4S vs. All-Season 4 over chat the night before. When an unknown number calls, the file even fills itself from the live transcript. But the AI never speaks to the customer: every call belongs to the rep, in their own words.',
       },
       {
         h: 'Earn the call, don’t burn the customer',
@@ -805,10 +805,6 @@ const STUDIES: Record<string, Study> = {
       {
         h: 'Every outcome teaches the system',
         p: 'Whatever the rep marks — converted, callback, voicemail, no answer, pre-filled from the call transcript for a quick review — writes back to the data “spine”: it recalculates churn, appends a timestamped, channel-tagged interaction, and adjusts brand-promo confidence, so tomorrow’s queue is sharper than today’s.',
-      },
-      {
-        h: 'AI chat, SMS, and calls in one view',
-        p: 'The console stitches a customer’s history across channels — including the AI tire agent and the TRACI SMS gateway — into one engagement log with AI transcript summaries, so a rep opens a call already knowing the customer compared PS4S vs. All-Season 4 over chat the night before. When an unknown number calls, the file even fills itself from the live transcript as they talk.',
       },
       {
         h: 'Respect the reps’ muscle memory',
@@ -837,7 +833,7 @@ const STUDIES: Record<string, Study> = {
         },
         {
           src: asset('traction/console-dark.webp'),
-          cap: 'Working a lead — AI intelligence, the AI-matched cart, an omni-channel engagement log with an AI transcript summary, and one-tap outcome capture.',
+          cap: 'Working a lead — AI intelligence, the AI-matched “Ready to sell” cart, an omni-channel engagement log with an AI transcript summary, and one-tap outcome capture.',
         },
         {
           src: asset('traction/console-light.webp'),
