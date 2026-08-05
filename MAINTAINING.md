@@ -220,6 +220,47 @@ Two separate systems — pick by where the file goes:
 Prefer `.webp` for photos (small + fast). `hero.png`, `react.svg`, `vite.svg` in
 `src/assets/` are unused leftovers — ignore them.
 
+### Adding images to a case study
+
+1. **Drop the `.webp` files** into `src/assets/img/<group>/` (e.g. `src/assets/img/traction/`).
+   Make the folder if the project is new.
+2. **Reference them** in that study's `gallery` in `src/components/CaseStudy.tsx`. To add
+   *more* images, add more `{ src, cap }` rows to the `shots` array:
+   ```tsx
+   gallery: {
+     heading: 'Screens',
+     frame: 'browser',            // 'phone' | 'browser' | 'photo'
+     shots: [
+       { src: asset('traction/console-dark.webp'), cap: 'The rep console' },
+       { src: asset('traction/queue-dark.webp'),   cap: 'Daily queue' },     // ← added
+     ],
+   },
+   ```
+   The name in `asset('group/file.webp')` must exactly match a file under `src/assets/img/` —
+   **mistype it and the build fails** (a guard, not a silent broken image).
+3. For two separate labelled rows (e.g. a desktop set *and* a mobile set), use `groups`
+   instead of `shots` — each group has its own `label`, `frame`, and `shots`. Copy the shape
+   from an existing multi-group study.
+
+### Adding cave-gallery photos
+
+Add `.webp` files to `src/assets/img/caves/`, then add entries to the `PHOTOS` array in
+`src/components/CaveGallery.tsx`. Follow the existing pattern **exactly**: each photo needs a
+full-size file **and** a matching `-sm` thumbnail (e.g. `cave-24.webp` *and* `cave-24-sm.webp`),
+so export both sizes.
+
+### Adding a plain image (referenced by URL)
+
+Put it in **`public/`** and reference it by path — these skip the `asset()` pipeline and are
+served as-is (that's how the About portrait `public/portrait.webp` works). Overwrite a
+same-named file to replace it.
+
+### Format tips
+
+- Use **`.webp`** for photos. Convert from PNG/JPG with [Squoosh](https://squoosh.app),
+  ImageMagick, or any online converter.
+- Keep case-study screenshots reasonable — a long edge of ~1600px is plenty.
+
 ---
 
 ## 6. The résumé
