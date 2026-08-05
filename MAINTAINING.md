@@ -291,6 +291,40 @@ same-named file to replace it.
 - The `resume/` folder at the repo root (no `public/`) is just the **authoring workspace**
   (fonts, the .docx source). It is not served to visitors. See `resume/README.md`.
 
+### Editing the Word (`.docx`) copy
+
+The `.docx` is a **standalone copy** with the theme fonts embedded — it is *not* generated
+from the PDF or the HTML. To update it, edit `public/Gabriel-Harlan-Resume.docx` directly in
+**Word or LibreOffice**, keep fonts embedded when you save (Word: *File → Options → Save →*
+✓ *"Embed fonts in the file"*), and `git push`. The HTML page stays the real source of truth;
+the `.docx` is a simpler copy that intentionally won't match the HTML's exact layout.
+
+### Rebuilding the `.docx` from the PDF (lossy — avoid if you can)
+
+You normally shouldn't — editing the `.docx` (or the HTML) directly is cleaner. But if you
+must convert a PDF into Word, expect to fix spacing/columns afterward:
+- **Word:** *File → Open →* pick the PDF; Word converts it to an editable document → clean it
+  up → re-embed fonts (above) → *Save As* over `public/Gabriel-Harlan-Resume.docx`.
+- **Adobe Acrobat** (best fidelity): *Export PDF → Microsoft Word*.
+- **Google Docs:** upload the PDF → *Open with Google Docs* → *Download → .docx*. ⚠️ Google
+  Docs drops embedded fonts — install the three families from `resume/fonts/` first.
+
+### Removing the Word download (if you'd rather not offer an editable copy)
+
+Anyone can download and edit a public `.docx` (a PDF is editable too, so this only raises the
+bar — it can't fully prevent reuse). To take the Word copy down entirely, do **both** steps —
+hiding the button alone still leaves the file reachable by its direct URL:
+
+1. **Hide the button** — in `public/resume/index.html`, delete the `↓ Word` line in the
+   download toolbar (leave the `↓ PDF` line above it):
+   ```html
+   <a class="alt" href="../Gabriel-Harlan-Resume.docx" download>↓ Word</a>
+   ```
+2. **Remove public access to the file** — delete `public/Gabriel-Harlan-Resume.docx`
+   (a file in `public/` is served at its URL whether or not anything links to it). Keep the
+   authoring copy at `resume/Gabriel-Harlan-Resume.docx` — that folder isn't served.
+3. `git push`. The Word button and the public file are both gone; the PDF stays.
+
 ---
 
 ## 7. External services (all keys are client-side & already set up)
