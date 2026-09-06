@@ -26,9 +26,9 @@ export const profile = {
   availability: 'Graduating Dec 2026 · open to UX & front-end roles · Bloomington, IN or remote',
   // a little "/now" line — edit anytime to keep the site feeling alive
   now: [
-    'hardening the SMS gateway I shipped for the TRACI tire agent at Tire Rack',
+    'wrapping up my last semester of school',
     'reading Kafka on the Shore by Haruki Murakami',
-    'playing Fallout 4',
+    'playing Project Zomboid',
   ],
 }
 
