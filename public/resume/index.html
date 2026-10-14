@@ -58,10 +58,18 @@
         justify-content: center;
       }
 
-      /* the page itself */
+      /* the page itself. The content runs taller than one Letter page, so the
+         sheet is laid out at (8.5in × 11in) / --pz and then shrunk by --pz —
+         on screen with transform, in print with zoom — so the screen page and
+         the printed PDF are the same full-bleed Letter page with identical
+         line breaks. Raise --pz toward 1 if the content gets shorter; lower it
+         if a print spills onto page 2. */
+      :root {
+        --pz: 0.96;
+      }
       .sheet {
-        width: 8.5in;
-        min-height: 11in;
+        width: calc(8.5in / var(--pz));
+        height: calc(11in / var(--pz));
         background: var(--paper);
         padding: 0.42in 0.6in 0.36in;
         position: relative;
@@ -147,7 +155,7 @@
       /* ---------- two-column body ---------- */
       .cols {
         display: grid;
-        grid-template-columns: 1fr 2.35in;
+        grid-template-columns: 1fr 2.55in;
         gap: 0.62in;
         align-items: start;
       }
@@ -352,18 +360,22 @@
       }
       @media print {
         body { padding: 0; background: #fff; display: block; }
-        /* the content runs ~9% taller than one Letter page, so shrink the sheet
-           to fit. zoom (not the print dialog's Scale, which leaves a blank strip
-           on the right) keeps it full-bleed: the pre-zoom box is sized so it
-           lands at exactly 8.5in × 11in. Raise --print-zoom toward 1 if the
-           content gets shorter; lower it if a print spills onto page 2. */
+        /* zoom (not the print dialog's Scale, which leaves a blank strip on
+           the right) shrinks the layout itself, so the page stays full-bleed */
         .sheet {
-          --print-zoom: 0.92;
           box-shadow: none;
-          zoom: var(--print-zoom);
-          width: calc(8.5in / var(--print-zoom));
-          height: calc(11in / var(--print-zoom));
-          min-height: 0;
+          zoom: var(--pz);
+        }
+      }
+      @media screen {
+        /* shrink to Letter size (times --fit on narrow screens, set by the
+           script below); the negative margins collapse the unscaled layout box
+           the transform would otherwise reserve, so centering still works */
+        .sheet {
+          transform: scale(calc(var(--pz) * var(--fit, 1)));
+          transform-origin: top left;
+          margin-right: calc(8.5in / var(--pz) * (var(--pz) * var(--fit, 1) - 1));
+          margin-bottom: calc(11in / var(--pz) * (var(--pz) * var(--fit, 1) - 1));
         }
       }
 
@@ -449,15 +461,9 @@
           margin: 0;
           padding: 62px 0 0; /* clear the fixed back arrow above the sheet */
         }
-        /* transform:scale works in every browser (incl. iOS Safari, where
-           `zoom` is unreliable). --fit scales the sheet to the viewport width;
-           --fitmb is a negative margin that collapses the unscaled height the
-           transform would otherwise reserve. Both are set by the script and
-           scoped to screen, so the printed PDF is never affected. */
+        /* the screen rule above scales by --fit too (transform works in every
+           browser, incl. iOS Safari, where `zoom` is unreliable) */
         .sheet {
-          transform: scale(var(--fit, 1));
-          transform-origin: top left;
-          margin-bottom: var(--fitmb, 0);
           box-shadow: none;
         }
       }
@@ -653,18 +659,13 @@
       // printed/downloaded PDF is never scaled).
       (function () {
         function fit() {
-          var sheet = document.querySelector('.sheet')
           var root = document.documentElement
           var vw = root.clientWidth
           if (vw < 816) {
             var f = vw / 816
             root.style.setProperty('--fit', f.toFixed(4))
-            // collapse the unscaled height the transform reserves (offsetHeight
-            // is the layout height, unaffected by transform)
-            root.style.setProperty('--fitmb', Math.round(sheet.offsetHeight * (f - 1)) + 'px')
           } else {
             root.style.setProperty('--fit', '1')
-            root.style.setProperty('--fitmb', '0px')
           }
         }
         window.addEventListener('resize', fit)

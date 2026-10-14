@@ -30,8 +30,9 @@ change the words, never the styling.
    (off = no sidebar card or paper color) → save over
    `public/Gabriel-Harlan-Resume.pdf`. Always print from Chrome/Edge — never
    export the PDF from the Word file, which drops the whole design. If the
-   print spills onto a second page, lower `--print-zoom` in the `@media print`
-   block (it's set to fit the current content on one page).
+   print spills onto a second page, lower `--pz` (top of the `<style>`; it
+   shrinks the sheet to fit Letter both on screen and in print). If there's
+   lots of empty space at the bottom, raise it toward 1.
 5. **Publish:** commit and `git push` — GitHub Pages redeploys, updating both
    the live `/resume/` page and the download.
 
