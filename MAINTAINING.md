@@ -287,7 +287,9 @@ same-named file to replace it.
 - The **live `/resume/` page** is `public/resume/index.html` (self-contained; fonts embedded).
   Edit the HTML there to change the résumé.
 - Downloadable copies are `public/Gabriel-Harlan-Resume.pdf` and `.docx` — regenerate the
-  PDF by print-to-PDF from the page, and overwrite the file.
+  PDF by print-to-PDF from the page in Chrome/Edge (Letter, margins None, Background
+  graphics ON), and overwrite the file. Don't export it from the Word file — that loses
+  the design. See `resume/README.md` step 4.
 - The `resume/` folder at the repo root (no `public/`) is just the **authoring workspace**
   (fonts, the .docx source). It is not served to visitors. See `resume/README.md`.
 

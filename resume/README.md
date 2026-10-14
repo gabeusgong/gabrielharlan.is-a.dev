@@ -26,7 +26,12 @@ change the words, never the styling.
 3. Save, then double-click the file to preview it in your browser.
 4. **Regenerate the download PDF:** in the browser press ⌘P / Ctrl-P →
    *Destination:* **Save as PDF** → *Paper size:* **Letter** → *Margins:*
-   **Default/None** → save over `public/Gabriel-Harlan-Resume.pdf`.
+   **None** → *Scale:* **Default** → *More settings:* **Background graphics ON**
+   (off = no sidebar card or paper color) → save over
+   `public/Gabriel-Harlan-Resume.pdf`. Always print from Chrome/Edge — never
+   export the PDF from the Word file, which drops the whole design. If the
+   print spills onto a second page, lower `--print-zoom` in the `@media print`
+   block (it's set to fit the current content on one page).
 5. **Publish:** commit and `git push` — GitHub Pages redeploys, updating both
    the live `/resume/` page and the download.
 

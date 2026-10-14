@@ -352,7 +352,19 @@
       }
       @media print {
         body { padding: 0; background: #fff; display: block; }
-        .sheet { box-shadow: none; width: 8.5in; min-height: 0; }
+        /* the content runs ~9% taller than one Letter page, so shrink the sheet
+           to fit. zoom (not the print dialog's Scale, which leaves a blank strip
+           on the right) keeps it full-bleed: the pre-zoom box is sized so it
+           lands at exactly 8.5in × 11in. Raise --print-zoom toward 1 if the
+           content gets shorter; lower it if a print spills onto page 2. */
+        .sheet {
+          --print-zoom: 0.92;
+          box-shadow: none;
+          zoom: var(--print-zoom);
+          width: calc(8.5in / var(--print-zoom));
+          height: calc(11in / var(--print-zoom));
+          min-height: 0;
+        }
       }
 
       /* screen-only download toolbar (never appears in the printed/downloaded PDF) */
