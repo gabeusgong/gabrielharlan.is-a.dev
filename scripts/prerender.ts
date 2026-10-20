@@ -24,7 +24,7 @@
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs'
 import { resolve, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { notes, projects, profile, noteNav, relatedNotes, type NoteBlock } from '../src/data'
+import { notes, projects, profile, links, noteNav, relatedNotes, type NoteBlock } from '../src/data'
 import { renderOgCard, renderHomeCard } from './og'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
@@ -458,8 +458,53 @@ ${items}
       `    <link rel="alternate" type="application/rss+xml" title="Gabriel Harlan — Field Notes" href="${SITE}/feed.xml" />\n  </head>`,
     )
   }
+  // static homepage content inside #root. The SPA replaces it on mount, but
+  // anything that reads HTML without running JS (AI résumé screeners, link
+  // fetchers, no-JS visitors) gets the real pitch instead of an empty div.
+  // Hidden from JS visitors by an inline class so it never flashes.
+  const workLinks = projects
+    .map((p) => {
+      const href = p.caseStudy && p.study ? `/work/${p.study}/` : p.href
+      const title = href ? `<a href="${esc(href)}">${esc(p.title)}</a>` : esc(p.title)
+      return `<li><strong>${title}</strong>${p.year ? ` (${esc(p.year)})` : ''} — ${esc(p.blurb)}</li>`
+    })
+    .join('\n          ')
+  const noteLinks = notes
+    .map((n) => `<li><a href="/notes/${n.slug}/">${esc(n.title)}</a> — ${esc(n.dek)}</li>`)
+    .join('\n          ')
+  const staticHome = `<div id="root">
+      <div id="static-home" style="max-width:46rem;margin:0 auto;padding:2rem 1.25rem;line-height:1.55">
+        <h1>${esc(profile.name)} — UX-Minded Front-End Engineer</h1>
+        <p>${esc(profile.tagline)}</p>
+        <p><strong>${esc(profile.availability)}</strong></p>
+        <p>${esc(profile.about)}</p>
+        <h2>Selected work</h2>
+        <ul>
+          ${workLinks}
+        </ul>
+        <h2>Field notes</h2>
+        <ul>
+          ${noteLinks}
+        </ul>
+        <h2>Contact</h2>
+        <ul>
+          <li>Email: <a href="mailto:${esc(links.email)}">${esc(links.email)}</a></li>
+          <li><a href="/resume/">Résumé</a> (<a href="/Gabriel-Harlan-Resume.pdf">PDF</a>)</li>
+          <li><a href="${esc(links.linkedin)}">LinkedIn</a> · <a href="${esc(links.github)}">GitHub</a></li>
+        </ul>
+      </div>
+    </div>`
+  if (!idx.includes('id="static-home"')) {
+    idx = idx
+      .replace('<div id="root"></div>', staticHome)
+      .replace(
+        '</head>',
+        `    <script>document.documentElement.classList.add('js')</script>\n    <style>.js #static-home{display:none}</style>\n  </head>`,
+      )
+  }
+
   writeFileSync(resolve(DIST, 'index.html'), idx)
-  console.log('  ✓ index.html (home og:image + feed link)')
+  console.log('  ✓ index.html (home og:image + feed link + static content)')
 }
 
 console.log('prerender: done')

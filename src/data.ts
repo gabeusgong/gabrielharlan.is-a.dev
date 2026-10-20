@@ -119,7 +119,7 @@ export const projects: Project[] = [
     tone: 'sun',
     year: '2026',
     emoji: '🦇',
-    href: 'https://spelunk-a-dunk.web.app',
+    href: 'https://karst.web.app',
     caseStudy: true,
     study: 'karst',
   },
@@ -160,7 +160,7 @@ export const projects: Project[] = [
 ]
 
 export const links = {
-  email: 'gbharlan@iu.edu',
+  email: 'gabrielharlan2@gmail.com',
   github: 'https://github.com/gabeusgong',
   linkedin: 'https://linkedin.com/in/gbharlan',
   twitter: '',

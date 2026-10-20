@@ -386,7 +386,7 @@ const STUDIES: Record<string, Study> = {
       { label: 'Stack', value: 'Next.js · Firebase · Leaflet' },
       { label: 'Ships as', value: 'Web app + Android' },
     ],
-    live: { href: 'https://spelunk-a-dunk.web.app', label: 'Visit the live app →' },
+    live: { href: 'https://karst.web.app', label: 'Visit the live app →' },
     problem: (
       <>
         Cavers juggle a pile of disconnected tools — separate apps, spreadsheets, and forum posts
