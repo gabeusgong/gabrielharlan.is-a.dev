@@ -79,6 +79,8 @@ export const hobbies: Sticker[] = [
 export type Project = {
   title: string
   blurb: string
+  // one-line version for social cards and LinkedIn (falls back to blurb)
+  summary?: string
   tags: string[]
   tone: keyof typeof tones
   href?: string
@@ -93,6 +95,8 @@ export const projects: Project[] = [
     title: 'TRACTION Rep Console',
     blurb:
       "Designed and prototyped a sales-enablement console for Tire Rack retention reps. An outbound engine scores every customer on LTV × churn × signal recency and builds a suppression-filtered, frequency-capped daily queue — handing each rep a ranked lead with a why-now reason, the customer’s cross-channel history, and an AI-matched cart ready to place. Unifies AI-chat, SMS, and call history with AI transcript summaries, and closes every outcome back to the data spine.",
+    summary:
+      'An AI-assisted sales console that tells Tire Rack retention reps who to call, why now, and what to offer.',
     tags: ['UX', 'Prototype', 'AI', 'CRM'],
     tone: 'pink',
     year: '2026',
@@ -104,6 +108,8 @@ export const projects: Project[] = [
     title: 'TRACI SMS Gateway',
     blurb:
       "Shipped solo to production as an Innovation & AI intern: a service that lets any customer text Tire Rack's TRACI AI tire agent — live on Google Cloud Run over Twilio. A Python/FastAPI backend with a text-driven vehicle picker (year/make/model → factory tire size), async workers so slow AI replies never time out, Redis-backed sessions, TCPA-compliant opt-out and per-phone rate limiting, keyless CI/CD, and 90 tests.",
+    summary:
+      "A production service, built solo, that lets any Tire Rack customer text the company's AI tire agent.",
     tags: ['Python', 'FastAPI', 'Cloud Run', 'Twilio'],
     tone: 'coral',
     year: '2026',
@@ -115,6 +121,7 @@ export const projects: Project[] = [
     title: 'Karst',
     blurb:
       "Shipped as both a live web app and an Android build: a caver's field guide to the wild and show caves of southern Indiana's karst country. Built on Next.js + Firebase around a privacy-first map that fuzzes sensitive cave locations, dead-reckoning trails you record once and follow in with AR or back out by compass, grotto groups, a community field guide, and a bat / White-Nose Syndrome conservation guide.",
+    summary: 'A privacy-first caving field guide for southern Indiana, live on web and Android.',
     tags: ['Next.js', 'Firebase', 'Leaflet', 'Privacy-first'],
     tone: 'sun',
     year: '2026',
@@ -127,6 +134,8 @@ export const projects: Project[] = [
     title: 'ITIT — IT Inventory Tracker',
     blurb:
       'Delivered as a senior capstone with a four-person Scrum team: inventory tracking for small businesses that’s less error-prone than spreadsheets and far cheaper than enterprise systems. Pairs a physical IoT tracker with a web app for deployments, locations, and items — plus CSV export and Google login.',
+    summary:
+      'An IoT inventory tracker for small businesses, built with a four-person Scrum team as my senior capstone.',
     tags: ['JavaScript', 'PHP', 'MySQL', 'IoT'],
     tone: 'cobalt',
     year: '2025–2026',
@@ -139,6 +148,8 @@ export const projects: Project[] = [
     title: 'Corne 42 LP Split Wireless Keyboard',
     blurb:
       'A split, wireless, low-profile Corne I built by hand and now type on every day — 42 ortholinear keys on custom ZMK firmware. Bluetooth profiles, per-half OLED screens, a removable hotswap controller, and magnetic USB-C ports. Tuned Choc switches, blank 3D-printed caps, soldered and flashed from scratch.',
+    summary:
+      'A split, wireless, low-profile keyboard I hand-built and flashed with custom ZMK firmware — my daily driver.',
     tags: ['ZMK', 'Firmware', 'Hardware'],
     tone: 'coral',
     year: '2022–2026',
@@ -150,6 +161,8 @@ export const projects: Project[] = [
     title: 'Richard Blenz Nature Preserve',
     blurb:
       "Redesigned and shipped for my I360 Web Design final: a responsive rebuild of the National Speleological Society's Buckner Cave preserve site. Hand-coded HTML/CSS/JS with an animated nav, a photo slideshow, and accordion geology & biology sections, all built around cave photography I shot on-site.",
+    summary:
+      "A responsive, hand-coded redesign of a cave preserve's website, built around my own cave photography.",
     tags: ['HTML', 'CSS', 'JavaScript', 'Responsive'],
     tone: 'lime',
     year: '2025',

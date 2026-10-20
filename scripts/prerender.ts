@@ -325,7 +325,7 @@ for (const p of projects) {
   const workCard = await renderOgCard({
     kicker: 'Case Study',
     title: p.title,
-    dek: p.blurb,
+    dek: p.summary ?? p.blurb,
     tone: p.tone,
     tags: p.tags,
   })

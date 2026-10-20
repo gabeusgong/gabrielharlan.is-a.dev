@@ -41,7 +41,9 @@ const h = (type: string, style: Record<string, unknown>, children?: any): any =>
   props: { style, children },
 })
 
-const clamp = (s: string, n: number) => (s.length > n ? `${s.slice(0, n - 1).trimEnd()}…` : s)
+// cut at a word boundary so a card never ends mid-word ("tir…")
+const clamp = (s: string, n: number) =>
+  s.length > n ? `${s.slice(0, n - 1).replace(/\s+\S*$/, '').replace(/[\s,;:—-]+$/, '')}…` : s
 
 export type OgOpts = {
   kicker: string
